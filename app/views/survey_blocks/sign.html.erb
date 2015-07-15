@@ -1,0 +1,21 @@
+<p id="notice"><%= notice %></p>
+<h1>Adding question to survey block '<%=@survey_block.category %>' </h1>
+
+
+<%= form_for(:survey_block) do |f| %>
+    <div class="field">
+      <label>Choose a question:</label>
+
+      <select name="question_id">
+        <%= Question.all.each do |p| %>
+            <option value="<%= p.id %>"><%= p.category%></option>
+        <% end %>
+      </select>
+
+      <input type="hidden" name="survey_block_id" value="<%= @survey_block.id %>" >
+
+      <%= f.submit 'Sign' %>
+
+    </div>
+<% end %>
+
