@@ -1,3 +1,4 @@
 class SurveyBlock < ActiveRecord::Base
-  has_many :questions, inverse_of: :survey_block
+  has_many :questions
+  belongs_to :survey
 end

@@ -1,6 +1,6 @@
 class Question < ActiveRecord::Base
 
-  belongs_to :survey_block, inverse_of: :questions
+  belongs_to :survey_block
 
   validates :category, :presence => true
   validates :weight, :presence => true

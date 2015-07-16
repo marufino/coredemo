@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150715215047) do
+ActiveRecord::Schema.define(version: 20150716170133) do
 
   create_table "questions", force: true do |t|
     t.string   "category"
@@ -25,6 +25,12 @@ ActiveRecord::Schema.define(version: 20150715215047) do
   create_table "survey_blocks", force: true do |t|
     t.string   "category"
     t.integer  "weight"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "survey_id"
+  end
+
+  create_table "surveys", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
   end
