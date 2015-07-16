@@ -1,4 +1,17 @@
 <p id="notice"><%= notice %></p>
 
+<p>
+  <strong>Survey Blocks:</strong>
+  <% @survey.survey_blocks.each do |s| %>
+    <p></p>
+    <%= s.category %>
+        <% s.questions.each do |q| %>
+            <%= q.category %>
+        <% end %>
+<% end %>
+
+</p>
+
+
 <%= link_to 'Edit', edit_survey_path(@survey) %> |
 <%= link_to 'Back', surveys_path %>
