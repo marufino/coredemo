@@ -16,6 +16,8 @@ class SurveysController < ApplicationController
   # GET /surveys/new
   def new
     @survey = Survey.new
+    @survey_blocks = @survey.survey_blocks.build
+    @questions = @survey_blocks.questions.build
   end
 
   # GET /surveys/1/edit
@@ -70,6 +72,6 @@ class SurveysController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def survey_params
-      params[:survey]
+      params[:survey].permit(survey_blocks_attributes: [:category, :weight, questions_attributes:[:category, :weight, :description]])
     end
 end

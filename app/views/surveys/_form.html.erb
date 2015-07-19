@@ -11,6 +11,34 @@
     </div>
   <% end %>
 
+
+    <p>SURVEY BLOCK</p>
+    <%= f.fields_for :survey_blocks do |block_form| %>
+        <p>
+          <%= block_form.label :category%>
+          <%= block_form.text_field :category %>
+
+          <%= block_form.label :weight%>
+          <%= block_form.number_field :weight %>
+
+        </p>
+
+        <p>QUESTIONS:</p>
+        <%= block_form.fields_for :questions do |q_form| %>
+            <p>
+              <%= q_form.label :category%>
+              <%= q_form.text_field :category %>
+
+              <%= q_form.label :weight%>
+              <%= q_form.number_field :weight %>
+
+              <%= q_form.label :description%>
+              <%= q_form.text_field :description %>
+            </p>
+        <% end %>
+    <% end %>
+
+
   <div class="actions">
     <%= f.submit %>
   </div>
