@@ -11,8 +11,8 @@
     </div>
   <% end %>
 
-
     <p>SURVEY BLOCK</p>
+
     <%= f.fields_for :survey_blocks do |block_form| %>
         <p>
           <%= block_form.label :category%>
@@ -34,9 +34,15 @@
 
               <%= q_form.label :description%>
               <%= q_form.text_field :description %>
+
+              <%= q_form.check_box :_destroy %>
+              <%= q_form.label :_destroy, 'delete' %>
             </p>
-        <% end %>
+        <% end -%>
+
+        <%= block_form.submit 'Add question', :name => block_form.index %>
     <% end %>
+
 
 
   <div class="actions">
