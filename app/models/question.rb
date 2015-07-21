@@ -4,6 +4,5 @@ class Question < ActiveRecord::Base
 
   validates :category, :presence => true
   validates :weight, :presence => true
-  validates :description, :presence => true
 
 end

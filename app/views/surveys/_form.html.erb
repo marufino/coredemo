@@ -24,7 +24,7 @@
         </p>
 
         <p>QUESTIONS:</p>
-        <%= block_form.fields_for :questions do |q_form| %>
+        <%= block_form.nested_fields_for :questions do |q_form| %>
             <p>
               <%= q_form.label :category%>
               <%= q_form.text_field :category %>
@@ -35,14 +35,13 @@
               <%= q_form.label :description%>
               <%= q_form.text_field :description %>
 
-              <%= q_form.check_box :_destroy %>
-              <%= q_form.label :_destroy, 'delete' %>
+              <%= q_form.remove_nested_fields_link %>
             </p>
         <% end -%>
 
-        <%= block_form.submit 'Add question', :name => block_form.index %>
-    <% end %>
+        <%= block_form.add_nested_fields_link :questions %>
 
+    <% end %>
 
 
   <div class="actions">
