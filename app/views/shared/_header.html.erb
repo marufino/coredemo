@@ -15,6 +15,7 @@
         </ul>
       </li>
       <li><%= current_user.email %></li>
+      <li><%= current_user.roles.first.name %></li>
       <li> <%= link_to "Logout", destroy_user_session_path, :method => :delete %></li>
   <% else %>
       <li><%= link_to "Sign in", new_user_session_path %></li>

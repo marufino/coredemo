@@ -21,7 +21,14 @@
     <%= f.password_field :password_confirmation, autocomplete: "off" %>
   </div>
 
-  <div class="actions">
+    <%= f.fields_for :roles do |r| %>
+      <div class="field">
+        <%= r.label 'Role' %><br />
+        <%= r.text_field :name %>
+      </div>
+    <% end %>
+
+    <div class="actions">
     <%= f.submit "Sign up" %>
   </div>
 <% end %>
