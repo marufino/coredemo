@@ -20,6 +20,7 @@ class SurveysController < ApplicationController
       @survey_blocks = @survey.survey_blocks.build(category: $categorynames[i])
       @questions = @survey_blocks.questions.build
     end
+
   end
 
   # GET /surveys/1/edit
