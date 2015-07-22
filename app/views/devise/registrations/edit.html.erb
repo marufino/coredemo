@@ -27,7 +27,7 @@
     <%= f.password_field :current_password, autocomplete: "off" %>
   </div>
 
-  <%= f.fields_for :role do |r| %>
+  <%= f.fields_for :roles do |r| %>
       <div class="field">
         <%= r.label 'Role' %><br />
         <%= r.text_field :name %>
