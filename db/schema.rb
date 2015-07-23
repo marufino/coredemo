@@ -11,13 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150723162340) do
+ActiveRecord::Schema.define(version: 20150723172403) do
 
   create_table "assignments", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
     t.date     "date"
     t.boolean  "completed"
+    t.integer  "project_id"
+    t.integer  "survey_id"
   end
 
   create_table "observers", force: true do |t|
@@ -72,6 +74,7 @@ ActiveRecord::Schema.define(version: 20150723162340) do
   create_table "surveys", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "assignment_id"
   end
 
   create_table "trainees", force: true do |t|

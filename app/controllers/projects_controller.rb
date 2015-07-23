@@ -14,6 +14,7 @@ class ProjectsController < ApplicationController
 
   def new
     @project = Project.new
+    @project.assignments.build
     respond_with(@project)
   end
 
@@ -42,6 +43,6 @@ class ProjectsController < ApplicationController
     end
 
     def project_params
-      params[:project]
+      params[:project].permit(assignments_attributes: [:id, :date, :survey_id])
     end
 end

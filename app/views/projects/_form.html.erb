@@ -11,6 +11,23 @@
     </div>
   <% end %>
 
+        <p>Assignments</p>
+        <%= f.nested_fields_for :assignments do |assign_form| %>
+            <p>
+              <%= assign_form.label :date %>
+              <%= assign_form.date_field :date %>
+
+              <%= assign_form.label :survey%>
+              <%= assign_form.collection_select :survey_id,
+                                                Survey.all, :id, :id,
+                                                :prompt => true %>
+
+              <%= assign_form.remove_nested_fields_link %>
+            </p>
+        <% end -%>
+
+        <%= f.add_nested_fields_link :assignments %>
+
   <div class="actions">
     <%= f.submit %>
   </div>
