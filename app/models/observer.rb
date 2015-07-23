@@ -1,6 +1,6 @@
 class Observer < ActiveRecord::Base
 
-  #belongs_to project
+  belongs_to :project
 
   has_one :user, as: :meta, dependent: :destroy
 

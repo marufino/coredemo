@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
 
+  resources :assignments
+
+  resources :projects
+
+  resources :ratings
+
+  resources :scores
+
   devise_for :users,  :controllers => { :registrations => "users/registrations" }
 
   resources :surveys

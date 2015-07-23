@@ -15,8 +15,8 @@
         </ul>
       </li>
       <li><%= current_user.email %></li>
-      <li><%= current_user.role? :admin %></li>
-      <li><%= current_user.meta %></li>
+      <li>Admin: <%= current_user.role? :admin %></li>
+      <li>Type:  <%= current_user.meta_type %></li>
       <li><%= link_to "Register", new_user_registration_path %></li>
       <li> <%= link_to "Logout", destroy_user_session_path, :method => :delete %></li>
   <% else %>

@@ -1,7 +1,7 @@
 class Trainee < ActiveRecord::Base
 
-  #has_many assignments
-  #has_many scores
+  has_many :assignments
+  has_many :scores
 
   has_one :user, as: :meta, dependent: :destroy
 

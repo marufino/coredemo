@@ -1,0 +1,5 @@
+class AddDateToAssignment < ActiveRecord::Migration
+  def change
+    add_column :assignments, :date, :date
+  end
+end
