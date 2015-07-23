@@ -8,7 +8,10 @@ class User < ActiveRecord::Base
 
   accepts_nested_attributes_for :roles
 
+  belongs_to :meta, polymorphic: true
+
   def role?(role)
-    return !!self.roles.find_by_name(role.to_s.camelize)
+    return !!self.roles.find_by_name(role)
   end
+
 end

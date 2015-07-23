@@ -11,7 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150722003538) do
+ActiveRecord::Schema.define(version: 20150723153310) do
+
+  create_table "observers", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "questions", force: true do |t|
     t.string   "category"
@@ -46,9 +51,7 @@ ActiveRecord::Schema.define(version: 20150722003538) do
     t.datetime "updated_at"
   end
 
-  create_table "todos", force: true do |t|
-    t.string   "title"
-    t.text     "notes"
+  create_table "trainees", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -66,9 +69,13 @@ ActiveRecord::Schema.define(version: 20150722003538) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.string   "type"
+    t.integer  "meta_id"
+    t.string   "meta_type"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["meta_id", "meta_type"], name: "index_users_on_meta_id_and_meta_type"
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
 end
