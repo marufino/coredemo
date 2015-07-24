@@ -1,6 +1,6 @@
 class Assignment < ActiveRecord::Base
 
-  belongs_to :trainee
+  has_and_belongs_to_many :trainee
   has_one :survey
 
 end

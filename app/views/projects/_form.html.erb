@@ -22,6 +22,12 @@
                                                 Survey.all, :id, :id,
                                                 :prompt => true %>
 
+              <%= assign_form.label :trainee %>
+              <%= assign_form.collection_select :trainee_id,
+                                                Trainee.all, :id, :id,
+                                                :prompt => true %>
+
+
               <%= assign_form.remove_nested_fields_link %>
             </p>
         <% end -%>
