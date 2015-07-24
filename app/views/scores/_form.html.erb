@@ -11,6 +11,14 @@
     </div>
   <% end %>
 
+    <p>Scores</p>
+    <%= f.nested_fields_for :ratings do |ratings_form| %>
+        <p>
+          <%= ratings_form.label :value %>
+          <%= ratings_form.number_field :value %>
+        </p>
+    <% end -%>
+
   <div class="actions">
     <%= f.submit %>
   </div>

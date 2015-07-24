@@ -11,9 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150723172403) do
+ActiveRecord::Schema.define(version: 20150724185236) do
 
   create_table "assignments", force: true do |t|
+    t.integer  "trainee_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.date     "date"
@@ -22,10 +23,20 @@ ActiveRecord::Schema.define(version: 20150723172403) do
     t.integer  "survey_id"
   end
 
+  add_index "assignments", ["trainee_id"], name: "index_assignments_on_trainee_id"
+
   create_table "observers", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "observers_projects", id: false, force: true do |t|
+    t.integer "observer_id"
+    t.integer "project_id"
+  end
+
+  add_index "observers_projects", ["observer_id", "project_id"], name: "index_observers_projects_on_observer_id_and_project_id"
+  add_index "observers_projects", ["observer_id"], name: "index_observers_projects_on_observer_id"
 
   create_table "projects", force: true do |t|
     t.datetime "created_at"
@@ -33,13 +44,15 @@ ActiveRecord::Schema.define(version: 20150723172403) do
   end
 
   create_table "questions", force: true do |t|
+    t.integer  "survey_block_id"
     t.string   "category"
     t.integer  "weight"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "survey_block_id"
   end
+
+  add_index "questions", ["survey_block_id"], name: "index_questions_on_survey_block_id"
 
   create_table "ratings", force: true do |t|
     t.integer  "value"
@@ -59,23 +72,30 @@ ActiveRecord::Schema.define(version: 20150723172403) do
   end
 
   create_table "scores", force: true do |t|
+    t.integer  "trainee_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "scores", ["trainee_id"], name: "index_scores_on_trainee_id"
+
   create_table "survey_blocks", force: true do |t|
+    t.integer  "survey_id"
     t.string   "category"
     t.integer  "weight"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "survey_id"
   end
 
+  add_index "survey_blocks", ["survey_id"], name: "index_survey_blocks_on_survey_id"
+
   create_table "surveys", force: true do |t|
+    t.integer  "assignment_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "assignment_id"
   end
+
+  add_index "surveys", ["assignment_id"], name: "index_surveys_on_assignment_id"
 
   create_table "trainees", force: true do |t|
     t.datetime "created_at"
@@ -95,7 +115,6 @@ ActiveRecord::Schema.define(version: 20150723172403) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
-    t.string   "type"
     t.integer  "meta_id"
     t.string   "meta_type"
   end

@@ -23,6 +23,11 @@ class ProjectsController < ApplicationController
 
   def create
     @project = Project.new(project_params)
+
+    #assign current user (observer) to this project
+    @obs = current_user
+    @project.observers << @obs.meta
+
     @project.save
     respond_with(@project)
   end
