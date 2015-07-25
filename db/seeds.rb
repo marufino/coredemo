@@ -5,7 +5,7 @@ Question.create!(category: 'Product Knowledge', weight: 25, description: 'How we
 Question.create!(category: 'Trends', weight: 10, description: 'How aware is the trainee in industry trends')
 
 
-survey = Survey.create()
+survey = Survey.create(name: 'Sales Base')
 
 block1 = survey.survey_blocks.create(category: 'Knowledge', weight: 30)
 block1.questions.create!(category: 'Market Insight', weight: 15, description: 'How well versed is the trainee in the Market')
@@ -19,7 +19,7 @@ block2.questions.create!(category: 'Market Insight', weight: 15, description: 'H
 block3 = survey.survey_blocks.create(category: 'Abilities', weight: 30)
 block3.questions.create!(category: 'Planning', weight: 15, description: 'How well does the trainee plan for work')
 
-survey = Survey.create()
+survey = Survey.create(name: 'Sales Advanced')
 
 block1 = survey.survey_blocks.create(category: 'Knowledge', weight: 30)
 block1.questions.create!(category: 'Market Insight', weight: 15, description: 'How well versed is the trainee in the Market')

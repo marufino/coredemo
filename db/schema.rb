@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150724215159) do
+ActiveRecord::Schema.define(version: 20150725055803) do
 
   create_table "assignments", force: true do |t|
     t.integer  "trainee_id"
@@ -21,9 +21,18 @@ ActiveRecord::Schema.define(version: 20150724215159) do
     t.boolean  "completed"
     t.integer  "project_id"
     t.integer  "survey_id"
+    t.string   "name"
   end
 
   add_index "assignments", ["trainee_id"], name: "index_assignments_on_trainee_id"
+
+  create_table "assignments_surveys", id: false, force: true do |t|
+    t.integer "assignment_id"
+    t.integer "survey_id"
+  end
+
+  add_index "assignments_surveys", ["assignment_id", "survey_id"], name: "index_assignments_surveys_on_assignment_id_and_survey_id"
+  add_index "assignments_surveys", ["assignment_id"], name: "index_assignments_surveys_on_assignment_id"
 
   create_table "assignments_trainees", id: false, force: true do |t|
     t.integer "assignment_id"
@@ -49,6 +58,7 @@ ActiveRecord::Schema.define(version: 20150724215159) do
   create_table "projects", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name"
   end
 
   create_table "questions", force: true do |t|
@@ -101,6 +111,7 @@ ActiveRecord::Schema.define(version: 20150724215159) do
     t.integer  "assignment_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name"
   end
 
   add_index "surveys", ["assignment_id"], name: "index_surveys_on_assignment_id"

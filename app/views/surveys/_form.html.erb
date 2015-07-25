@@ -11,6 +11,9 @@
     </div>
   <% end %>
 
+    <%= f.label :name%>
+    <%= f.text_field :name %>
+
     <p>SURVEY BLOCK</p>
 
     <%= f.fields_for :survey_blocks do |block_form| %>

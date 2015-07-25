@@ -1,14 +1,23 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  Project Title:
+  <%= @project.name %> <br>
+
+  Observers:
   <% @project.observers.each do |o| %>
-      <%= o.id %>
+      <%= o.user.email %>
   <% end %>
 
   <% @project.assignments.each do |a| %>
     <p></p>
     <%= a.date %>
-    <% a.survey %>
+    <% a.surveys.each do |s| %>
+        <%= s.name %>
+    <% end %>
+    <% a.trainees.each do |t| %>
+        <%= t.user.email %>
+        <% end %>
     <% end %>
 </p>
 

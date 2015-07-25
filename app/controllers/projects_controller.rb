@@ -14,7 +14,7 @@ class ProjectsController < ApplicationController
 
   def new
     @project = Project.new
-    @project.assignments.build
+    @assignments = @project.assignments.build
     respond_with(@project)
   end
 
@@ -24,22 +24,26 @@ class ProjectsController < ApplicationController
   def create
     @project = Project.new(project_params)
 
-    #assign current user (observer) to this project
-    @obs = current_user
-    @project.observers << @obs.meta
+    # assign observers to this project
+    @obs_ids = params[:project][:observer_ids]
+    @obs_ids.reject!(&:empty?)
+    @obs = Observer.find(@obs_ids)
+    @project.observers = @obs
 
+    # for every assignment
     @project.assignments.each_with_index { | assignment , i |
+
+      # add trainees to assignments
       @trainee_ids = params[:project][:assignments_attributes].values[i][:trainee_ids]
       @trainee_ids.reject!(&:empty?)
       @trainees = Trainee.find(@trainee_ids)
       assignment.trainees = @trainees
+
+      # assign survey to project
+      @survey = Survey.find(params[:project][:assignments_attributes].values[i][:survey_id])
+      assignment.surveys = []
+      assignment.surveys << @survey
     }
-
-
-
-    byebug
-
-    #@project.assignments.trainees = @
 
     @project.save
     respond_with(@project)
@@ -47,6 +51,26 @@ class ProjectsController < ApplicationController
 
   def update
     @project.update(project_params)
+
+    # assign current user (observer) to this project
+    @obs_ids = params[:project][:observer_ids]
+    @obs_ids.reject!(&:empty?)
+    @obs = Observer.find(@obs_ids)
+    @project.observers = @obs
+
+    # add trainees to assignments
+    @project.assignments.each_with_index { | assignment , i |
+      @trainee_ids = params[:project][:assignments_attributes].values[i][:trainee_ids]
+      @trainee_ids.reject!(&:empty?)
+      @trainees = Trainee.find(@trainee_ids)
+      assignment.trainees = @trainees
+
+      # assign survey to project
+      @survey = Survey.find(params[:project][:assignments_attributes].values[i][:survey_id])
+      assignment.surveys = []
+      assignment.surveys << @survey
+    }
+
     respond_with(@project)
   end
 
@@ -61,6 +85,6 @@ class ProjectsController < ApplicationController
     end
 
     def project_params
-      params[:project].permit(assignments_attributes: [:id, :date, :survey_id], trainees_attributes: [:id])
+      params[:project].permit(:name, :observer_ids, assignments_attributes: [:id, :date, :survey_id, :trainee_ids])
     end
 end
