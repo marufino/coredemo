@@ -28,6 +28,19 @@ class ProjectsController < ApplicationController
     @obs = current_user
     @project.observers << @obs.meta
 
+    @project.assignments.each_with_index { | assignment , i |
+      @trainee_ids = params[:project][:assignments_attributes].values[i][:trainee_ids]
+      @trainee_ids.reject!(&:empty?)
+      @trainees = Trainee.find(@trainee_ids)
+      assignment.trainees = @trainees
+    }
+
+
+
+    byebug
+
+    #@project.assignments.trainees = @
+
     @project.save
     respond_with(@project)
   end
@@ -48,6 +61,6 @@ class ProjectsController < ApplicationController
     end
 
     def project_params
-      params[:project].permit(assignments_attributes: [:id, :date, :survey_id])
+      params[:project].permit(assignments_attributes: [:id, :date, :survey_id], trainees_attributes: [:id])
     end
 end
