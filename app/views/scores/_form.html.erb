@@ -12,12 +12,20 @@
   <% end %>
 
     <p>Scores</p>
-    <%= f.nested_fields_for :ratings do |ratings_form| %>
-        <p>
-          <%= ratings_form.label :value %>
-          <%= ratings_form.number_field :value %>
-        </p>
-    <% end -%>
+
+    <% @blocks_ratings.each do |block, ratings| %>
+        <%= block.category %>
+        <% block.questions.each do |b| %>
+            <%= b.category %>
+            <% end %>
+        <% end %>
+
+    <%= f.fields_for :ratings do |ratings_form| %>
+          <td>
+            <%= ratings_form.number_field :value %>
+          </td>
+    <% end %>
+
 
   <div class="actions">
     <%= f.submit %>

@@ -10,6 +10,9 @@
   <tbody>
     <% @scores.each do |score| %>
       <tr>
+        <td><%= score.trainee.user.email %> | </td>
+        <td><%= Project.find(score.assignment.project_id).name %> | </td>
+        <td><%= score.assignment.date %> | </td>
         <td><%= link_to 'Show', score %></td>
         <td><%= link_to 'Edit', edit_score_path(score) %></td>
         <td><%= link_to 'Destroy', score, method: :delete, data: { confirm: 'Are you sure?' } %></td>

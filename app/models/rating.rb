@@ -1,7 +1,6 @@
 class Rating < ActiveRecord::Base
 
   belongs_to :observer
-
-  validates :value, :presence => true
+  belongs_to :score
 
 end

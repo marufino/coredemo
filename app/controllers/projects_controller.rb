@@ -43,6 +43,21 @@ class ProjectsController < ApplicationController
       @survey = Survey.find(params[:project][:assignments_attributes].values[i][:survey_id])
       assignment.surveys = []
       assignment.surveys << @survey
+
+      # for every trainee create a score object
+      @trainees.each_with_index { |trainee, i |
+
+        @score = Score.new()
+        @score.trainee = trainee
+        @score.assignment = assignment
+
+        # build ratings for every question
+        @survey.questions.each do
+          @score.ratings.build
+        end
+
+        @score.save
+      }
     }
 
     @project.save
@@ -58,8 +73,10 @@ class ProjectsController < ApplicationController
     @obs = Observer.find(@obs_ids)
     @project.observers = @obs
 
-    # add trainees to assignments
+    # for every assignment
     @project.assignments.each_with_index { | assignment , i |
+
+      # add trainees to assignments
       @trainee_ids = params[:project][:assignments_attributes].values[i][:trainee_ids]
       @trainee_ids.reject!(&:empty?)
       @trainees = Trainee.find(@trainee_ids)
@@ -69,6 +86,21 @@ class ProjectsController < ApplicationController
       @survey = Survey.find(params[:project][:assignments_attributes].values[i][:survey_id])
       assignment.surveys = []
       assignment.surveys << @survey
+
+      # for every trainee create a score object
+      @trainees.each_with_index { |trainee, i |
+
+        @score = Score.new()
+        @score.trainee = trainee
+        @score.assignment = assignment
+
+        # build ratings for every question
+        @survey.questions.each do
+          @score.ratings.build
+        end
+
+        @score.save
+      }
     }
 
     respond_with(@project)

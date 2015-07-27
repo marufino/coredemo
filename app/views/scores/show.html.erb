@@ -1,4 +1,23 @@
 <p id="notice"><%= notice %></p>
 
+<p>
+  Trainee: <%= @score.trainee.user.email %>
+<p></p>
+
+<% @blocks_ratings.each do |block, ratings| %>
+    <%= block.category %>
+    <p></p>
+    <% block.questions.each do |q| %>
+        <td><%= q.category %></td>
+        <td><%= ratings.value %></td>
+        <td><%= q.weight %></td>
+        <p></p>
+    <% end %>
+<% end %>
+<p></p>
+
+
+
+
 <%= link_to 'Edit', edit_score_path(@score) %> |
 <%= link_to 'Back', scores_path %>

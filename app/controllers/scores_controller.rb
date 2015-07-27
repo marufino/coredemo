@@ -9,15 +9,22 @@ class ScoresController < ApplicationController
   end
 
   def show
+    blocks = @score.assignment.surveys.first.survey_blocks
+    ratings = @score.ratings
+    @blocks_ratings = blocks.zip(ratings)
     respond_with(@score)
   end
 
   def new
     @score = Score.new
+    @score.ratings.build
     respond_with(@score)
   end
 
   def edit
+    blocks = @score.assignment.surveys.first.survey_blocks
+    ratings = @score.ratings
+    @blocks_ratings = blocks.zip(ratings)
   end
 
   def create
@@ -42,6 +49,6 @@ class ScoresController < ApplicationController
     end
 
     def score_params
-      params[:score]
+      params[:score].permit(ratings_attributes: [:id,:value])
     end
 end
