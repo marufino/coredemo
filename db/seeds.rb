@@ -33,20 +33,21 @@ block3.questions.create!(category: 'Planning', weight: 15, description: 'How wel
 
 
 # OBSERVERS
-User.create(email: 'observer1@ncsu.edu', password: 'password', password_confirmation: 'password', meta_id: '1', meta_type: 'Observer')
+User.create(first_name: 'Ed', last_name: 'Ross',title: 'Manager', email: 'observer1@ncsu.edu', password: 'password', password_confirmation: 'password', meta_id: '1', meta_type: 'Observer')
 obs1 = Observer.create(id: '1')
-User.create(email: 'observer2@ncsu.edu', password: 'password', password_confirmation: 'password', meta_id: '2', meta_type: 'Observer')
+User.create(first_name: 'Macklin', last_name: 'Frazier',title: 'Designer', email: 'observer2@ncsu.edu', password: 'password', password_confirmation: 'password', meta_id: '2', meta_type: 'Observer')
 obs2 = Observer.create(id: '2')
-User.create(email: 'observer3@ncsu.edu', password: 'password', password_confirmation: 'password', meta_id: '3', meta_type: 'Observer')
+User.create(first_name: 'Tia', last_name: 'Simpson',title: 'Designer', email: 'observer3@ncsu.edu', password: 'password', password_confirmation: 'password', meta_id: '3', meta_type: 'Observer')
 obs3 = Observer.create(id: '3')
-
+User.create(first_name: 'Miguel', last_name: 'Rufino',title: 'Developer', email: 'observer4@ncsu.edu', password: 'password', password_confirmation: 'password', meta_id: '4', meta_type: 'Observer')
+obs4 = Observer.create(id: '4')
 
 # TRAINEES
-User.create(email: 'user1@ncsu.edu', password: 'password', password_confirmation: 'password', meta_id: '1', meta_type: 'Trainee')
+User.create(first_name: 'Cristiano', last_name: 'Ronaldo',title: 'Senior Researcher', email: 'user1@ncsu.edu', password: 'password', password_confirmation: 'password', meta_id: '1', meta_type: 'Trainee')
 t1 = Trainee.create(id: '1')
-User.create(email: 'user2@ncsu.edu', password: 'password', password_confirmation: 'password', meta_id: '2', meta_type: 'Trainee')
+User.create(first_name: 'Leonel', last_name: 'Messi',title: 'Production Manager', email: 'user2@ncsu.edu', password: 'password', password_confirmation: 'password', meta_id: '2', meta_type: 'Trainee')
 t2 = Trainee.create(id: '2')
-User.create(email: 'user3@ncsu.edu', password: 'password', password_confirmation: 'password', meta_id: '3', meta_type: 'Trainee')
+User.create(first_name: 'Zlatan', last_name: 'Ibrahimovic',title: 'Junior Consultant', email: 'user3@ncsu.edu', password: 'password', password_confirmation: 'password', meta_id: '3', meta_type: 'Trainee')
 t3 = Trainee.create(id: '3')
 
 

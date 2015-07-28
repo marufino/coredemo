@@ -1,0 +1,18 @@
+{
+  "name": "Core Training Web App",
+  "version": "0.0.1",
+  "homepage": "https://github.com/marufino/bootstrap-todo-app",
+  "authors": [
+    "marufino <marufino@ncsu.edu>"
+  ],
+  "description": "Web app for tracking training progress",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor/assets/components",
+    "test",
+    "tests"
+  ]
+}
