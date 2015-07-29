@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  Trainee: <%= @score.trainee.user.email %>
+  Trainee: <%= @score.trainee.user.first_name %> <%= @score.trainee.user.last_name %>
 <p></p>
 
 <% @blocks_ratings.each do |block, ratings| %>

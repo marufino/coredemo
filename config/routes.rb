@@ -10,13 +10,13 @@ Rails.application.routes.draw do
 
   devise_for :users,  :controllers => { :registrations => "users/registrations" }
 
+  match 'users/:id' => 'users#show', via: :get, :as => :user
+
   resources :surveys
 
   resources :survey_blocks
 
   resources :questions
-
-  resources :todos
 
   root 'surveys#index'
 

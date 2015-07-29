@@ -10,7 +10,7 @@
   <tbody>
     <% @scores.each do |score| %>
       <tr>
-        <td><%= score.trainee.user.email %> | </td>
+        <td><%= score.trainee.user.first_name %> <%= score.trainee.user.last_name %> | </td>
         <td><%= Project.find(score.assignment.project_id).name %> | </td>
         <td><%= score.assignment.date %> | </td>
         <td><%= link_to 'Show', score %></td>

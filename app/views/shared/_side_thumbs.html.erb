@@ -1,0 +1,11 @@
+<div class="user-side">
+  <%= link_to user.user do %>
+      <li>
+        <div style="display: inline">
+          <%= image_tag("/assets/profile_thumb.png", size: "40x40", :alt => "rss feed", :style => "float: left" ) %>
+          <%= user.user.first_name %> <%= user.user.last_name %><br>
+          <small><%= user.user.title %></small>
+        </div>
+      </li>
+  <% end %>
+</div>
