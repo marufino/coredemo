@@ -46,18 +46,15 @@ class ScoresController < ApplicationController
 
     # pull questions for this score
     questions = @score.assignment.surveys[0].questions
-    num_questions = questions.size
 
     # init params hash
     update_params = {'ratings_attributes'=>{}}
 
     # for each questions extract the rating and add to params hash
-    (1..num_questions).each do |i|
-      rating = params[i.to_s]
-      update_params['ratings_attributes'][i.to_s] = {'value' => rating.to_s, 'id' => Rating.where(question_id: questions[i-1].id, score_id: @score.id).first.id.to_s}
+    questions.each do |q|
+      rating = params[q.id.to_s]
+      update_params['ratings_attributes'][q.id.to_s] = {'value' => rating.to_s, 'id' => Rating.where(question_id: q.id, score_id: @score.id).first.id.to_s}
     end
-
-
 
     # update score
     @score.update(update_params)
