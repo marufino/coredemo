@@ -11,23 +11,36 @@
     </div>
   <% end %>
 
-    <p>Scores</p>
+  <%= render :partial => "shared/profile_block", :locals => {:user => @score.trainee.user} %>
 
-    <% @blocks_ratings.each do |block, ratings| %>
-        <%= block.category %>
-        <% block.questions.each do |b| %>
-            <%= b.category %>
-            <% end %>
-        <% end %>
+  <% @blocks.each do |block| %>
+  <h4><%= block.category %> Evaluation ( <%= block.weight %> points)</h4>
 
-    <%= f.fields_for :ratings do |ratings_form| %>
-          <td>
-            <%= ratings_form.number_field :value %>
-          </td>
+  <table class="table shadow">
+    <thead>
+    <tr style="background-color: lightgrey">
+      <th>Category</th>
+      <th>Rating</th>
+      <th>Weight</th>
+    </tr>
+    </thead>
+    <% block.questions.each_with_index do |q| %>
+      <tr>
+
+        <td><%= q.category %></td>
+
+        <td><% (1..10).each do |i| %>
+            <%= radio_button_tag q.id, i, Rating.where(question_id: q.id, score_id: @score.id).first.value == i %>
+          <% end %></td>
+
+        <td><%= q.weight %></td>
+
+      </tr>
     <% end %>
-
+  </table>
+  <% end %>
 
   <div class="actions">
-    <%= f.submit %>
+    <%= submit_tag 'Submit' %>
   </div>
 <% end %>

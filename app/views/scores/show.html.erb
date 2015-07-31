@@ -1,23 +1,28 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  Trainee: <%= @score.trainee.user.first_name %> <%= @score.trainee.user.last_name %>
-<p></p>
+<%= render :partial => "shared/profile_block", :locals => {:user => @score.trainee.user} %>
 
-<% @blocks_ratings.each do |block, ratings| %>
-    <%= block.category %>
-    <p></p>
-    <% block.questions.each do |q| %>
-        <td><%= q.category %></td>
-        <td><%= ratings.value %></td>
-        <td><%= q.weight %></td>
-        <p></p>
-    <% end %>
+<% @blocks.each_with_index do |block| %>
+<h4><%= block.category %> Evaluation ( <%= block.weight %> points)</h4>
+
+<table class="table shadow">
+  <thead>
+  <tr style="background-color: lightgrey">
+    <th>Category</th>
+    <th>Rating</th>
+    <th>Weight</th>
+  </tr>
+  </thead>
+  <% block.questions.each_with_index do |q, index| %>
+    <tr>
+      <td><%= q.category %></td>
+      <td><% (1..10).each do |i| %>
+        <%= radio_button_tag index.to_s + block.category, i, Rating.where(question_id: q.id, score_id: @score.id).first.value == i, options = {:disabled => true} %>
+      <% end %></td>
+      <td><%= q.weight %></td>
+    </tr>
+  <% end %>
+</table>
 <% end %>
-<p></p>
 
-
-
-
-<%= link_to 'Edit', edit_score_path(@score) %> |
 <%= link_to 'Back', scores_path %>

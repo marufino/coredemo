@@ -95,10 +95,12 @@ class ProjectsController < ApplicationController
         @score.assignment = assignment
 
         # build ratings for every question
-        @survey.questions.each do
-          @score.ratings.build
+        @survey.questions.each do |q|
+          rating = @score.ratings.build
+          q.rating << rating
         end
 
+        @survey.save
         @score.save
       }
     }

@@ -71,12 +71,14 @@ ActiveRecord::Schema.define(version: 20150728043359) do
   create_table "ratings", force: true do |t|
     t.integer  "observer_id"
     t.integer  "score_id"
+    t.integer  "question_id"
     t.integer  "value"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "ratings", ["observer_id"], name: "index_ratings_on_observer_id"
+  add_index "ratings", ["question_id"], name: "index_ratings_on_question_id"
   add_index "ratings", ["score_id"], name: "index_ratings_on_score_id"
 
   create_table "roles", force: true do |t|
