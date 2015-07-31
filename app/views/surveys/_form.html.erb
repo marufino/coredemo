@@ -11,40 +11,46 @@
     </div>
   <% end %>
 
-    <%= f.label :name%>
-    <%= f.text_field :name %>
+  <%= f.label :name%>
+  <%= f.text_field :name %><br>
 
-    <p>SURVEY BLOCK</p>
+  <%= f.fields_for :survey_blocks do |block_form| %>
 
-    <%= f.fields_for :survey_blocks do |block_form| %>
-        <p>
-          <%= block_form.label :category%>
-          <%= block_form.text_field :category %>
+    <%= block_form.label :category%>
+    <%= block_form.text_field :category %>
 
-          <%= block_form.label :weight%>
-          <%= block_form.number_field :weight %>
+    <%= block_form.label :weight%>
+    <%= block_form.number_field :weight %>
 
-        </p>
 
-        <p>QUESTIONS:</p>
-        <%= block_form.nested_fields_for :questions do |q_form| %>
-            <p>
-              <%= q_form.label :category%>
-              <%= q_form.text_field :category %>
+<div class="scorecard">
+    <table class="table shadow">
+      <thead>
+      <tr style="background-color: lightgrey">
+        <th>Category</th>
+        <th>Rating</th>
+        <th>Weight</th>
+      </tr>
+      </thead>
+          <tr>
+            <%= block_form.nested_fields_for :questions, wrapper_tag: :tr do |q_form| %>
+            <td><%= q_form.text_field :category %> <span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="color:cornflowerblue"></span></td>
+            <td><% (1..10).each do |i| %>
+                <%= radio_button_tag "test", i, 0, options = {:disabled => true} %>
+              <% end %></td>
+            <td><%= q_form.number_field :weight %><%= q_form.remove_nested_fields_link do %>
+                <span class="glyphicon glyphicon-minus-sign" aria-hidden="true" style="color:red"></span>
+                <% end %>
+            </td>
+          </tr>
+        <% end %>
+        <tr>
+          <td><%= block_form.add_nested_fields_link :questions, 'Add new +' %></td>
+        </tr>
 
-              <%= q_form.label :weight%>
-              <%= q_form.number_field :weight %>
-
-              <%= q_form.label :description%>
-              <%= q_form.text_field :description %>
-
-              <%= q_form.remove_nested_fields_link %>
-            </p>
-        <% end -%>
-
-        <%= block_form.add_nested_fields_link :questions %>
-
-    <% end %>
+    </table>
+  <% end %>
+</div>
 
 
   <div class="actions">

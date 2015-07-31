@@ -5,6 +5,22 @@ class ScoresController < ApplicationController
 
   def index
     @scores = Score.all
+
+    @users = []
+    @last_assignments = []
+    @second_to_last_assignments = []
+    @observers = Array.new() { Array.new()}
+
+    @scores.each do |s|
+      @users.push(s.trainee.user)
+    end
+
+    @users.each_with_index do |u,i|
+      @last_assignments.push(u.meta.assignments.last)
+      @second_to_last_assignments.push(u.meta.assignments.all[-2])
+      #@observers[i].push(Project.find(u.meta.assignments.last.project_id).observers)
+    end
+
     respond_with(@scores)
   end
 
