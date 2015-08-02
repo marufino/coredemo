@@ -1,22 +1,26 @@
 <div class = "navbar-default sidebar" role="navigation">
     <div class = "sidebar-nav navbar-collapse">
       <ul class="nav in" id="side-menu">
-        <h4>Michigan & Manchester</h4>
-        <p>CORE Training Web App</p>
+        <div style="padding: 0px">
+          <%= image_tag("logo.png", :alt => "logo", style: "width:100%") %>
+        </div>
       </ul>
-        <ul class="nav in" id="side-menu">
+        <ul class="nav in menu-padding" id="side-menu">
+          <li class = "orange-text" style="padding-left: 0px;"><%= link_to '#' do %>
+              <span class="glyphicon glyphicon-list-alt icon-larger"></span>Navigation</li>
+              <% end %>
           <li><%= link_to "Overview", new_user_registration_path %></li>
           <li><%= link_to "View Results", new_user_registration_path %></li>
           <li><%= link_to "Conduct a Survey", scores_path %></li>
           <li><%= link_to "Administration", new_user_registration_path %></li>
         </ul>
         <ul class="nav nav-second-level">
-          <li><h5>Trainees <%= Trainee.all.count %></h5></li>
+          <li><h5><span class="glyphicon glyphicon-user icon-larger"></span>Trainees <%= Trainee.all.count %></h5></li>
             <% Trainee.all.each do |trainee|%>
               <%= render :partial => "shared/side_thumbs", :locals => {:user => trainee} %>
             <% end %>
 
-          <li><h5>Observers <%= Observer.all.count %></h5></li>
+          <li><h5><span class="glyphicon glyphicon-user icon-larger"></span>Observers <%= Observer.all.count %></h5></li>
             <% Observer.all.each do |observer|%>
               <%= render :partial => "shared/side_thumbs", :locals => {:user => observer} %>
             <% end %>
