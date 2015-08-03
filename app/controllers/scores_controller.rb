@@ -66,11 +66,40 @@ class ScoresController < ApplicationController
     # init params hash
     update_params = {'ratings_attributes'=>{}}
 
+    ratings = []
     # for each questions extract the rating and add to params hash
     questions.each do |q|
       rating = params[q.id.to_s]
       update_params['ratings_attributes'][q.id.to_s] = {'value' => rating.to_s, 'id' => Rating.where(question_id: q.id, score_id: @score.id).first.id.to_s}
+      ratings << rating
     end
+
+    q_knowledge = 0
+    q_skills = 0
+    q_abilities = 0
+    knowledge = 0
+    abilities = 0
+    skills= 0
+    #generate CORE Scores
+    questions.each_with_index do |q,i|
+      if q.survey_block.category == 'Knowledge'
+        knowledge = knowledge + ratings[i].to_i
+        q_knowledge = q_knowledge + 1
+      end
+      if q.survey_block.category == 'Abilities'
+        abilities = abilities + ratings[i].to_i
+        q_abilities = q_abilities + 1
+      end
+      if q.survey_block.category == 'Skills'
+        skills = skills + ratings[i].to_i
+        q_skills = q_skills + 1
+      end
+    end
+
+    @score.knowledge  = knowledge / q_knowledge*10
+    @score.abilities  = abilities / q_abilities*10
+    @score.skills     = skills / q_skills*10
+    @score.total      = ratings.map(&:to_f).reduce(:+) / questions.size*10
 
     # update score
     respond_to do |format|

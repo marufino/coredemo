@@ -14,7 +14,7 @@
       <small>Results:</small><small class="text-success">PASSED</small><br>
     </div>
     <div class="col-xs-5 user-profile" style="display: inline">
-      <h1>749    554    648</h1>
+      <h1><%= Score.find(@last_assignments[index]).knowledge %>    <%= Score.find(@last_assignments[index]).skills %>    <%= Score.find(@last_assignments[index]).abilities %></h1>
     </div>
     <div class="col-xs-1 user-profile">
       <%= link_to edit_score_path(score) do %>

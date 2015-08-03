@@ -17,6 +17,6 @@
       <button class="fg-button">View Results</button>
     </div>
     <div class="col-xs-6 user-profile" style="display: inline">
-      <h1>749    554    648</h1>
+      <h1><%= Score.find(@last_assignment).knowledge %>    <%= Score.find(@last_assignment).skills %>    <%= Score.find(@last_assignment).abilities %></h1>
     </div>
 </div>
