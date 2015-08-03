@@ -1,9 +1,9 @@
 <div class="settings-header">
   <ul>
-    <li><%= link_to (root_path) do %>
-        <span class="glyphicon glyphicon-collapse-down" aria-hidden="true"></span>
+    <li style="border: 0"><%= link_to (root_path) do %>
+        <span class="glyphicon glyphicon-cog icon-largest" aria-hidden="true" style="color: #9fb0b7"></span>
       <% end %>
     </li>
-    <li><%= Date.today.strftime("%B %d, %Y") %></li>
+    <li><div style="padding: 5px; background-color: #e0e5e8"><%= Date.today.strftime("%B %d, %Y") %></div></li>
   </ul>
 </div>
