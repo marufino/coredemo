@@ -27,7 +27,7 @@
     <% block.questions.each_with_index do |q| %>
       <tr>
 
-        <td><%= q.category %></td>
+        <td><%= q.category %><span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="color:cornflowerblue; float:right;"></span></td>
 
         <td><% (1..10).each do |i| %>
             <%= radio_button_tag q.id, i, Rating.where(question_id: q.id, score_id: @score.id).first.value == i %>
