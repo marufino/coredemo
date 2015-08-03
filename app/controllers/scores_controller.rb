@@ -73,8 +73,15 @@ class ScoresController < ApplicationController
     end
 
     # update score
-    @score.update(update_params)
-    respond_with(@score)
+    respond_to do |format|
+      if @score.update(update_params)
+        format.html { redirect_to scores_path, notice: 'Scorecard successfully completed' }
+        format.json { render :show, status: :ok, location: scores_path }
+      else
+        format.html { render :edit }
+        format.json { render json: @score.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def destroy

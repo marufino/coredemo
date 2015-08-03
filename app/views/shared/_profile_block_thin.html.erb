@@ -1,0 +1,26 @@
+<div class="col-xs-12 shadow" style="margin-bottom: 25px">
+    <div class="col-xs-2 user-profile">
+      <%= image_tag("profile_thumb.png", size: "130x105", :alt => "profile pic" , :style => "padding-left: 20px") %>
+    </div>
+    <div class="col-xs-4 user-profile" style="padding-left: 40px">
+      <b><%= user.first_name %> <%= user.last_name %></b><br>
+      <small><%= user.title %></small><br>
+      <small><%= @last_assignments[index].date %></small><br>
+      <small>Last evaluation: <%= @second_to_last_assignments[index].date %></small><br>
+      <small>Evaluation by:</small>
+        <% @observers.each do |o| %>
+          <small><%= o.user.first_name %> <%= o.user.last_name %></small><br>
+        <% end %>
+      <small>Results:</small><small class="text-success">PASSED</small><br>
+    </div>
+    <div class="col-xs-5 user-profile" style="display: inline">
+      <h1>749    554    648</h1>
+    </div>
+    <div class="col-xs-1 user-profile">
+      <%= link_to edit_score_path(score) do %>
+        <div class="button">
+          Evaluate
+        </div>
+      <% end %>
+    </div>
+</div>

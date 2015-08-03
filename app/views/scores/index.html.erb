@@ -1,26 +1,10 @@
-<h1>Listing scores</h1>
+<h4>Scorecards Home</h4>
 
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<% @scores.each_with_index do |score, index| %>
+  <row>
+      <%= render :partial => "shared/profile_block_thin", :locals => {:user => score.trainee.user, :score => score, :index => index} %>
+  </row>
+<% end %>
 
-  <tbody>
-    <% @scores.each do |score| %>
-      <tr>
-        <td><%= score.trainee.user.first_name %> <%= score.trainee.user.last_name %> | </td>
-        <td><%= Project.find(score.assignment.project_id).name %> | </td>
-        <td><%= score.assignment.date %> | </td>
-        <td><%= link_to 'Show', score %></td>
-        <td><%= link_to 'Edit', edit_score_path(score) %></td>
-        <td><%= link_to 'Destroy', score, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
 
 
