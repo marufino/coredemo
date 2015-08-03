@@ -21,15 +21,12 @@
             <%= render 'shared/sidebar' %>
         </div>
         <div class="col-xs-9">
-          <div class="row">
-            <div class="col-xs-12">
-              <% flash.each do |name, msg| -%>
-                <%= content_tag :div, msg, class: "alert alert-dismissible alert-#{name}" %>
-              <% end -%>
-            </div>
-          </div>
-          <%= render 'shared/main_header' %>
-          <%= yield %>
+          <row>
+            <%= render 'shared/main_header' %>
+          </row>
+          <row>
+            <%= yield %>
+          </row>
         </div>
       </div>
 

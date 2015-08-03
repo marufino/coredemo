@@ -11,19 +11,21 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :category %><br>
-    <%= f.text_field :category %>
+  <h4>Editing <%= @question.category %></h4>
+
+  <div class = "col-xs-12 shadow admin-panels">
+    <div class = "col-xs-6">
+      <li>Name of Competency: <%= f.text_field :category , :style => "float: right" %></li>
+      <li>Category of Competency: <%= f.text_field :category , :style => "float: right" %></li>
+      <li>Weight: <%= f.number_field :weight , :style => "float: right" %></li>
+    </div>
+    <div class = "col-xs-6">
+      <li>Description: <%= f.text_area :description , cols: 40, rows: 5 , :style => "float: right"%></li>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :weight %><br>
-    <%= f.number_field :weight %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_area :description %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+
+  <br>
+  <div class="actions" style="float: right; padding:20px">
+    <%= f.submit "Save Changes" %>
   </div>
 <% end %>

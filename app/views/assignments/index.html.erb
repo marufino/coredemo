@@ -1,23 +1,87 @@
-<h1>Listing assignments</h1>
+<h4>Administration Home</h4>
 
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+  <row>
+    <div class="col-xs-12">
+      <div class ="admin-panels">
+        <div class = "shadow">
+          <div class="col-xs-4">
+            <ul>
+              <li>Your ID: admin@bus.com</li>
+              <li>Your ID: admin@bus.com</li>
+              <li>Your ID: admin@bus.com</li>
+              <li>Your ID: admin@bus.com</li>
+            </ul>
+          </div>
+          <div class="col-xs-4">
+            <ul>
+              <li>Your ID: admin@bus.com</li>
+              <li>Your ID: admin@bus.com</li>
+              <li>Your ID: admin@bus.com</li>
+              <li>Your ID: admin@bus.com</li>
+            </ul>
+          </div>
+          <div class="col-xs-4">
+            <ul>
+              <li>Your ID: admin@bus.com</li>
+              <li>Your ID: admin@bus.com</li>
+              <li>Your ID: admin@bus.com</li>
+              <li>Your ID: admin@bus.com</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </row>
 
-  <tbody>
-    <% @assignments.each do |assignment| %>
-      <tr>
-        <td><%= link_to 'Show', assignment %></td>
-        <td><%= link_to 'Edit', edit_assignment_path(assignment) %></td>
-        <td><%= link_to 'Destroy', assignment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+  <row>
+
+    <%= link_to projects_path do %>
+    <div class="col-xs-3">
+      <div class ="admin-panels">
+        <div class = "shadow">
+          <li>Users</li>
+          <li style="padding: 30px; padding-left: 60px"><%= image_tag("users.png", size: "70x70", :alt => "surveys") %></li>
+          <li> <%= User.all.size %> total</li>
+        </div>
+      </div>
+    </div>
     <% end %>
-  </tbody>
-</table>
 
-<br>
+    <%= link_to projects_path do %>
+    <div class="col-xs-3">
+      <div class ="admin-panels">
+        <div class = "shadow">
+          <li>Projects</li>
+          <li style="padding: 30px; padding-left: 60px"><%= image_tag("projects.png", size: "70x70", :alt => "surveys") %></li>
+          <li> <%= Project.all.size %> total</li>
+        </div>
+      </div>
+    </div>
+    <% end %>
 
-<%= link_to 'New Assignment', new_assignment_path %>
+    <%= link_to questions_path do %>
+    <div class="col-xs-3">
+      <div class ="admin-panels">
+        <div class = "shadow">
+          <li>Competencies</li>
+          <li style="padding: 30px; padding-left: 60px"><%= image_tag("competencies.png", size: "80x70", :alt => "surveys") %></li>
+          <li> <%= Question.all.size %> total</li>
+        </div>
+      </div>
+    </div>
+    <% end %>
+
+    <%= link_to surveys_path do %>
+    <div class="col-xs-3">
+      <div class ="admin-panels">
+        <div class = "shadow">
+          <li>Scorecards</li>
+          <li style="padding: 30px; padding-left: 60px"><%= image_tag("surveys.png", size: "60x70", :alt => "surveys") %></li>
+          <li> <%= Survey.all.size %> total</li>
+        </div>
+      </div>
+    </div>
+    <% end %>
+  </row>
+
+
