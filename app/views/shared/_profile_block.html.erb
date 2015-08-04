@@ -17,6 +17,5 @@
       <button class="fg-button">View Results</button>
     </div>
     <div class="col-xs-6 user-profile" style="display: inline">
-      <h1><%= Score.find(@last_assignment).knowledge %>    <%= Score.find(@last_assignment).skills %>    <%= Score.find(@last_assignment).abilities %></h1>
-    </div>
+      <h1><%= Score.where(:assignment_id =>  @last_assignment.id).where(:trainee_id => user.meta.id).first.knowledge %>    <%= Score.where(:assignment_id =>  @last_assignment.id).where(:trainee_id => user.meta.id).first.skills %>    <%= Score.where(:assignment_id =>  @last_assignment.id).where(:trainee_id => user.meta.id).first.abilities %></h1>    </div>
 </div>

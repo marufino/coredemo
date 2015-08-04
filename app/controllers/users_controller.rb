@@ -10,8 +10,10 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    @last_assignment = @user.meta.assignments.last
-    @second_to_last_assignment = @user.meta.assignments.all[-2]
+
+    trainee = @user.meta
+    @last_assignment = trainee.get_nth_assignment(-1)
+    @second_to_last_assignment = trainee.get_nth_assignment(-2)
     @observers = Project.find(@last_assignment.project_id).observers
   end
 

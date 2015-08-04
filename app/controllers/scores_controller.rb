@@ -16,8 +16,8 @@ class ScoresController < ApplicationController
     end
 
     @users.each_with_index do |u,i|
-      @last_assignments.push(u.meta.assignments.last)
-      @second_to_last_assignments.push(u.meta.assignments.all[-2])
+      @last_assignments.push(u.meta.get_nth_assignment(-1))
+      @second_to_last_assignments.push(u.meta.get_nth_assignment(-2))
       #@observers[i].push(Project.find(u.meta.assignments.last.project_id).observers)
     end
 
@@ -29,8 +29,9 @@ class ScoresController < ApplicationController
     @ratings = @score.ratings
 
     @user = @score.trainee.user
-    @last_assignment = @user.meta.assignments.last
-    @second_to_last_assignment = @user.meta.assignments.all[-2]
+    trainee = @user.meta
+    @last_assignment = trainee.get_nth_assignment(-1)
+    @second_to_last_assignment = trainee.get_nth_assignment(-2)
     @observers = Project.find(@last_assignment.project_id).observers
 
     respond_with(@score)
@@ -47,8 +48,9 @@ class ScoresController < ApplicationController
     @ratings = @score.ratings
 
     @user = @score.trainee.user
-    @last_assignment = @user.meta.assignments.last
-    @second_to_last_assignment = @user.meta.assignments.all[-2]
+    trainee = @user.meta
+    @last_assignment = trainee.get_nth_assignment(-1)
+    @second_to_last_assignment = trainee.get_nth_assignment(-2)
     @observers = Project.find(@last_assignment.project_id).observers
   end
 

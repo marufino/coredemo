@@ -7,4 +7,8 @@ class Trainee < ActiveRecord::Base
 
   accepts_nested_attributes_for :user
 
+  def get_nth_assignment(n)
+    return self.assignments.order('date')[n]
+  end
+
 end

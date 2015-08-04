@@ -1,4 +1,4 @@
-<div class="col-xs-12 shadow" style="margin-bottom: 25px">
+<div class="col-xs-12 shadow" style="margin-bottom: 25px; ">
     <div class="col-xs-2 user-profile">
       <%= image_tag("profile_thumb.png", size: "130x105", :alt => "profile pic" , :style => "padding-left: 20px") %>
     </div>
@@ -14,7 +14,7 @@
       <small>Results:</small><small class="text-success">PASSED</small><br>
     </div>
     <div class="col-xs-5 user-profile" style="display: inline">
-      <h1><%= Score.find(@last_assignments[index]).knowledge %>    <%= Score.find(@last_assignments[index]).skills %>    <%= Score.find(@last_assignments[index]).abilities %></h1>
+      <h1><%= Score.where(:assignment_id =>  @last_assignments[index].id).where(:trainee_id => @users[index].meta.id).first.knowledge %>    <%= Score.where(:assignment_id =>  @last_assignments[index].id).where(:trainee_id => @users[index].meta.id).first.skills %>    <%= Score.where(:assignment_id =>  @last_assignments[index].id).where(:trainee_id => @users[index].meta.id).first.abilities %></h1>
     </div>
     <div class="col-xs-1 user-profile">
       <%= link_to edit_score_path(score) do %>

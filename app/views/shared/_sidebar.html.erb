@@ -9,21 +9,30 @@
           <li class = "orange-text" style="padding-left: 0px;"><%= link_to '#' do %>
               <span class="glyphicon glyphicon-list-alt icon-larger"></span>Navigation</li>
               <% end %>
-          <li><%= link_to "Overview", new_user_registration_path %></li>
+          <li><%= link_to "Overview", user_path(current_user) %></li>
           <li><%= link_to "Conduct a Survey", scores_path %></li>
           <li><%= link_to "Data Analysis", new_user_registration_path %></li>
           <li><%= link_to "Administration", assignments_path %></li>
         </ul>
         <ul class="nav nav-second-level">
-          <li><h5><span class="glyphicon glyphicon-user icon-larger"></span>Trainees <%= Trainee.all.count %></h5></li>
-            <% Trainee.all.each do |trainee|%>
-              <%= render :partial => "shared/side_thumbs", :locals => {:user => trainee} %>
-            <% end %>
-
-          <li><h5><span class="glyphicon glyphicon-user icon-larger"></span>Observers <%= Observer.all.count %></h5></li>
+          <div style="margin-bottom: 10px">
+            <li style="padding-top: 10px"><h5><span class="glyphicon glyphicon-user icon-larger"></span>Trainees <%= Trainee.all.count %></h5></li>
+              <% Trainee.all.each do |trainee|%>
+                <%= render :partial => "shared/side_thumbs", :locals => {:user => trainee} %>
+              <% end %>
+          </div>
+          <div style="margin-bottom: 10px">
+            <li style="padding-top: 10px"><h5><span class="glyphicon glyphicon-user icon-larger"></span>Observers <%= Observer.all.count %></h5></li>
+              <% Observer.all.each do |observer|%>
+                <%= render :partial => "shared/side_thumbs", :locals => {:user => observer} %>
+              <% end %>
+          </div>
+          <div style="margin-bottom: 30px">
+            <li style="padding-top: 10px"><h5><span class="glyphicon glyphicon-user icon-larger"></span>Administrators <%= Observer.all.count %></h5></li>
             <% Observer.all.each do |observer|%>
               <%= render :partial => "shared/side_thumbs", :locals => {:user => observer} %>
             <% end %>
+          </div>
         </ul>
     </div>
 </div>
