@@ -16,14 +16,17 @@ class UsersController < ApplicationController
     @last_assignment = trainee.get_nth_assignment(-1)
     @second_to_last_assignment = trainee.get_nth_assignment(-2)
     @observers = Project.find(@last_assignment.project_id).observers
-  end
 
-  def data
-    respond_to do |format|
-      format.json {
-        render :json => [1,2,3,4,5]
-      }
-    end
+    totals = []
+    dates = []
+    # scores for current user
+    scores = Score.where( :trainee_id => @user.meta.id)
+    # parse out totals
+    scores.each { |s| totals << s.total}
+    # parse out dates
+    scores.each { |s| dates << s.assignment.date}
+    @graph = dates.zip totals
+
   end
 
   private

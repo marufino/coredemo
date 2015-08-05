@@ -21,21 +21,27 @@
         <ul class="nav nav-second-level">
           <div style="margin-bottom: 10px">
             <li style="padding-top: 10px"><h5><span class="glyphicon glyphicon-user icon-larger"></span>Trainees <%= Trainee.all.count %></h5></li>
-              <% Trainee.all.each do |trainee|%>
-                <%= render :partial => "shared/side_thumbs", :locals => {:user => trainee.user} %>
-              <% end %>
+              <div class="scrollable">
+                <% Trainee.all.each do |trainee|%>
+                  <%= render :partial => "shared/side_thumbs", :locals => {:user => trainee.user} %>
+                <% end %>
+              </div>
           </div>
-          <div style="margin-bottom: 10px">
+          <div style="margin-bottom: 10px; padding-right: 10px; background-color: #081b29">
             <li style="padding-top: 10px"><h5><span class="glyphicon glyphicon-user icon-larger"></span>Observers <%= Observer.all.count %></h5></li>
-              <% Observer.all.each do |observer|%>
-                <%= render :partial => "shared/side_thumbs", :locals => {:user => observer.user} %>
-              <% end %>
+              <div class="scrollable">
+                <% Observer.all.each do |observer|%>
+                  <%= render :partial => "shared/side_thumbs", :locals => {:user => observer.user} %>
+                <% end %>
+              </div>
           </div>
           <div style="margin-bottom: 30px">
             <li style="padding-top: 10px"><h5><span class="glyphicon glyphicon-user icon-larger"></span>Administrators <%= Role.find_by_name('admin').users.count %></h5></li>
-            <% Role.find_by_name('admin').users.each do |user|%>
-              <%= render :partial => "shared/side_thumbs", :locals => {:user => user} %>
-            <% end %>
+              <div class="scrollable">
+                <% Role.find_by_name('admin').users.each do |user|%>
+                  <%= render :partial => "shared/side_thumbs", :locals => {:user => user} %>
+                <% end %>
+            </div>
           </div>
         </ul>
     </div>

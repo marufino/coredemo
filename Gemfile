@@ -34,7 +34,13 @@ gem 'cancan'
 
 gem 'byebug'
 
-gem 'd3js-rails', '~> 3.1.6'
+#gem 'd3js-rails', '~> 3.1.6'
+
+gem 'chartkick'
+
+gem 'hightop'
+
+gem 'seed_dump'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
