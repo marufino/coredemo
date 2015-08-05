@@ -1,21 +1,13 @@
 class Users::RegistrationsController < Devise::RegistrationsController
 
-  #before_filter :check_permissions, :only => [:new, :create, :cancel]
   skip_before_filter :require_no_authentication
 
-  #def check_permissions
-  #  authorize! :create, resource
-  #end
 
   # GET /users/sign_up
   def new
     # Override Devise default behaviour and create a profile as well
     @user = User.new
     @user.roles.build
-
-    #build_resource({})
-    #resource.roles.build
-    #respond_with self.resource
   end
 
   def create

@@ -38,10 +38,17 @@
 
     <%= f.fields_for :roles do |r| %>
       <div class="field">
-        <%= r.label 'Role' %><br />
+        <%= r.label 'Admin?' %><br />
         <%= r.text_field :name %>
       </div>
     <% end %>
+
+  <%= f.fields_for :meta_type do |r| %>
+    <div class="field">
+      <%= r.label 'Role' %><br />
+      <%= r.text_field :meta_type %>
+    </div>
+  <% end %>
 
     <div class="actions">
     <%= f.submit "Sign up" %>

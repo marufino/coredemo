@@ -31,16 +31,20 @@ block2.questions.create!(category: 'Market Insight', weight: 15, description: 'H
 block3 = survey1.survey_blocks.create(category: 'Abilities', weight: 30)
 block3.questions.create!(category: 'Planning', weight: 15, description: 'How well does the trainee plan for work')
 
+role1 = Role.create(name: 'admin')
 
 # OBSERVERS
-User.create(first_name: 'Ed', last_name: 'Ross',title: 'Manager', email: 'observer1@ncsu.edu', password: 'password', password_confirmation: 'password', meta_id: '1', meta_type: 'Observer')
+u1 = User.create(first_name: 'Ed', last_name: 'Ross',title: 'Manager', email: 'observer1@ncsu.edu', password: 'password', password_confirmation: 'password', meta_id: '1', meta_type: 'Observer')
 obs1 = Observer.create(id: '1')
 User.create(first_name: 'Macklin', last_name: 'Frazier',title: 'Designer', email: 'observer2@ncsu.edu', password: 'password', password_confirmation: 'password', meta_id: '2', meta_type: 'Observer')
 obs2 = Observer.create(id: '2')
 User.create(first_name: 'Tia', last_name: 'Simpson',title: 'Designer', email: 'observer3@ncsu.edu', password: 'password', password_confirmation: 'password', meta_id: '3', meta_type: 'Observer')
 obs3 = Observer.create(id: '3')
-User.create(first_name: 'Miguel', last_name: 'Rufino',title: 'Developer', email: 'observer4@ncsu.edu', password: 'password', password_confirmation: 'password', meta_id: '4', meta_type: 'Observer')
+u4 = User.create(first_name: 'Miguel', last_name: 'Rufino',title: 'Developer', email: 'observer4@ncsu.edu', password: 'password', password_confirmation: 'password', meta_id: '4', meta_type: 'Observer')
 obs4 = Observer.create(id: '4')
+
+u1.roles << role1
+u4.roles << role1
 
 # TRAINEES
 User.create(first_name: 'Cristiano', last_name: 'Ronaldo',title: 'Senior Researcher', email: 'user1@ncsu.edu', password: 'password', password_confirmation: 'password', meta_id: '1', meta_type: 'Trainee')

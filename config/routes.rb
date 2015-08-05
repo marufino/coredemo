@@ -23,6 +23,8 @@ Rails.application.routes.draw do
   get 'survey_blocks/:id/sign' => 'survey_blocks#show_sign', as: :show_sign_survey
   post 'survey_blocks/:id/sign' => 'survey_blocks#sign', as: :sign_survey
 
+  get 'users/data', :defaults => { :format => 'json' }
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

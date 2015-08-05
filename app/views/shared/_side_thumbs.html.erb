@@ -1,10 +1,10 @@
 <div class="user-side">
-  <%= link_to user.user do %>
+  <%= link_to user do %>
       <li>
         <div class = "thumb-text" style="display: inline">
           <%= image_tag("profile_thumb.png", size: "46x46", :alt => "rss feed", :style => "float: left" ) %>
-          <%= user.user.first_name %> <%= user.user.last_name %><br>
-          <small style= "color: #2c7083"><%= user.user.title %></small>
+          <%= user.first_name %> <%= user.last_name %><br>
+          <small style= "color: #2c7083"><%= user.title %></small>
         </div>
       </li>
   <% end %>
