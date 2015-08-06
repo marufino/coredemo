@@ -10,3 +10,6 @@ Rails.application.initialize!
 
 
 $categorynames = ['Knowledge', 'Skills', 'Ability']
+
+
+$graph_labels = ['Totals','Knowledge', 'Skills', 'Ability']

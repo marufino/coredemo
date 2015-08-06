@@ -14,4 +14,12 @@ class User < ActiveRecord::Base
     return !!self.roles.find_by_name(role)
   end
 
+  def trainee?
+    return (self.meta_type == 'Trainee')
+  end
+
+  def observer?
+    return (self.meta_type == 'Observer')
+  end
+
 end

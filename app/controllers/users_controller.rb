@@ -17,15 +17,27 @@ class UsersController < ApplicationController
     @second_to_last_assignment = trainee.get_nth_assignment(-2)
     @observers = Project.find(@last_assignment.project_id).observers
 
+    @graph = [[]]
+    knowledge = []
+    skills = []
+    abilities = []
     totals = []
     dates = []
     # scores for current user
     scores = Score.where( :trainee_id => @user.meta.id)
     # parse out totals
+    scores.each { |s| knowledge << s.knowledge}
+    scores.each { |s| skills << s.skills}
+    scores.each { |s| abilities << s.abilities}
     scores.each { |s| totals << s.total}
     # parse out dates
     scores.each { |s| dates << s.assignment.date}
-    @graph = dates.zip totals
+    @graph[0] = dates.zip totals
+    @graph[1] = dates.zip knowledge
+    @graph[2] = dates.zip skills
+    @graph[3] = dates.zip abilities
+
+
 
   end
 

@@ -4,7 +4,17 @@ class ScoresController < ApplicationController
   respond_to :html
 
   def index
-    @scores = Score.all
+
+    # pick out all scores for admin, only observer's own for observer
+    if current_user.role?('admin')
+      @scores = Score.all
+    elsif current_user.observer?
+      @scores = []
+      obs = current_user.meta
+      # extract scores from this observer's projects
+      obs.projects.each {|proj| proj.assignments.each {|ass| Score.where(:assignment_id => ass.id).each {|score| @scores << score} }}
+    end
+
 
     @users = []
     @last_assignments = []
@@ -20,7 +30,6 @@ class ScoresController < ApplicationController
       @second_to_last_assignments.push(u.meta.get_nth_assignment(-2))
       #@observers[i].push(Project.find(u.meta.assignments.last.project_id).observers)
     end
-
     respond_with(@scores)
   end
 
