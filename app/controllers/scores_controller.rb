@@ -8,7 +8,7 @@ class ScoresController < ApplicationController
     # pick out all scores for admin, only observer's own for observer
     if current_user.role?('admin')
       @scores = Score.all
-    elsif current_user.observer?
+    elsif current_user.observer? && !current_user.role?('admin')
       @scores = []
       obs = current_user.meta
       # extract scores from this observer's projects
