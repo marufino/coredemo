@@ -6,7 +6,7 @@
       <b><%= user.first_name %> <%= user.last_name %></b><br>
       <small><%= user.title %></small><br>
       <small><%= @last_assignments[index].date %></small><br>
-      <% if !@second_to_last_assignments[index].nil? %>
+      <% if @second_to_last_assignments[index] %>
         <small>Last evaluation: <%= @second_to_last_assignments[index].date %></small><br>
       <% end %>
       <small>Evaluation by:</small>

@@ -6,7 +6,7 @@
       <b><%= user.first_name %> <%= user.last_name %></b><br>
       <small><%= user.title %></small><br>
       <small><%= @last_assignment.date %></small><br>
-      <% if !@second_to_last_assignment.nil? %>
+      <% if @second_to_last_assignment %>
         <small>Last evaluation: <%= @second_to_last_assignment.date %></small><br>
       <% end %>
       <small>Evaluation by:</small>
@@ -19,7 +19,7 @@
       <button class="fg-button">View Results</button>
     </div>
     <div class="col-xs-6 user-profile" style="display: inline">
-      <% if !@percent_improvement.nil? %>
+      <% if @percent_improvement %>
         <h1><%= @percent_improvement['knowledge'] %>%    <%= @percent_improvement['skills'] %>%   <%= @percent_improvement['abilities'] %>%</h1>
       <% end %>
       <h1><%= Score.where(:assignment_id =>  @last_assignment.id).where(:trainee_id => user.meta.id).first.knowledge %>    <%= Score.where(:assignment_id =>  @last_assignment.id).where(:trainee_id => user.meta.id).first.skills %>    <%= Score.where(:assignment_id =>  @last_assignment.id).where(:trainee_id => user.meta.id).first.abilities %></h1>    </div>
