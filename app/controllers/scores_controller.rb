@@ -1,4 +1,5 @@
 class ScoresController < ApplicationController
+  include ApplicationHelper
   before_action :set_score, only: [:show, :edit, :update, :destroy]
 
   respond_to :html
@@ -9,10 +10,8 @@ class ScoresController < ApplicationController
     if current_user.role?('admin')
       @scores = Score.all
     elsif current_user.observer? && !current_user.role?('admin')
-      @scores = []
-      obs = current_user.meta
-      # extract scores from this observer's projects
-      obs.projects.each {|proj| proj.assignments.each {|ass| Score.where(:assignment_id => ass.id).each {|score| @scores << score} }}
+      # extract scores from this user's project
+      @scores = get_scores_by_observer(current_user.meta)
     end
 
 
@@ -30,6 +29,7 @@ class ScoresController < ApplicationController
       @second_to_last_assignments.push(u.meta.get_nth_assignment(-2))
       #@observers[i].push(Project.find(u.meta.assignments.last.project_id).observers)
     end
+
     respond_with(@scores)
   end
 

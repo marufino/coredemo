@@ -22,4 +22,8 @@ class User < ActiveRecord::Base
     return (self.meta_type == 'Observer')
   end
 
+  def full_name
+    return self.first_name + ' ' + self.last_name
+  end
+
 end

@@ -6,7 +6,9 @@
       <b><%= user.first_name %> <%= user.last_name %></b><br>
       <small><%= user.title %></small><br>
       <small><%= @last_assignment.date %></small><br>
+      <% if !@second_to_last_assignment.nil? %>
       <small>Last evaluation: <%= @second_to_last_assignment.date %></small><br>
+      <% end %>
       <small>Evaluation by:</small>
         <% @observers.each do |o| %>
           <small><%= o.user.first_name %> <%= o.user.last_name %></small><br>

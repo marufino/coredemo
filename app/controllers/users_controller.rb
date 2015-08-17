@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  include ApplicationHelper
   respond_to :html, :json
 
 
@@ -11,31 +12,37 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    @user = User.find(params[:id])
-    trainee = @user.meta
-    @last_assignment = trainee.get_nth_assignment(-1)
-    @second_to_last_assignment = trainee.get_nth_assignment(-2)
-    @observers = Project.find(@last_assignment.project_id).observers
 
-    @graph = [[]]
-    knowledge = []
-    skills = []
-    abilities = []
-    totals = []
-    dates = []
-    # scores for current user
-    scores = Score.where( :trainee_id => @user.meta.id)
-    # parse out totals
-    scores.each { |s| knowledge << s.knowledge}
-    scores.each { |s| skills << s.skills}
-    scores.each { |s| abilities << s.abilities}
-    scores.each { |s| totals << s.total}
-    # parse out dates
-    scores.each { |s| dates << s.assignment.date}
-    @graph[0] = dates.zip totals
-    @graph[1] = dates.zip knowledge
-    @graph[2] = dates.zip skills
-    @graph[3] = dates.zip abilities
+    @user = User.find(params[:id])
+
+    if @user.trainee?
+
+      @trainee = @user.meta
+      @last_assignment = @trainee.get_nth_assignment(-1)
+      @second_to_last_assignment = @trainee.get_nth_assignment(-2)
+      @observers = Project.find(@last_assignment.project_id).observers
+
+      #@percent_improvement = compute_percent_improvement(@last_assignment, @second_to_last_assignment, @trainee)
+
+      @graph = graph_scores_for_trainee(@trainee)
+
+    elsif @user.observer? & !@user.role?('admin')
+      # get next scorecard to be completed by this observer
+      scores = get_scores_by_observer(@user.meta)
+
+      # date for survey/profile card
+      @score = scores.first
+      @trainee = @score.trainee
+      @last_assignment = @trainee.get_nth_assignment(-1)
+      @second_to_last_assignment = @trainee.get_nth_assignment(-2)
+      @observers = Project.find(@last_assignment.project_id).observers
+
+      # get all trainees under this observer
+      @trainees = get_trainees_by_observer(@user.meta)
+
+      # generate graph
+      @graph = graph_scores_for_trainee(@trainee)
+    end
 
 
 

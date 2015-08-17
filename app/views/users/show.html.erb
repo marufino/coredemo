@@ -1,8 +1,52 @@
 <p id="notice"><%= notice %></p>
 
-<h4>Your Results</h4>
+
 
 <row>
-  <%= render :partial => "shared/profile_block", :locals => {:user => @user} %>
+  <% if @user.trainee? %>
+    <h4>Your Results</h4>
+    <%= render :partial => "shared/profile_block", :locals => {:user => @trainee.user} %>
+  <% elsif @user.observer? & !@user.role?('admin') %>
+    <h4>Upcoming Scorecard</h4>
+    <%= render :partial => "shared/profile_block_thin_single", :locals => {:user => @trainee.user, :score => @score} %>
+
 </row>
+
+    <row>
+      <h4>Trainees</h4>
+      <table class="table table-striped shadow">
+        <thead>
+        <tr  style="background-color: lightgray">
+          <th>Name</th>
+          <th>Last Effective Date</th>
+          <th>CORE Score</th>
+          <th>Need for Evaluation</th>
+          <th>Phone</th>
+          <th>Email</th>
+          <th>See Details</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <% @trainees.each do |trainee| %>
+          <tr>
+            <td><%= trainee.user.full_name %></td>
+            <td><%= trainee.assignments.last.date %></td>
+            <td>957</td>
+            <td>Low</td>
+            <td>x9548</td>
+            <td><%= trainee.user.email %></td>
+            <td><%= link_to 'See Details', user_path(trainee.user.id) %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </row>
+  <% elsif @user.role?('admin') %>
+
+
+
+  <% end %>
+
+
 <%= render :partial => "shared/viz_large" %>

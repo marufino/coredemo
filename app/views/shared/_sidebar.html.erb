@@ -56,9 +56,9 @@
               </div>
           </div>
           <div style="margin-bottom: 30px">
-            <li style="padding-top: 10px"><h5><span class="glyphicon glyphicon-user icon-larger"></span>Administrators <%= Role.find_by_name('admin').users.count %></h5></li>
+            <li style="padding-top: 10px"><h5><span class="glyphicon glyphicon-user icon-larger"></span>Administrators <%= Role.find_by(:name => 'admin').users.count %></h5></li>
               <div class="scrollable">
-                <% Role.find_by_name('admin').users.each do |user|%>
+                <% Role.find_by(:name => 'admin').users.each do |user|%>
                   <%= render :partial => "shared/side_thumbs", :locals => {:user => user} %>
                 <% end %>
             </div>
