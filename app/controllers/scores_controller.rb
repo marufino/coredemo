@@ -71,6 +71,11 @@ class ScoresController < ApplicationController
 
   def update
 
+    if params[:submit]
+      @score.completed = true
+      @score.completed_date = Date.today
+    end
+
     # pull questions for this score
     questions = @score.assignment.surveys[0].questions
 

@@ -41,10 +41,10 @@ module ApplicationHelper
     first_score   = Score.find_by(:assignment_id => first.id, :trainee_id => trainee.id)
 
     percent_improvement = Hash.new
-    percent_improvement['knowledge'] = ((second_score.knowledge - first_score.knowledge) / first_score.knowledge) * 100
-    percent_improvement['skills'] = (second_score.skills - first_score.skills) / first_score.skills
-    percent_improvement['abilities'] = (second_score.abilities - first_score.abilities) / first_score.abilities
-    percent_improvement['total'] = (second_score.total - first_score.total) / first_score.total
+    percent_improvement['knowledge'] = ((second_score.knowledge - first_score.knowledge) / first_score.knowledge.to_f) * 100
+    percent_improvement['skills'] = ((second_score.skills - first_score.skills) / first_score.skills.to_f) * 100
+    percent_improvement['abilities'] = ((second_score.abilities - first_score.abilities) / first_score.abilities.to_f) * 100
+    percent_improvement['total'] = ((second_score.total - first_score.total) / first_score.total.to_f) * 100
 
     return percent_improvement
 

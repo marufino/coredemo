@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150803214951) do
+ActiveRecord::Schema.define(version: 20150817181512) do
 
   create_table "assignments", force: true do |t|
     t.datetime "created_at"
@@ -102,6 +102,8 @@ ActiveRecord::Schema.define(version: 20150803214951) do
     t.integer  "knowledge"
     t.integer  "abilities"
     t.integer  "total"
+    t.boolean  "completed"
+    t.date     "completed_date"
   end
 
   add_index "scores", ["assignment_id"], name: "index_scores_on_assignment_id"

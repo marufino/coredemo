@@ -6,6 +6,7 @@
       <th>Name</th>
       <th>Date</th>
       <th>Completed</th>
+      <th>Date Completed</th>
       <th>Knowledge</th>
       <th>Skills</th>
       <th>Abilities</th>
@@ -22,13 +23,16 @@
           <td><%= score.trainee.user.full_name %></td>
           <td><%= score.assignment.date %></td>
           <td><%= score.assignment.completed? %></td>
+          <td><%= score.completed_date %></td>
           <td><%= score.knowledge %></td>
           <td><%= score.skills %></td>
           <td><%= score.abilities %></td>
           <td><%= score.total %></td>
         </tr>
       <% else %>
-        <%= render :partial => "shared/profile_block_thin", :locals => {:user => score.trainee.user, :score => score, :index => index} %>
+        <% if !score.completed %>
+          <%= render :partial => "shared/profile_block_thin", :locals => {:user => score.trainee.user, :score => score, :index => index} %>
+        <% end %>
       <% end %>
   </row>
 <% end %>

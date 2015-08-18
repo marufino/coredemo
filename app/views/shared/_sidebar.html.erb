@@ -36,9 +36,9 @@
                 <% end %>
               </div>
             <% else %>
-              <li style="padding-top: 10px"><h5><span class="glyphicon glyphicon-user icon-larger"></span>Trainees <%= Trainee.all.count %></h5></li>
+              <li style="padding-top: 10px"><h5><span class="glyphicon glyphicon-user icon-larger"></span>Trainees <%= get_trainees_by_observer(current_user.meta).count %></h5></li>
               <div class="scrollable">
-                <% Trainee.all.each do |trainee|%>
+                <% get_trainees_by_observer(current_user.meta).each do |trainee|%>
                   <%= render :partial => "shared/side_thumbs", :locals => {:user => trainee.user} %>
                 <% end %>
               </div>

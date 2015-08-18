@@ -44,9 +44,114 @@
     </row>
   <% elsif @user.role?('admin') %>
 
+    <h4>Overall Statistics</h4>
 
+    <div class="col-xs-3">
+      <div class ="admin-panels">
+        <div class = "shadow">
+          <li>Users</li>
+          <li style="padding: 30px; padding-left: 60px"><%= image_tag("users.png", size: "70x70", :alt => "surveys") %></li>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-3">
+      <div class ="admin-panels">
+        <div class = "shadow">
+          <li>Users</li>
+          <li style="padding: 30px; padding-left: 60px"><%= image_tag("users.png", size: "70x70", :alt => "surveys") %></li>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-3">
+      <div class ="admin-panels">
+        <div class = "shadow">
+          <li>Users</li>
+          <li style="padding: 30px; padding-left: 60px"><%= image_tag("users.png", size: "70x70", :alt => "surveys") %></li>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-3">
+      <div class ="admin-panels">
+        <div class = "shadow">
+          <li>Users</li>
+          <li style="padding: 30px; padding-left: 60px"><%= image_tag("users.png", size: "70x70", :alt => "surveys") %></li>
+        </div>
+      </div>
+    </div>
+
+
+    <h4>Recent Events</h4>
+
+    <% @scores.each_with_index do |score, index| %>
+      <div class = '<%= 'admin-profile admin-profile-'+index.to_s %>' style = 'display: none'>
+      <%= render :partial => "shared/profile_block_thin", :locals => {:user => score.trainee.user, :score => score, :index => index} %>
+      </div>
+    <% end %>
+
+    <div class = 'timeline'>
+      <% @scores.each_with_index do |score, index| %>
+        <div class = 'timeline' style="display:inline-block">
+          <div class="row" style="padding-left: 20px">
+            <div class = 'timeline-dot'></div>
+          </div>
+          <div class="row">
+            <div class = 'timeline-date timeline-date-<%= index.to_s %>' style = 'visibility: hidden'>
+              <small><%= score.completed_date.strftime("%B %d, %Y") %></small>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+    </div>
 
   <% end %>
 
 
+
 <%= render :partial => "shared/viz_large" %>
+
+
+<script>
+  $( document ).ready(function() {
+    console.log( "ready!" );
+
+    // show the latest event profile card
+    $(".admin-profile-0").show();
+    $(".timeline-date-0").css('visibility', 'visible');
+
+
+    $(".timeline-dot").each(function( index ) {
+      $( this ).click(function(){
+
+        //debug print
+        console.log("showing .admin-profile-"+index);
+
+        // hide all profile cards
+        $(".admin-profile").each(function (){
+          $( this).hide();
+        });
+
+        // hide all dates
+        $(".timeline-date").each(function (){
+          $( this).css('visibility', 'hidden');
+        });
+
+        // show just the one that got clicked
+        $(".timeline-date-"+index).css('visibility', 'visible');
+
+        // show just the one that got clicked
+        $(".admin-profile-"+index).show();
+      });
+    });
+  });
+
+
+
+
+
+
+
+</script>

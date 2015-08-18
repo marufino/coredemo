@@ -22,7 +22,9 @@ class UsersController < ApplicationController
       @second_to_last_assignment = @trainee.get_nth_assignment(-2)
       @observers = Project.find(@last_assignment.project_id).observers
 
-      #@percent_improvement = compute_percent_improvement(@last_assignment, @second_to_last_assignment, @trainee)
+      if @last_assignment && @second_to_last_assignment
+        @percent_improvement = compute_percent_improvement(@last_assignment, @second_to_last_assignment, @trainee)
+      end
 
       @graph = graph_scores_for_trainee(@trainee)
 
@@ -42,6 +44,31 @@ class UsersController < ApplicationController
 
       # generate graph
       @graph = graph_scores_for_trainee(@trainee)
+
+    elsif @user.role?('admin')
+
+      # get last N(10) completed scores
+      @scores = Score.where(:completed => 't').order(completed_date: :asc).limit(10)
+
+      @users = []
+      @last_assignments = []
+      @second_to_last_assignments = []
+      @observers = Array.new() { Array.new()}
+
+      # populate profile cards based on scores
+      @scores.each do |s|
+        @users.push(s.trainee.user)
+      end
+
+      @users.each_with_index do |u,i|
+        @last_assignments.push(u.meta.get_nth_assignment(-1))
+        @second_to_last_assignments.push(u.meta.get_nth_assignment(-2))
+        #@observers[i].push(Project.find(u.meta.assignments.last.project_id).observers)
+      end
+
+      # generate graph
+      @graph = graph_scores_for_trainee(@users.first.meta)
+
     end
 
 

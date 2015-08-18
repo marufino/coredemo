@@ -20,7 +20,7 @@
     </div>
     <div class="col-xs-6 user-profile" style="display: inline">
       <% if @percent_improvement %>
-        <h1><%= @percent_improvement['knowledge'] %>%    <%= @percent_improvement['skills'] %>%   <%= @percent_improvement['abilities'] %>%</h1>
+        <small><%= @percent_improvement['knowledge'].to_i %>%</small>    <small><%= @percent_improvement['skills'].to_i %>%</small>   <small><%= @percent_improvement['abilities'].to_i %>%</small>
       <% end %>
       <h1><%= Score.where(:assignment_id =>  @last_assignment.id).where(:trainee_id => user.meta.id).first.knowledge %>    <%= Score.where(:assignment_id =>  @last_assignment.id).where(:trainee_id => user.meta.id).first.skills %>    <%= Score.where(:assignment_id =>  @last_assignment.id).where(:trainee_id => user.meta.id).first.abilities %></h1>    </div>
 </div>
