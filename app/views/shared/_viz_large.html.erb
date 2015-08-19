@@ -4,13 +4,12 @@
       <% if @graph %>
         <%= area_chart @graph.each_with_index.map{|graph, i|
                        {name: $graph_labels[i], data: graph}
-                     },library: {isStacked: "false", areaOpacity: "0.3"}, min: 0, max: 100 %>
+                     },library: {isStacked: "false", areaOpacity: "0.7"}, min: 0, max: 100,colors:['#56849d','#0cb3e1','#97daec','#56849d'] %>
 
-<#%=colors:['#344a57','#507e98','#0db4e1','#97daeb']%></#>
 
       <%= line_chart @graph.map{|graph|
                        {name: '1', data: graph}
-                     } %>
+                     },library: {isStacked: "false", areaOpacity: "0.7"}, min: 0, max: 100,colors:['#56849d','#0cb3e1','#97daec','#56849d'] %>
       <% end %>
     </div>
   </row>

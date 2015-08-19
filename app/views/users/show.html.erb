@@ -49,7 +49,16 @@
     <div class="col-xs-3">
       <div class ="admin-panels">
         <div class = "shadow">
-          <li>Users</li>
+          <li>Overall Completion</li>
+          <li><div class="circle" id="circle"></div></li>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-3">
+      <div class ="admin-panels">
+        <div class = "shadow">
+          <li>Average Time Taken</li>
           <li style="padding: 30px; padding-left: 60px"><%= image_tag("users.png", size: "70x70", :alt => "surveys") %></li>
         </div>
       </div>
@@ -58,7 +67,7 @@
     <div class="col-xs-3">
       <div class ="admin-panels">
         <div class = "shadow">
-          <li>Users</li>
+          <li>Evaluation Progress</li>
           <li style="padding: 30px; padding-left: 60px"><%= image_tag("users.png", size: "70x70", :alt => "surveys") %></li>
         </div>
       </div>
@@ -67,16 +76,7 @@
     <div class="col-xs-3">
       <div class ="admin-panels">
         <div class = "shadow">
-          <li>Users</li>
-          <li style="padding: 30px; padding-left: 60px"><%= image_tag("users.png", size: "70x70", :alt => "surveys") %></li>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-xs-3">
-      <div class ="admin-panels">
-        <div class = "shadow">
-          <li>Users</li>
+          <li>Average Duration Per Day</li>
           <li style="padding: 30px; padding-left: 60px"><%= image_tag("users.png", size: "70x70", :alt => "surveys") %></li>
         </div>
       </div>
@@ -93,7 +93,7 @@
 
     <div class = 'timeline'>
       <% @scores.each_with_index do |score, index| %>
-        <div class = 'timeline' style="display:inline-block">
+        <div class = 'timeline-inside' style="display:inline-block">
           <div class="row" style="padding-left: 20px">
             <div class = 'timeline-dot'></div>
           </div>
@@ -148,10 +148,25 @@
     });
   });
 
+</script>
 
-
-
-
-
+<script type="text/javascript">
+  var myCircle = Circles.create({
+    id:           'circle',
+    radius:       50,
+    value:        27,
+    maxValue:     100,
+    width:        10,
+    text:         '27%',// #{Date.today.strftime('%B')}-Evaluations Completed"
+    colors:       ['#FFEB99', '#FFCC00'],
+    duration:       200,
+    textClass:      'circles-text'
+  });
 
 </script>
+
+<style>
+  .circles-text{
+    font-size: 16px !important;
+  }
+</style>
