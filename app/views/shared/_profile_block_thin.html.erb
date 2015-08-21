@@ -16,7 +16,13 @@
       <small>Results:</small><small class="text-success">PASSED</small><br>
     </div>
     <div class="col-xs-5 user-profile" style="display: inline">
-      <h1><%= Score.where(:assignment_id =>  @last_assignments[index].id).where(:trainee_id => @users[index].meta.id).first.knowledge %>    <%= Score.where(:assignment_id =>  @last_assignments[index].id).where(:trainee_id => @users[index].meta.id).first.skills %>    <%= Score.where(:assignment_id =>  @last_assignments[index].id).where(:trainee_id => @users[index].meta.id).first.abilities %></h1>
+      <% if @percent_improvements[index] %>
+        <% @percent_improvements[index].each do |p| %>
+          <div class="col-xs-3">
+            <div class="circle" id='<%= "#{p[0]}-circle"+index.to_s %>'></div>
+          </div>
+        <% end %>
+      <% end %>
     </div>
     <div class="col-xs-1 user-profile">
       <%= link_to edit_score_path(score) do %>
@@ -26,3 +32,27 @@
       <% end %>
     </div>
 </div>
+
+<script type="text/javascript">
+
+  <% @values = Score.where(:assignment_id =>  @last_assignments[index].id).where(:trainee_id => user.meta.id).first %>
+  <% if @percent_improvements[index] %>
+    <% @percent_improvements[index].each do |p| %>
+
+
+
+    var myCircle = Circles.create({
+      id:           '<%= "#{p[0]}-circle"+index.to_s %>',
+      radius:       50,
+      value:        '<%= @values["#{p[0]}"] %>',
+      maxValue:     100,
+      width:        10,
+      text:         '<row><span class="glyphicon <%= p[1].to_i>0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down' %>" style="color:<%= p[1].to_i>0 ? 'green' : 'red' %>"></span><%= p[1].to_i.to_s %>%</row><br><row><span style="font-size:0.6em"><%="#{p[0]}" %></span><br><span style="font-size:0.6em">Score</span></row></div>',// #{Date.today.strftime('%B')}-Evaluations Completed"
+      colors:       ['lightgray', '#1ab3db'],
+      duration:       200,
+      textClass:      'circles-text'
+    });
+
+    <% end %>
+  <% end %>
+</script>

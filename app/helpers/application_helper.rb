@@ -48,6 +48,7 @@ module ApplicationHelper
 
     return percent_improvement
 
+
   end
 
 

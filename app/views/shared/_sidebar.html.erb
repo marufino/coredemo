@@ -11,7 +11,7 @@
               <% end %>
           <% if current_user %>
             <li><%= link_to "Overview", user_path(current_user) %></li>
-             <% if current_user.observer? %>
+             <% if current_user.observer? or current_user.role?('admin') %>
               <li><%= link_to "Conduct a Survey", scores_path %></li>
                 <% if current_user.role?('admin') %>
                   <li><%= link_to "Data Analysis", new_user_registration_path %></li>
@@ -26,9 +26,9 @@
         <% if current_user %>
         <ul class="nav nav-second-level">
 
-          <% if current_user.observer? %>
+          <% if current_user.role?('admin') %>
           <div style="margin-bottom: 10px">
-            <% if current_user.role?('admin') %>
+            <% if !current_user.observer? %>
             <li style="padding-top: 10px"><h5><span class="glyphicon glyphicon-user icon-larger"></span>Trainees <%= Trainee.all.count %></h5></li>
               <div class="scrollable">
                 <% Trainee.all.each do |trainee|%>

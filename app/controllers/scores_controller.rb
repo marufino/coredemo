@@ -18,6 +18,7 @@ class ScoresController < ApplicationController
     @users = []
     @last_assignments = []
     @second_to_last_assignments = []
+    @percent_improvements = []
     @observers = Array.new() { Array.new()}
 
     @scores.each do |s|
@@ -25,10 +26,22 @@ class ScoresController < ApplicationController
     end
 
     @users.each_with_index do |u,i|
-      @last_assignments.push(u.meta.get_nth_assignment(-1))
-      @second_to_last_assignments.push(u.meta.get_nth_assignment(-2))
+
+      trainee = u.meta
+      last_assignment = trainee.get_nth_assignment(-1)
+      second_to_last_assignment = trainee.get_nth_assignment(-2)
+
+      @last_assignments.push(last_assignment)
+      @second_to_last_assignments.push(second_to_last_assignment)
+
+
+
+      if (last_assignment && second_to_last_assignment)
+        @percent_improvements.push(compute_percent_improvement(last_assignment,second_to_last_assignment,trainee))
+      end
       #@observers[i].push(Project.find(u.meta.assignments.last.project_id).observers)
     end
+
 
     respond_with(@scores)
   end

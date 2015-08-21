@@ -151,22 +151,17 @@
 </script>
 
 <script type="text/javascript">
+
   var myCircle = Circles.create({
     id:           'circle',
     radius:       50,
-    value:        27,
+    value:        '<%= @completion.to_i %>',
     maxValue:     100,
     width:        10,
-    text:         '27%',// #{Date.today.strftime('%B')}-Evaluations Completed"
-    colors:       ['#FFEB99', '#FFCC00'],
+    text:         '<row><%= @completion.to_i %>%</row><br><row><span style="font-size:0.6em"><%="#{Date.today.strftime('%B')}" + " Evaluations" %></span><br><span style="font-size:0.6em">Completed</span></row></div>',
+    colors:       ['lightgray', '#1ab3db'],
     duration:       200,
     textClass:      'circles-text'
   });
 
 </script>
-
-<style>
-  .circles-text{
-    font-size: 16px !important;
-  }
-</style>

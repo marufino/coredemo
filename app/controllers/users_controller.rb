@@ -42,6 +42,10 @@ class UsersController < ApplicationController
       # get all trainees under this observer
       @trainees = get_trainees_by_observer(@user.meta)
 
+      if @last_assignment && @second_to_last_assignment
+        @percent_improvement = compute_percent_improvement(@last_assignment, @second_to_last_assignment, @trainee)
+      end
+
       # generate graph
       @graph = graph_scores_for_trainee(@trainee)
 
@@ -53,6 +57,7 @@ class UsersController < ApplicationController
       @users = []
       @last_assignments = []
       @second_to_last_assignments = []
+      @percent_improvements = []
       @observers = Array.new() { Array.new()}
 
       # populate profile cards based on scores
@@ -61,17 +66,36 @@ class UsersController < ApplicationController
       end
 
       @users.each_with_index do |u,i|
-        @last_assignments.push(u.meta.get_nth_assignment(-1))
-        @second_to_last_assignments.push(u.meta.get_nth_assignment(-2))
+
+        trainee = u.meta
+        last_assignment = trainee.get_nth_assignment(-1)
+        second_to_last_assignment = trainee.get_nth_assignment(-2)
+
+        @last_assignments.push(last_assignment)
+        @second_to_last_assignments.push(second_to_last_assignment)
+
+        if last_assignment && second_to_last_assignment
+          @percent_improvements.push(compute_percent_improvement(last_assignment,second_to_last_assignment,trainee))
+        end
         #@observers[i].push(Project.find(u.meta.assignments.last.project_id).observers)
       end
 
       # generate graph
       @graph = graph_scores_for_trainee(@users.first.meta)
 
+      # scores completed this month
+      month_scores = Score.where(completed_date: Date.today.beginning_of_month..Date.today)
+      completed = month_scores.where(:completed => 't')
+      not_completed = month_scores.where(:completed => false)
+      @completion = (completed.size/not_completed.size.to_f)*100
+
+      # average time to take scorecard
+
+
+      # evaluation progress per user
+
+
     end
-
-
 
   end
 

@@ -42,6 +42,12 @@ gem 'hightop'
 
 gem 'seed_dump'
 
+gem 'activesupport'
+
+gem 'faker'
+
+gem 'fabrication'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
