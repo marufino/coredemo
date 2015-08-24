@@ -54,9 +54,10 @@ class ProjectsController < ApplicationController
         # build ratings for every question
         @survey.questions.each do |q|
           rating = @score.ratings.build
-          q.rating << rating
+          q.rating = rating
         end
 
+        @survey.save
         @score.save
       }
     }
@@ -98,7 +99,7 @@ class ProjectsController < ApplicationController
         # build ratings for every question
         @survey.questions.each do |q|
           rating = @score.ratings.build
-          q.rating << rating
+          q.rating = rating
         end
 
         @survey.save

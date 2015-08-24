@@ -23,16 +23,81 @@ namespace :app do
 
     # INSERT BELOW
 
-    10.times do
-      Fabricate(:trainee)
-      Fabricate(:observer)
-      Fabricate(:survey)
+    u=[]
+    t=[]
+    o=[]
+    p=[]
+    a=[]
+    s=[]
+    r=[]
+    score=[]
+
+    n = 10
+
+    n.times do |i|
+      u[i] = Fabricate(:user)
+      t[i] = Fabricate(:trainee)
+
+      t[i].user = u[i]
+
+      u[i] = Fabricate(:user)
+      o[i] = Fabricate(:observer)
+
+      o[i].user = u[i]
+
+      s[i] = Fabricate(:survey)
+
+      p[i] = Fabricate(:project)
+    end
+
+    #populate project
+    p.each_with_index do |p,i|
+
+      # assign random observers
+      p.observers << o[rand(0..n-1)]
+
+      # make assignments
+      a[i] = Fabricate(:assignment)
+
+      # add survey to assignment
+      a[i].surveys << s[rand(0..n-1)]
+
+      # assign trainees to assignment
+      a[i].trainees << t[rand(0..n-1)]
+
+      # generate scores for assignment -> trainee combos
+      score[i] = Fabricate(:score)
+
+      # add trainee to score
+      score[i].trainee_id = a[i].trainees.first.id
+
+      ### generate ratings
+      a[i].surveys.first.survey_blocks.each do |block| block.questions.each_with_index do |q , j |
+
+          # generate ratings
+          r[j] = Fabricate(:rating)
+
+          # belongs to question
+          q.rating = r[j]
+
+          # add to score
+          score[i].ratings << r[j]
+
+          # belongs to observers
+          p.observers[0] = p.observers.first
+          end
+      end
+
+      score[i].assignment_id = a[i].id
+
+      # add assignment to project
+      p.assignments << a[i]
+
     end
 
 
     # INSERT ABOVE
 
-    puts "#{'*'*(`tput cols`.to_i)}\nThe database has been populated!\n#{'*'*(`tput cols`.to_i)}"
   end
 
 end
