@@ -32,7 +32,7 @@ namespace :app do
     r=[]
     score=[]
 
-    n = 50
+    n = 10
 
     n.times do |i|
       u[i] = Fabricate(:user)
@@ -58,48 +58,50 @@ namespace :app do
       # assign random observers
       p.observers << o[rand(0..n-1)]
 
-      # make assignments
-      a[i] = Fabricate(:assignment)
+      10.times do |k|
+        # make assignments
+        a[k] = Fabricate(:assignment)
 
-      # add survey to assignment
-      p_survey = s[rand(0..n-1)]
-      a[i].surveys << p_survey
-      a[i].survey_id = p_survey.id
+        # add survey to assignment
+        p_survey = s[rand(0..n-1)]
+        a[k].surveys << p_survey
+        a[k].survey_id = p_survey.id
 
-      # assign trainees to assignment
-      a[i].trainees << t[rand(0..n-1)]
+        # assign trainees to assignment
+        a[k].trainees << t[rand(0..n-1)]
 
-      # generate scores for assignment -> trainee combos
-      score[i] = Fabricate(:score)
+        # generate scores for assignment -> trainee combos
+        score[k] = Fabricate(:score)
 
-      # add trainee to score
-      score[i].trainee = a[i].trainees.first
+        # add trainee to score
+        score[k].trainee = a[k].trainees.first
 
-      ### generate ratings
-      a[i].surveys.first.survey_blocks.each do |block| block.questions.each_with_index do |q , j |
+        ### generate ratings
+        a[k].surveys.first.survey_blocks.each do |block| block.questions.each_with_index do |q , j |
 
-          # generate ratings
-          r[j] = Fabricate(:rating)
+            # generate ratings
+            r[j] = Fabricate(:rating)
 
-          # belongs to question
-          r[j].question = q
+            # belongs to question
+            r[j].question = q
 
-          # add to score
-          score[i].ratings << r[j]
+            # add to score
+            score[k].ratings << r[j]
 
-          # belongs to observers
-          r[j].observer = p.observers.first
+            # belongs to observers
+            r[j].observer = p.observers.first
 
-          r[j].save
-          end
+            r[j].save
+            end
+        end
+
+        score[k].assignment_id = a[k].id
+        score[k].save
+
+        # add assignment to project
+        p.assignments << a[k]
       end
 
-      score[i].assignment_id = a[i].id
-
-      # add assignment to project
-      p.assignments << a[i]
-
-      score[i].save
       a[i].save
       p.save
 

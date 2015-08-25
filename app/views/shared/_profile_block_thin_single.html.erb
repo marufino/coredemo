@@ -5,8 +5,15 @@
     <div class="col-xs-4 user-profile" style="padding-left: 40px">
       <b><%= user.first_name %> <%= user.last_name %></b><br>
       <small><%= user.title %></small><br>
-      <small><%= @last_assignment.date %></small><br>
+      <% if @last_assignment %>
+        <small><%= @last_assignment.date %></small><br>
+      <% end %>
+
+      <% if @second_to_last_assignment %>
       <small>Last evaluation: <%= @second_to_last_assignment.date %></small><br>
+      <% end %>
+
+      <% if @observers %>
       <small>Evaluation by:</small>
         <% @observers.each_with_index do |o,index| %>
           <small><% if index>0 %>
@@ -15,6 +22,7 @@
               <%= o.user.first_name %> <%= o.user.last_name %></small>
         <% end %>
       <small>Results:</small><small class="text-success">PASSED</small><br>
+      <% end %>
     </div>
     <div class="col-xs-5 user-profile" style="display: inline">
       <% if @percent_improvement %>
@@ -36,22 +44,27 @@
 
 <script type="text/javascript">
 
-  <% @values = Score.where(:assignment_id =>  @last_assignment.id).where(:trainee_id => user.meta.id).first %>
-  <% @percent_improvement.each do |p| %>
+  <% if @last_assignment %>
+    <% @values = Score.where(:assignment_id =>  @last_assignment.id).where(:trainee_id => user.meta.id).first %>
+  <% end %>
 
 
+  <% if @percent_improvement %>
+      <% @percent_improvement.each do |p| %>
 
-  var myCircle = Circles.create({
-    id:           '<%= "#{p[0]}-circle" %>',
-    radius:       50,
-    value:        '<%= @values["#{p[0]}"] %>',
-    maxValue:     100,
-    width:        10,
-    text:         '<row><span class="glyphicon <%= p[1].to_i>0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down' %>" style="color:<%= p[1].to_i>0 ? 'green' : 'red' %>"></span><%= p[1].to_i.to_s %>%</row><br><row><span style="font-size:0.6em"><%="#{p[0]}" %></span><br><span style="font-size:0.6em">Score</span></row></div>',// #{Date.today.strftime('%B')}-Evaluations Completed"
-    colors:       ['lightgray', '#1ab3db'],
-    duration:       200,
-    textClass:      'circles-text'
-  });
 
+      var myCircle = Circles.create({
+        id:           '<%= "#{p[0]}-circle" %>',
+        radius:       50,
+        value:        '<%= @values["#{p[0]}"] %>',
+        maxValue:     100,
+        width:        10,
+        text:         '<row><span class="glyphicon <%= p[1].to_i>0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down' %>" style="color:<%= p[1].to_i>0 ? 'green' : 'red' %>"></span><%= p[1].to_i.to_s %>%</row><br><row><span style="font-size:0.6em"><%="#{p[0]}" %></span><br><span style="font-size:0.6em">Score</span></row></div>',// #{Date.today.strftime('%B')}-Evaluations Completed"
+        colors:       ['lightgray', '#1ab3db'],
+        duration:       200,
+        textClass:      'circles-text'
+      });
+
+      <% end %>
   <% end %>
 </script>

@@ -32,23 +32,28 @@ class UsersController < ApplicationController
       # get next scorecard to be completed by this observer
       scores = get_scores_by_observer(@user.meta)
 
-      # date for survey/profile card
-      @score = scores.first
-      @trainee = @score.trainee
-      @last_assignment = @trainee.get_nth_assignment(-1)
-      @second_to_last_assignment = @trainee.get_nth_assignment(-2)
+
+        # date for survey/profile card
+        @score = scores.first
+
+      if @score
+        @trainee = @score.trainee
+        @last_assignment = @trainee.get_nth_assignment(-1)
+        @second_to_last_assignment = @trainee.get_nth_assignment(-2)
 
 
-      # get all trainees under this observer
-      @trainees = get_trainees_by_observer(@user.meta)
+        # get all trainees under this observer
+        @trainees = get_trainees_by_observer(@user.meta)
 
-      if @last_assignment && @second_to_last_assignment
-        @observers = Project.find(@last_assignment.project_id).observers
-        @percent_improvement = compute_percent_improvement(@last_assignment, @second_to_last_assignment, @trainee)
+        if @last_assignment && @second_to_last_assignment
+          @observers = Project.find(@last_assignment.project_id).observers
+          @percent_improvement = compute_percent_improvement(@last_assignment, @second_to_last_assignment, @trainee)
+        end
+
+        # generate graph
+        @graph = graph_scores_for_trainee(@trainee)
       end
 
-      # generate graph
-      @graph = graph_scores_for_trainee(@trainee)
 
     elsif @user.role?('admin')
 
@@ -94,6 +99,9 @@ class UsersController < ApplicationController
 
 
       # evaluation progress per user
+
+
+
 
 
     end

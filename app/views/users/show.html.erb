@@ -8,7 +8,9 @@
     <%= render :partial => "shared/profile_block", :locals => {:user => @trainee.user} %>
   <% elsif @user.observer? & !@user.role?('admin') %>
     <h4>Upcoming Scorecard</h4>
-    <%= render :partial => "shared/profile_block_thin_single", :locals => {:user => @trainee.user, :score => @score} %>
+    <% if @trainee %>
+        <%= render :partial => "shared/profile_block_thin_single", :locals => {:user => @trainee.user, :score => @score} %>
+
 
 </row>
 
@@ -42,6 +44,7 @@
         </tbody>
       </table>
     </row>
+      <% end %>
   <% elsif @user.role?('admin') %>
 
     <h4>Overall Statistics</h4>
