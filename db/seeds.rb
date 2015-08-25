@@ -32,11 +32,11 @@ block2.questions.create!(category: 'Market Insight', weight: 15, description: 'H
 block3 = survey1.survey_blocks.create(category: 'Abilities', weight: 30)
 block3.questions.create!(category: 'Planning', weight: 15, description: 'How well does the trainee plan for work')
 =end
+u1 = User.create(first_name: 'Ed', last_name: 'Ross',title: 'Manager', email: 'observer1@ncsu.edu', password: 'password', password_confirmation: 'password')
 
 role1 = Role.create(name: 'admin')
 
 # OBSERVERS
-u1 = User.create(first_name: 'Ed', last_name: 'Ross',title: 'Manager', email: 'observer1@ncsu.edu', password: 'password', password_confirmation: 'password')
 u1.roles << role1
 
 

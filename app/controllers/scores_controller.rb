@@ -74,6 +74,8 @@ class ScoresController < ApplicationController
     @last_assignment = trainee.get_nth_assignment(-1)
     @second_to_last_assignment = trainee.get_nth_assignment(-2)
     @observers = Project.find(@last_assignment.project_id).observers
+
+
   end
 
   def create

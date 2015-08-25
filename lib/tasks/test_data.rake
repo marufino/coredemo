@@ -32,7 +32,7 @@ namespace :app do
     r=[]
     score=[]
 
-    n = 10
+    n = 50
 
     n.times do |i|
       u[i] = Fabricate(:user)
@@ -51,6 +51,8 @@ namespace :app do
     end
 
     #populate project
+
+
     p.each_with_index do |p,i|
 
       # assign random observers
@@ -60,7 +62,9 @@ namespace :app do
       a[i] = Fabricate(:assignment)
 
       # add survey to assignment
-      a[i].surveys << s[rand(0..n-1)]
+      p_survey = s[rand(0..n-1)]
+      a[i].surveys << p_survey
+      a[i].survey_id = p_survey.id
 
       # assign trainees to assignment
       a[i].trainees << t[rand(0..n-1)]
@@ -69,7 +73,7 @@ namespace :app do
       score[i] = Fabricate(:score)
 
       # add trainee to score
-      score[i].trainee_id = a[i].trainees.first.id
+      score[i].trainee = a[i].trainees.first
 
       ### generate ratings
       a[i].surveys.first.survey_blocks.each do |block| block.questions.each_with_index do |q , j |
@@ -78,13 +82,15 @@ namespace :app do
           r[j] = Fabricate(:rating)
 
           # belongs to question
-          q.rating = r[j]
+          r[j].question = q
 
           # add to score
           score[i].ratings << r[j]
 
           # belongs to observers
-          p.observers[0] = p.observers.first
+          r[j].observer = p.observers.first
+
+          r[j].save
           end
       end
 
@@ -92,6 +98,11 @@ namespace :app do
 
       # add assignment to project
       p.assignments << a[i]
+
+      score[i].save
+      a[i].save
+      p.save
+
 
     end
 

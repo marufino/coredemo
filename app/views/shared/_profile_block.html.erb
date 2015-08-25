@@ -5,14 +5,21 @@
     <div class="col-xs-3 user-profile">
       <b><%= user.first_name %> <%= user.last_name %></b><br>
       <small><%= user.title %></small><br>
-      <small><%= @last_assignment.date %></small><br>
+      <% if @last_assignment %>
+        <small><%= @last_assignment.date %></small><br>
+      <% end %>
+
       <% if @second_to_last_assignment %>
         <small>Last evaluation: <%= @second_to_last_assignment.date %></small><br>
       <% end %>
+
+      <% if @observers %>
       <small>Evaluation by:</small>
         <% @observers.each do |o| %>
           <small><%= o.user.first_name %> <%= o.user.last_name %></small><br>
         <% end %>
+      <% end %>
+
       <small>Results:</small><small class="text-success">PASSED</small><br>
 
 
@@ -31,7 +38,10 @@
 
 <script type="text/javascript">
 
-  <% @values = Score.where(:assignment_id =>  @last_assignment.id).where(:trainee_id => user.meta.id).first %>
+  <% if @last_assignment %>
+    <% @values = Score.where(:assignment_id =>  @last_assignment.id).where(:trainee_id => user.meta.id).first %>
+  <% end %>
+
   <% if @percent_improvement %>
     <% @percent_improvement.each do |p| %>
 

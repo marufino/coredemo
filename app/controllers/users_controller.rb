@@ -20,9 +20,9 @@ class UsersController < ApplicationController
       @trainee = @user.meta
       @last_assignment = @trainee.get_nth_assignment(-1)
       @second_to_last_assignment = @trainee.get_nth_assignment(-2)
-      @observers = Project.find(@last_assignment.project_id).observers
 
       if @last_assignment && @second_to_last_assignment
+        @observers = Project.find(@last_assignment.project_id).observers
         @percent_improvement = compute_percent_improvement(@last_assignment, @second_to_last_assignment, @trainee)
       end
 
@@ -37,12 +37,13 @@ class UsersController < ApplicationController
       @trainee = @score.trainee
       @last_assignment = @trainee.get_nth_assignment(-1)
       @second_to_last_assignment = @trainee.get_nth_assignment(-2)
-      @observers = Project.find(@last_assignment.project_id).observers
+
 
       # get all trainees under this observer
       @trainees = get_trainees_by_observer(@user.meta)
 
       if @last_assignment && @second_to_last_assignment
+        @observers = Project.find(@last_assignment.project_id).observers
         @percent_improvement = compute_percent_improvement(@last_assignment, @second_to_last_assignment, @trainee)
       end
 
