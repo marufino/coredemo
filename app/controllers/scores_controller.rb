@@ -8,7 +8,18 @@ class ScoresController < ApplicationController
 
     # pick out all scores for admin, only observer's own for observer
     if current_user.role?('admin')
-      @scores = Score.all
+      #@scores = Score.all
+
+      @filterrific = initialize_filterrific(
+          Score,
+          params[:filterrific],
+          :select_options => {
+              sorted_by: Score.options_for_sorted_by,
+              with_trainee_id: User.options_for_select
+          }
+      ) or return
+      @scores = @filterrific.find.page(params[:page])
+
     elsif current_user.observer? && !current_user.role?('admin')
       # extract scores from this user's project
       @scores = get_scores_by_observer(current_user.meta)
@@ -20,6 +31,7 @@ class ScoresController < ApplicationController
     @second_to_last_assignments = []
     @percent_improvements = []
     @observers = Array.new() { Array.new()}
+
 
     @scores.each do |s|
       @users.push(s.trainee.user)
@@ -42,7 +54,6 @@ class ScoresController < ApplicationController
       #@observers[i].push(Project.find(u.meta.assignments.last.project_id).observers)
     end
 
-
     respond_with(@scores)
   end
 
@@ -57,6 +68,7 @@ class ScoresController < ApplicationController
     @observers = Project.find(@last_assignment.project_id).observers
 
     respond_with(@score)
+
   end
 
   def new

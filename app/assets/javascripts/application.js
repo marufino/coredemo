@@ -16,6 +16,7 @@
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require chartkick
+//= require filterrific/filterrific-jquery
 //= require_tree .
 
 

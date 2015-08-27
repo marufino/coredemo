@@ -1,45 +1,52 @@
 <h4>Scorecards Home</h4>
-<% if current_user.role?('admin') %>
-  <table class="table table-striped shadow">
-    <thead>
-    <tr style="background-color: white">
-      <th>Name</th>
-      <th>Date</th>
-      <th>Completed</th>
-      <th>Date Completed</th>
-      <th>Knowledge</th>
-      <th>Skills</th>
-      <th>Abilities</th>
-      <th>Total</th>
-    </tr>
-    </thead>
-    <tbody>
-<% end %>
-
-<% @scores.each_with_index do |score, index| %>
-  <row>
-      <% if current_user.role?('admin') %>
-        <tr class="pointer" onclick="location.href='<%= edit_score_path(score) %>'">
-          <td><%= score.trainee.user.full_name %></td>
-          <td><%= score.assignment.date %></td>
-          <td><%= score.assignment.completed? %></td>
-          <td><%= score.completed_date %></td>
-          <td><%= score.knowledge %></td>
-          <td><%= score.skills %></td>
-          <td><%= score.abilities %></td>
-          <td><%= score.total %></td>
-        </tr>
-      <% else %>
-        <% if !score.completed %>
-          <%= render :partial => "shared/profile_block_thin", :locals => {:user => score.trainee.user, :score => score, :index => index} %>
-        <% end %>
-      <% end %>
-  </row>
-<% end %>
 
 <% if current_user.role?('admin') %>
-    </tbody>
-  </table>
+
+    <%= form_for_filterrific @filterrific do |f| %>
+    <div class = 'row'>
+      <div class = 'admin-panels'>
+          <div class = 'col-xs-3'>
+             <%= f.label 'Search' %>
+             <%= f.text_field :search_query, :class => 'filterrific-periodically-observed form-control' %>
+          </div>
+
+          <div class = 'col-xs-3'>
+            <%= f.label 'Trainee' %>
+            <%= f.select :with_trainee_id,
+                         @filterrific.select_options[:with_trainee_id],
+                         { :include_blank => '- Any -' },
+                         { :class => 'form-control' } %>
+          </div>
+
+          <div class = 'col-xs-3'>
+            <%= f.label 'Registered After' %>
+            <%= f.text_field :with_created_at_gte,
+                             :class => 'js-datepicker form-control' %>
+          </div>
+
+          <div class = 'col-xs-3'>
+            <%= f.label 'Sorted By' %>
+            <%= f.select :sorted_by,
+                         @filterrific.select_options[:sorted_by],
+                         {},
+                         { :class => 'form-control' } %>
+          </div>
+      </div>
+    </div>
+    <% end %>
+
+<div id="filterrific_results">
+  </div>
+<%#= render :partial => "scores/list", :locals => {:scores => @scores} %>
+
+<% else %>
+
+    <% if !score.completed %>
+        <%= render :partial => "shared/profile_block_thin", :locals => {:user => score.trainee.user, :score => score, :index => index} %>
+<% end %>
 <% end %>
 
+<script>
+    $('.js-datepicker').datepicker();
+</script>
 

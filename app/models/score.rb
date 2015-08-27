@@ -1,6 +1,6 @@
 class Score < ActiveRecord::Base
 
-  filterrific :default_filter_params => { :sorted_by => 'created_at_desc' },
+  filterrific :default_filter_params => { :sorted_by => 'completed_at_desc' },
               :available_filters => %w[
                 sorted_by
                 search_query
@@ -14,6 +14,21 @@ class Score < ActiveRecord::Base
 
   accepts_nested_attributes_for :ratings
 
+  # default for will_paginate
+  self.per_page = 20
+
+  scope :sorted_by, lambda { |sort_option|
+    # extract the sort direction from the param value.
+    direction = (sort_option =~ /desc$/) ? 'desc' : 'asc'
+    case sort_option.to_s
+      when /^completed_at_/
+        order("completed_date #{ direction }")
+      when /^created_at_/
+        order("created_at #{ direction }")
+      else
+        raise(ArgumentError, "Invalid sort option: #{ sort_option.inspect }")
+    end
+  }
 
   scope :search_query, lambda { |query|
      return nil  if query.blank?
@@ -48,10 +63,10 @@ class Score < ActiveRecord::Base
 
   def self.options_for_sorted_by
     [
-        ['Name (a-z)', 'name_asc'],
         ['Registration date (newest first)', 'created_at_desc'],
         ['Registration date (oldest first)', 'created_at_asc'],
-        ['Country (a-z)', 'country_name_asc']
+        ['Completed date (newest first)', 'completed_at_desc'],
+        ['Completed date (oldest first)', 'completed_at_asc']
     ]
   end
 

@@ -1,0 +1,39 @@
+<%= page_entries_info @scores %> <%= render_filterrific_spinner %>
+
+<table class="table table-striped shadow">
+  <thead>
+  <tr style="background-color: white">
+    <th>Name</th>
+    <th>Date</th>
+    <th>Completed</th>
+    <th>Date Completed</th>
+    <th>Knowledge</th>
+    <th>Skills</th>
+    <th>Abilities</th>
+    <th>Total</th>
+  </tr>
+  </thead>
+  <tbody>
+
+    <% scores.each_with_index do |score, index| %>
+        <row>
+
+              <tr class="pointer" onclick="location.href='<%= edit_score_path(score) %>'">
+                <td><%= score.trainee.user.full_name %></td>
+                <td><%= score.assignment.date %></td>
+                <td><%= score.assignment.completed? %></td>
+                <td><%= score.completed_date %></td>
+                <td><%= score.knowledge %></td>
+                <td><%= score.skills %></td>
+                <td><%= score.abilities %></td>
+                <td><%= score.total %></td>
+              </tr>
+
+        </row>
+    <% end %>
+
+  </tbody>
+</table>
+<%= will_paginate @scores, renderer: BootstrapPagination::Rails %>
+
+

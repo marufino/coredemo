@@ -26,4 +26,8 @@ class User < ActiveRecord::Base
     return self.first_name + ' ' + self.last_name
   end
 
+  def self.options_for_select
+    order('LOWER(last_name)').map { |e| [e.last_name, e.id] }
+  end
+
 end
