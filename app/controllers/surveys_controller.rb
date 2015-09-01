@@ -20,6 +20,7 @@ class SurveysController < ApplicationController
       @survey_blocks = @survey.survey_blocks.build(category: $categorynames[i])
       @questions = @survey_blocks.questions.build
     end
+    @competencies = Competency.all
 
   end
 
@@ -31,6 +32,8 @@ class SurveysController < ApplicationController
   # POST /surveys.json
   def create
     @survey = Survey.new(survey_params)
+
+
 
     respond_to do |format|
       if @survey.save

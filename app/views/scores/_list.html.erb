@@ -1,10 +1,11 @@
 <%= page_entries_info @scores %> <%= render_filterrific_spinner %>
 
-<table class="table table-striped shadow">
+<table class="table table-striped shadow" style="font-size: 8pt">
   <thead>
   <tr style="background-color: white">
-    <th>Name</th>
-    <th>Date</th>
+    <th>Trainee</th>
+    <th>Project</th>
+    <th>Date Assigned</th>
     <th>Completed</th>
     <th>Date Completed</th>
     <th>Knowledge</th>
@@ -20,6 +21,7 @@
 
               <tr class="pointer" onclick="location.href='<%= edit_score_path(score) %>'">
                 <td><%= score.trainee.user.full_name %></td>
+                <td><%= Project.find(score.assignment.project_id).name %></td>
                 <td><%= score.assignment.date %></td>
                 <td><%= score.assignment.completed? %></td>
                 <td><%= score.completed_date %></td>

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :competencies
+
   resources :assignments
 
   resources :projects

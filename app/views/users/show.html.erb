@@ -34,7 +34,7 @@
           <tr>
             <td><%= trainee.user.full_name %></td>
             <td><%= trainee.assignments.last.date %></td>
-            <td>957</td>
+            <td><%= trainee.get_core_score %></td>
             <td>Low</td>
             <td>x9548</td>
             <td><%= trainee.user.email %></td>
@@ -62,7 +62,7 @@
       <div class ="admin-panels">
         <div class = "shadow">
           <li>Average Time Taken</li>
-          <li style="padding: 30px; padding-left: 60px"><%= image_tag("users.png", size: "70x70", :alt => "surveys") %></li>
+          <li><%= render :partial => "shared/viz_time_taken" %></li>
         </div>
       </div>
     </div>
@@ -158,10 +158,10 @@
   var myCircle = Circles.create({
     id:           'circle',
     radius:       50,
-    value:        '<%= @completion.to_i %>',
+    value:        '<%= if @completion then @completion.to_i else 0 end  %>',
     maxValue:     100,
     width:        10,
-    text:         '<row><%= @completion.to_i %>%</row><br><row><span style="font-size:0.6em"><%="#{Date.today.strftime('%B')}" + " Evaluations" %></span><br><span style="font-size:0.6em">Completed</span></row></div>',
+    text:         '<row><%= if @completion then @completion.to_i else 0 end %>%</row><br><row><span style="font-size:0.6em"><%="#{Date.today.strftime('%B')}" + " Evaluations" %></span><br><span style="font-size:0.6em">Completed</span></row></div>',
     colors:       ['lightgray', '#1ab3db'],
     duration:       200,
     textClass:      'circles-text'

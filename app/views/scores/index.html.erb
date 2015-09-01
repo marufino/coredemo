@@ -36,8 +36,9 @@
     <% end %>
 
 <div id="filterrific_results">
-  </div>
-<%#= render :partial => "scores/list", :locals => {:scores => @scores} %>
+  <%= render :partial => "scores/list", :locals => {:scores => @scores} %>
+</div>
+
 
 <% else %>
 
@@ -45,6 +46,8 @@
         <%= render :partial => "shared/profile_block_thin", :locals => {:user => score.trainee.user, :score => score, :index => index} %>
 <% end %>
 <% end %>
+
+<%= link_to "CSV", scores_path(format: "csv") %> |
 
 <script>
     $('.js-datepicker').datepicker();

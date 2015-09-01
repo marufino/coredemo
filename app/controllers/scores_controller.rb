@@ -15,7 +15,7 @@ class ScoresController < ApplicationController
           params[:filterrific],
           :select_options => {
               sorted_by: Score.options_for_sorted_by,
-              with_trainee_id: User.options_for_select
+              with_trainee_id: Trainee.options_for_select
           }
       ) or return
       @scores = @filterrific.find.page(params[:page])

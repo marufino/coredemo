@@ -2,9 +2,9 @@
   <row>
     <div>
       <% if @graph %>
-        <%= area_chart @graph.each_with_index.map{|graph, i|
+        <%= line_chart @graph.each_with_index.map{|graph, i|
                        {name: $graph_labels[i], data: graph}
-                     },library: {isStacked: "false", areaOpacity: "0.7"}, min: 0, max: 100,colors:['#56849d','#0cb3e1','#97daec','#56849d'] %>
+                     },library: {isStacked: "false", areaOpacity: "0.5"}, min: 0, max: 100,colors:['#DDDDDD', '#ff5b5a','#009933','#3366cc'] %>
 
 
       <%#= line_chart @graph.map{|graph|

@@ -20,6 +20,10 @@
         <% @percent_improvements[index].each do |p| %>
           <div class="col-xs-3">
             <div class="circle" id='<%= "#{p[0]}-circle"+index.to_s %>'></div>
+            <row style="padding-left: 30px">
+              <span class="glyphicon <%= p[1].to_i>0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down' %>" style="color:<%= p[1].to_i>0 ? 'green' : 'red' %>"></span>
+              <%= p[1].to_i.to_s %>%
+            </row>
           </div>
         <% end %>
       <% end %>
@@ -47,11 +51,11 @@
             var myCircle = Circles.create({
               id:           '<%= "#{p[0]}-circle"+index.to_s %>',
               radius:       50,
-              value:        '<%= @values["#{p[0]}"] %>',
-              maxValue:     100,
-              width:        10,
-              text:         '<row><span class="glyphicon <%= p[1].to_i>0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down' %>" style="color:<%= p[1].to_i>0 ? 'green' : 'red' %>"></span><%= p[1].to_i.to_s %>%</row><br><row><span style="font-size:0.6em"><%="#{p[0]}" %></span><br><span style="font-size:0.6em">Score</span></row></div>',// #{Date.today.strftime('%B')}-Evaluations Completed"
-              colors:       ['lightgray', '#1ab3db'],
+                value:        '<%= @values["#{p[0]}"] %>',
+                maxValue:     100,
+                width:        10,
+                text:         '<row><%= @values["#{p[0]}"].to_i.to_s %></row><br><row><span style="font-size:0.6em"><%="#{p[0]}" %></span><br><span style="font-size:0.6em">Score</span></row></div>',// #{Date.today.strftime('%B')}-Evaluations Completed"
+                colors:       ['lightgray', '#1ab3db'],
               duration:       200,
               textClass:      'circles-text'
             });

@@ -46,9 +46,9 @@ class Score < ActiveRecord::Base
      where(
          terms.map {
            or_clauses = [
-               "LOWER(scores.trainee.first_name) LIKE ?",
-               "LOWER(scores.trainee.last_name) LIKE ?",
-               "LOWER(scores.assignment.name) LIKE ?"
+               "trainee.user.first_name LIKE ?",
+               "trainee.user.last_name LIKE ?",
+               "assignment.name LIKE ?"
            ].join(' OR ')
            "(#{ or_clauses })"
          }.join(' AND '),

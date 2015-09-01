@@ -50,6 +50,10 @@ namespace :app do
       p[i] = Fabricate(:project)
     end
 
+
+    30.times do
+      Fabricate(:competency)
+    end
     #populate project
 
 

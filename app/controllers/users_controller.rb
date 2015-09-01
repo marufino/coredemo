@@ -91,15 +91,37 @@ class UsersController < ApplicationController
 
       # scores completed this month
       month_scores = Score.where(completed_date: Date.today.beginning_of_month..Date.today)
-      completed = month_scores.where(:completed => 't')
-      not_completed = month_scores.where(:completed => false)
-      @completion = (completed.size/not_completed.size.to_f)*100
+      if (!month_scores.empty?)
+        completed = month_scores.where(:completed => 't')
+        not_completed = month_scores.where(:completed => false)
+        @completion = (completed.size/not_completed.size.to_f)*100
+      end
+
 
       # average time to take scorecard
+      # for all scores
+      scores = Score.all
+
+      # calculate diff of
+      @time_taken=[]
+      scores.each do |s|
+        @time_taken.push((s.completed_date - s.assignment.date).to_i)
+      end
+
+
+
+      # calculate date assigned - date completed
+      #score.completed_date
+      #Assignment.find(score.id).date
 
 
       # evaluation progress per user
 
+      # for each user
+
+      # get all their scores
+
+      # get number of completed vs total number
 
 
 
