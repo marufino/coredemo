@@ -46,6 +46,10 @@ namespace :app do
       o[i].user = u[i]
 
       s[i] = Fabricate(:survey)
+      s[i].survey_blocks.each_with_index do |sb,i|
+        sb.category = $categorynames[i]
+      end
+      s[i].save
 
       p[i] = Fabricate(:project)
     end
@@ -79,6 +83,13 @@ namespace :app do
 
         # add trainee to score
         score[k].trainee = a[k].trainees.first
+        score[k].assigned_date = a[k].date
+
+        if (score[k].completed_date < Date.today())
+          score[k].completed = 't'
+        else
+          score[k].completed = 'f'
+        end
 
         ### generate ratings
         a[k].surveys.first.survey_blocks.each do |block| block.questions.each_with_index do |q , j |

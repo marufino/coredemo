@@ -27,11 +27,12 @@ class Trainee < ActiveRecord::Base
   end
 
   def need_for_eval
-    scores = Score.where(:trainee_id => self.id).where(:completed => )
+    date = self.next_scorecard.assigned_date
+    return (Date.today() - date).to_i
   end
 
   def next_scorecard
-    return Score.where
+    return Score.where(:completed => 'f').where(:trainee_id => self.id).order('assigned_date').first
   end
 
 end

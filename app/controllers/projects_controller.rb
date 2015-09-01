@@ -50,6 +50,7 @@ class ProjectsController < ApplicationController
         @score = Score.new()
         @score.trainee = trainee
         @score.assignment = assignment
+        @score.assigned_date = assignment.date
 
         # build ratings for every question
         @survey.questions.each do |q|
@@ -95,6 +96,7 @@ class ProjectsController < ApplicationController
         @score = Score.new()
         @score.trainee = trainee
         @score.assignment = assignment
+        @score.assigned_date = assignment.date
 
         # build ratings for every question
         @survey.questions.each do |q|

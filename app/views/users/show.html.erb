@@ -35,7 +35,14 @@
             <td><%= trainee.user.full_name %></td>
             <td><%= trainee.assignments.last.date %></td>
             <td><%= trainee.get_core_score %></td>
-            <td>Low</td>
+            <td><% if trainee.need_for_eval < 10 %>
+                  <span style="color:green">Low</span>
+                <% elsif trainee.need_for_eval >= 10 and trainee.need_for_eval < 20%>
+                  <span style="color:#ffcc00">Medium</span>
+                <% else %>
+                  <span style="color:darkred">High</span>
+            <% end %>
+            </td>
             <td>x9548</td>
             <td><%= trainee.user.email %></td>
             <td><%= link_to 'See Details', user_path(trainee.user.id) %></td>
