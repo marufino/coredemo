@@ -1,0 +1,13 @@
+<% @eval_keys.each do |k| %>
+
+    <row>
+        <div style="display: inline">
+          <%= k %>  <div class="progress" style="width:60%; float:right">
+                <div class="progress-bar progress-bar-success" role="progressbar" style="width:<%= @eval_progress[k] %>%"></div>
+                </div>
+        </div>
+    </row>
+
+<% end %>
+
+<%= @eval_keys.paginate(:page => 1, :per_page => 3) %>

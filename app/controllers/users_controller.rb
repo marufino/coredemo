@@ -103,11 +103,19 @@ class UsersController < ApplicationController
       # for all scores
       scores = Score.all
 
-      # calculate diff of
+      # calculate diff of completed date vs assigned date
       @time_taken=[]
       scores.each do |s|
         @time_taken.push((s.completed_date - s.assignment.date).to_i)
       end
+      # replace negatives with 0s
+      @time_taken.map!{|val| if val<0 then 0 else val end}
+
+      # group by tens of days
+      @time_taken = @time_taken.group_by { |i| i/10 }
+
+      # count occurences in each group of days
+      @time_taken.keys.each { |i| @time_taken[i] = @time_taken[i].count }
 
       # VIZ 3
       ### evaluation progress per user
@@ -118,6 +126,8 @@ class UsersController < ApplicationController
       trainees.each do |t|
         @eval_progress[t.user.full_name] = t.percent_scores_completed
       end
+      @eval_keys = @eval_progress.keys.paginate
+
 
       @top_performers = Hash.new
       # VIZ 4
@@ -126,8 +136,7 @@ class UsersController < ApplicationController
         @top_performers[t.user.full_name] = t.get_core_score
       end
 
-      #@top_performers.sort!.first(5)
-
+      @top_performers = @top_performers.sort_by{ |name, score| score}.last(5)
 
     end
 
