@@ -54,6 +54,7 @@ class ScoresController < ApplicationController
       #@observers[i].push(Project.find(u.meta.assignments.last.project_id).observers)
     end
 
+
     respond_with(@scores)
   end
 
@@ -129,7 +130,7 @@ class ScoresController < ApplicationController
         knowledge = knowledge + ratings[i].to_i
         q_knowledge = q_knowledge + 1
       end
-      if q.survey_block.category == 'Abilities'
+      if q.survey_block.category == 'Ability'
         abilities = abilities + ratings[i].to_i
         q_abilities = q_abilities + 1
       end
@@ -138,6 +139,8 @@ class ScoresController < ApplicationController
         q_skills = q_skills + 1
       end
     end
+
+
 
     @score.knowledge  = knowledge / q_knowledge*10
     @score.abilities  = abilities / q_abilities*10

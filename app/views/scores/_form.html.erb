@@ -12,7 +12,7 @@
   <% end %>
 
   <h4>Trainee Bio</h4>
-  <%= render :partial => "shared/profile_block_survey", :locals => {:user => @score.trainee.user} %>
+  <%= render :partial => "shared/profile_block_survey", :locals => {:user => @score.trainee.user, :score => @score} %>
 
   <% @blocks.each do |block| %>
   <h4><%= block.category %> Evaluation ( <%= block.weight %> points)</h4>

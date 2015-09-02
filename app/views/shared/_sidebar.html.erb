@@ -26,9 +26,9 @@
         <% if current_user %>
         <ul class="nav nav-second-level">
 
-          <% if current_user.role?('admin') %>
+          <% if !current_user.trainee? %>
           <div style="margin-bottom: 10px">
-            <% if !current_user.observer? %>
+            <% if current_user.role?('admin') %>
             <li style="padding-top: 10px"><h5><span class="glyphicon glyphicon-user icon-larger"></span>Trainees <%= Trainee.all.count %></h5></li>
               <div class="scrollable">
                 <% Trainee.all.each do |trainee|%>
@@ -37,7 +37,7 @@
               </div>
             <% else %>
               <li style="padding-top: 10px"><h5><span class="glyphicon glyphicon-user icon-larger"></span>Trainees <%= get_trainees_by_observer(current_user.meta).count %></h5></li>
-              <div class="scrollable">
+              <div class="scrollable" style="max-height: 500px">
                 <% get_trainees_by_observer(current_user.meta).each do |trainee|%>
                   <%= render :partial => "shared/side_thumbs", :locals => {:user => trainee.user} %>
                 <% end %>

@@ -1,39 +1,6 @@
 <h4>Administration Home</h4>
 
   <row>
-    <div class="col-xs-12">
-      <div class ="admin-panels">
-        <div class = "shadow">
-          <div class="col-xs-4">
-            <ul>
-              <li>Your ID: admin@bus.com</li>
-              <li>Your ID: admin@bus.com</li>
-              <li>Your ID: admin@bus.com</li>
-              <li>Your ID: admin@bus.com</li>
-            </ul>
-          </div>
-          <div class="col-xs-4">
-            <ul>
-              <li>Your ID: admin@bus.com</li>
-              <li>Your ID: admin@bus.com</li>
-              <li>Your ID: admin@bus.com</li>
-              <li>Your ID: admin@bus.com</li>
-            </ul>
-          </div>
-          <div class="col-xs-4">
-            <ul>
-              <li>Your ID: admin@bus.com</li>
-              <li>Your ID: admin@bus.com</li>
-              <li>Your ID: admin@bus.com</li>
-              <li>Your ID: admin@bus.com</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </row>
-
-  <row>
 
     <%= link_to projects_path do %>
     <div class="col-xs-3">
@@ -59,29 +26,31 @@
     </div>
     <% end %>
 
-    <%= link_to questions_path do %>
+    <%= link_to competencies_path do %>
     <div class="col-xs-3">
       <div class ="admin-panels">
         <div class = "shadow">
           <li>Competencies</li>
           <li style="padding: 30px; padding-left: 60px"><%= image_tag("competencies.png", size: "80x70", :alt => "surveys") %></li>
-          <li> <%= Question.all.size %> total</li>
-        </div>
-      </div>
-    </div>
-    <% end %>
-
-    <%= link_to surveys_path do %>
-    <div class="col-xs-3">
-      <div class ="admin-panels">
-        <div class = "shadow">
-          <li>Scorecards</li>
-          <li style="padding: 30px; padding-left: 60px"><%= image_tag("surveys.png", size: "60x70", :alt => "surveys") %></li>
-          <li> <%= Survey.all.size %> total</li>
+          <li> <%= Competency.all.size %> total</li>
         </div>
       </div>
     </div>
     <% end %>
   </row>
+
+<row>
+  <%= link_to surveys_path do %>
+      <div class="col-xs-3">
+        <div class ="admin-panels">
+          <div class = "shadow">
+            <li>Scorecards</li>
+            <li style="padding: 30px; padding-left: 60px"><%= image_tag("surveys.png", size: "60x70", :alt => "surveys") %></li>
+            <li> <%= Survey.all.size %> total</li>
+          </div>
+        </div>
+      </div>
+  <% end %>
+</row>
 
 

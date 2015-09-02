@@ -23,7 +23,7 @@
                 <td><%= score.trainee.user.full_name %></td>
                 <td><%= Project.find(score.assignment.project_id).name %></td>
                 <td><%= score.assignment.date %></td>
-                <td><%= score.assignment.completed? %></td>
+                <td><%= score.completed? %></td>
                 <td><%= score.completed_date %></td>
                 <td><%= score.knowledge %></td>
                 <td><%= score.skills %></td>

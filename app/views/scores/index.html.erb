@@ -39,15 +39,16 @@
   <%= render :partial => "scores/list", :locals => {:scores => @scores} %>
 </div>
 
+<%= link_to "CSV", scores_path(format: "csv") %> |
 
 <% else %>
-
-    <% if !score.completed %>
-        <%= render :partial => "shared/profile_block_thin", :locals => {:user => score.trainee.user, :score => score, :index => index} %>
+    <% @scores.each_with_index do |score, index| %>
+        <% if !score.completed %>
+            <%= render :partial => "shared/profile_block_thin", :locals => {:user => score.trainee.user, :score => score, :index => index} %>
+        <% end %>
+    <% end %>
 <% end %>
-<% end %>
 
-<%= link_to "CSV", scores_path(format: "csv") %> |
 
 <script>
     $('.js-datepicker').datepicker();

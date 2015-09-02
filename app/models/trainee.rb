@@ -35,4 +35,21 @@ class Trainee < ActiveRecord::Base
     return Score.where(:completed => 'f').where(:trainee_id => self.id).order('assigned_date').first
   end
 
+  def previous_scorecard(score)
+    n_s = Score.where(:trainee_id => self.id).where("completed_date < ?", score.completed_date).order('completed_date').last
+    if (n_s)
+      return n_s
+    else
+      return score
+    end
+  end
+
+  def percent_scores_completed
+    scores = Score.where(:trainee_id => self.id)
+    completed = Score.where(:completed => 't').where(:trainee_id => self.id)
+
+    return (completed.size  / scores.size.to_f) * 100
+  end
+
+
 end

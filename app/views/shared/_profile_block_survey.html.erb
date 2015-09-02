@@ -5,10 +5,11 @@
     <div class="col-xs-3 user-profile">
       <b><%= user.first_name %> <%= user.last_name %></b><br>
       <small><%= user.title %></small><br>
-      <small><%= @last_assignment.date %></small><br>
-      <% if !@second_to_last_assignment.nil? %>
-      <small>Last evaluation: <%= @second_to_last_assignment.date %></small><br>
-      <% end %>
+
+      <small><%= score.assigned_date %></small><br>
+
+      <small>Last evaluation: <%= user.meta.previous_scorecard(score).assigned_date %></small><br>
+
       <small>Evaluation by:</small>
         <% @observers.each do |o| %>
           <small><%= o.user.first_name %> <%= o.user.last_name %></small><br>
@@ -17,7 +18,7 @@
     </div>
     <div class = "col-xs-4">
       Project: <%= Project.find(@score.assignment.project_id).name %><br>
-      Date: <%= @score.assignment.date %><br>
+      Date: <%= @score.assigned_date %><br>
       Observer: <%= current_user.first_name %> <%= current_user.last_name %>
     </div>
     <div class = "col-xs-2">

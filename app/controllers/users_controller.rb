@@ -33,8 +33,8 @@ class UsersController < ApplicationController
       scores = get_scores_by_observer(@user.meta)
 
 
-        # date for survey/profile card
-        @score = scores.first
+      # date for survey/profile card
+      @score = scores.first
 
       if @score
         @trainee = @score.trainee
@@ -51,7 +51,7 @@ class UsersController < ApplicationController
         end
 
         # generate graph
-        @graph = graph_scores_for_trainee(@trainee)
+        @graph = graph_scores_for_observer(@user.meta)
       end
 
 
@@ -87,18 +87,19 @@ class UsersController < ApplicationController
       end
 
       # generate graph
-      @graph = graph_scores_for_trainee(@users.first.meta)
+      @graph = graph_scores_for_admin
 
-      # scores completed this month
+      # VIZ 1
+      ### scores completed this month
       month_scores = Score.where(completed_date: Date.today.beginning_of_month..Date.today)
       if (!month_scores.empty?)
         completed = month_scores.where(:completed => 't')
-        not_completed = month_scores.where(:completed => false)
-        @completion = (completed.size/not_completed.size.to_f)*100
+        not_completed = month_scores.where(:completed => 'f')
+        @completion = (completed.size/month_scores.size.to_f)*100
       end
 
-
-      # average time to take scorecard
+      # VIZ 2
+      ### average time to take scorecard
       # for all scores
       scores = Score.all
 
@@ -108,22 +109,24 @@ class UsersController < ApplicationController
         @time_taken.push((s.completed_date - s.assignment.date).to_i)
       end
 
+      # VIZ 3
+      ### evaluation progress per user
+      trainees = Trainee.all
 
-
-      # calculate date assigned - date completed
-      #score.completed_date
-      #Assignment.find(score.id).date
-
-
-      # evaluation progress per user
-
+      @eval_progress = Hash.new
       # for each user
+      trainees.each do |t|
+        @eval_progress[t.user.full_name] = t.percent_scores_completed
+      end
 
-      # get all their scores
+      @top_performers = Hash.new
+      # VIZ 4
+      ### top performers
+      trainees.each do |t|
+        @top_performers[t.user.full_name] = t.get_core_score
+      end
 
-      # get number of completed vs total number
-
-
+      #@top_performers.sort!.first(5)
 
 
     end
