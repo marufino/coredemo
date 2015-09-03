@@ -5,7 +5,7 @@
 <row>
   <% if @user.trainee? %>
     <h4>Your Results</h4>
-    <%= render :partial => "shared/profile_block", :locals => {:user => @trainee.user} %>
+    <%= render :partial => "shared/profile_block", :locals => {:user => @trainee.user, :score => @score} %>
   <% elsif @user.observer? & !@user.role?('admin') %>
     <h4>Upcoming Scorecard</h4>
     <% if @trainee %>
@@ -101,7 +101,8 @@
       </div>
     <% end %>
 
-    <div class = 'timeline'>
+    <div style="width: 80%; margin: auto;">
+      <div class = 'timeline'>
       <% @scores.each_with_index do |score, index| %>
         <div class = 'timeline-inside' style="display:inline-block">
           <div class="row" style="padding-left: 20px">
@@ -114,7 +115,7 @@
           </div>
         </div>
       <% end %>
-
+      </div>
     </div>
 
   <% end %>

@@ -5,13 +5,9 @@
     <div class="col-xs-3 user-profile">
       <b><%= user.first_name %> <%= user.last_name %></b><br>
       <small><%= user.title %></small><br>
-      <% if @last_assignment %>
-        <small><%= @last_assignment.date %></small><br>
-      <% end %>
+      <small>Due evaluation: <%= score.assigned_date %></small><br>
 
-      <% if @second_to_last_assignment %>
-        <small>Last evaluation: <%= @second_to_last_assignment.date %></small><br>
-      <% end %>
+      <small>Last evaluation: <%= user.meta.previous_scorecard(score).assigned_date %></small><br>
 
       <% if @observers %>
       <small>Evaluation by:</small>
@@ -20,7 +16,7 @@
         <% end %>
       <% end %>
 
-      <small>Results:</small><small class="text-success">PASSED</small><br>
+      <small>Score:</small><small><%= user.meta.previous_scorecard(score).total %></small><br>
 
 
       <button class="fg-button">View Results</button>

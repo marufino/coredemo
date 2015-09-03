@@ -26,6 +26,8 @@ class UsersController < ApplicationController
         @percent_improvement = compute_percent_improvement(@last_assignment, @second_to_last_assignment, @trainee)
       end
 
+      @score = @user.meta.next_scorecard
+
       @graph = graph_scores_for_trainee(@trainee)
 
     elsif @user.observer? & !@user.role?('admin')
@@ -130,9 +132,6 @@ class UsersController < ApplicationController
       end
       @eval_keys = @eval_progress.keys.paginate(:page => params[:page],:per_page => 8)
 
-      #@eval_keys = WillPaginate::Collection.create(1, 5, eval_keys.length) do |pager|
-      #  pager.replace eval_keys
-      #end
 
       @top_performers = Hash.new
       # VIZ 4

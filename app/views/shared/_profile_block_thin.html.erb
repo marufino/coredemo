@@ -5,15 +5,13 @@
     <div class="col-xs-4 user-profile" style="padding-left: 40px">
       <b><%= user.first_name %> <%= user.last_name %></b><br>
       <small><%= user.title %></small><br>
-      <small><%= @last_assignments[index].date %></small><br>
-      <% if @second_to_last_assignments[index] %>
-        <small>Last evaluation: <%= @second_to_last_assignments[index].date %></small><br>
-      <% end %>
+      <small><%= score.assigned_date %></small><br>
+      <small>Last evaluation: <%= user.meta.previous_scorecard(score).assigned_date %></small><br>
       <small>Evaluation by:</small>
         <% @observers.each do |o| %>
           <small><%= o.user.first_name %> <%= o.user.last_name %></small><br>
         <% end %>
-      <small>Results:</small><small class="text-success">PASSED</small><br>
+      <small>Results:</small><small><%= user.meta.previous_scorecard(score).total %></small><br>
     </div>
     <div class="col-xs-5 user-profile" style="display: inline">
       <% if @percent_improvements[index] %>
