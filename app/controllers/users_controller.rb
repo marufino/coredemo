@@ -128,7 +128,7 @@ class UsersController < ApplicationController
       trainees.each do |t|
         @eval_progress[t.user.full_name] = t.percent_scores_completed
       end
-      @eval_keys = @eval_progress.keys.paginate(:page => params[:page],:per_page => 5)
+      @eval_keys = @eval_progress.keys.paginate(:page => params[:page],:per_page => 8)
 
       #@eval_keys = WillPaginate::Collection.create(1, 5, eval_keys.length) do |pager|
       #  pager.replace eval_keys
@@ -141,7 +141,7 @@ class UsersController < ApplicationController
         @top_performers[t.user.full_name] = t.get_core_score
       end
 
-      @top_performers = @top_performers.sort_by{ |name, score| score}.last(5)
+      @top_performers = @top_performers.sort_by{ |name, score| score}.last(9).reverse
 
     end
 

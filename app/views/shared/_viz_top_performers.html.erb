@@ -1,5 +1,19 @@
-<div>
-  <% if @time_taken %>
-    <%= column_chart @time_taken %>
+<div class="viz-square">
+  <% @top_performers.each_with_index do |t,i| %>
+      <row>
+        <div>
+          <div class="col-xs-2" style="padding:0px">
+            <small><%=  i+1  %> </small>
+          </div>
+          <div class="col-xs-8" style="padding:0px">
+            <small><%=  t[0]  %></small>
+          </div>
+          <div class="col-xs-2" style="padding:0px">
+            <small><%=  t[1]  %> </small>
+          </div>
+          <br>
+        </div>
+      </row>
   <% end %>
+
 </div>

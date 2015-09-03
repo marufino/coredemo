@@ -60,7 +60,7 @@
       <div class ="admin-panels">
         <div class = "shadow">
           <li>Overall Completion</li>
-          <li><div class="circle" id="circle"></div></li>
+          <li><%= render :partial => "shared/viz_overall_completion" %></li>
         </div>
       </div>
     </div>
@@ -164,14 +164,14 @@
 
   var myCircle = Circles.create({
     id:           'circle',
-    radius:       50,
+    radius:       90,
     value:        '<%= if @completion then @completion.to_i else 0 end  %>',
     maxValue:     100,
     width:        10,
-    text:         '<row><%= if @completion then @completion.to_i else 0 end %>%</row><br><row><span style="font-size:0.6em"><%="#{Date.today.strftime('%B')}" + " Evaluations" %></span><br><span style="font-size:0.6em">Completed</span></row></div>',
+    text:         '<row><strong style="font-size:2em"><%= if @completion then @completion.to_i else 0 end %>%</strong></row><br><row><span style="font-size:0.8em"><%="#{Date.today.strftime('%B')}" + " Evaluations" %></span><br><span style="font-size:0.8em">Completed</span></row></div>',
     colors:       ['lightgray', '#1ab3db'],
     duration:       200,
-    textClass:      'circles-text'
+    textClass:      'circles-text-large'
   });
 
 </script>
