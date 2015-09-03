@@ -112,10 +112,12 @@ class UsersController < ApplicationController
       @time_taken.map!{|val| if val<0 then 0 else val end}
 
       # group by tens of days
-      @time_taken = @time_taken.group_by { |i| i/10 }
+      @time_taken = @time_taken.group_by { |i| i/7 }
 
       # count occurences in each group of days
       @time_taken.keys.each { |i| @time_taken[i] = @time_taken[i].count }
+
+
 
       # VIZ 3
       ### evaluation progress per user
@@ -126,8 +128,11 @@ class UsersController < ApplicationController
       trainees.each do |t|
         @eval_progress[t.user.full_name] = t.percent_scores_completed
       end
-      @eval_keys = @eval_progress.keys.paginate
+      @eval_keys = @eval_progress.keys.paginate(:page => params[:page],:per_page => 5)
 
+      #@eval_keys = WillPaginate::Collection.create(1, 5, eval_keys.length) do |pager|
+      #  pager.replace eval_keys
+      #end
 
       @top_performers = Hash.new
       # VIZ 4

@@ -1,13 +1,18 @@
 <% @eval_keys.each do |k| %>
-
     <row>
-        <div style="display: inline">
-          <%= k %>  <div class="progress" style="width:60%; float:right">
-                <div class="progress-bar progress-bar-success" role="progressbar" style="width:<%= @eval_progress[k] %>%"></div>
-                </div>
+        <div>
+          <div class="col-xs-6" style="padding:0px">
+            <small><%=  k  %></small>
+          </div>
+          <div class="col-xs-6" style="padding:0px; padding-top: 10px">
+              <div class="progress">
+                    <div class="progress-bar progress-bar-success" role="progressbar" style="width:<%= @eval_progress[k] %>%"></div>
+              </div>
+          </div><br>
         </div>
     </row>
-
 <% end %>
 
-<%= @eval_keys.paginate(:page => 1, :per_page => 3) %>
+<div class="center">
+    <%= will_paginate @eval_keys, renderer: BootstrapPagination::Rails, :previous_label => "<", :next_label => ">", :page_links=> false %>
+</div>

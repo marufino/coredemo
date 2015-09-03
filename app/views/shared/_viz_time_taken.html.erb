@@ -1,5 +1,16 @@
 <div>
   <% if @time_taken %>
-    <%= column_chart @time_taken %>
+    <div style="display: inline">
+        <% 10.times do |i| %>
+          <div class="col-xs-1">
+            <%= i  %>
+          </div>
+          <div class="col-xs-1">
+              <div class="progress" style="height:8px">
+                <div class="progress-bar progress-bar-orange" role="progressbar" style="width:50%"></div>
+              </div>
+          </div>
+        <% end %>
+    </div>
   <% end %>
 </div>
