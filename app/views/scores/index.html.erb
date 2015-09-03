@@ -2,39 +2,6 @@
 
 <% if current_user.role?('admin') %>
 
-    <%= form_for_filterrific @filterrific do |f| %>
-    <div class = 'row'>
-      <div class = 'admin-panels'>
-          <div class = 'col-xs-3'>
-             <%= f.label 'Search' %>
-             <%= f.text_field :search_query, :class => 'filterrific-periodically-observed form-control' %>
-          </div>
-
-          <div class = 'col-xs-3'>
-            <%= f.label 'Trainee' %>
-            <%= f.select :with_trainee_id,
-                         @filterrific.select_options[:with_trainee_id],
-                         { :include_blank => '- Any -' },
-                         { :class => 'form-control' } %>
-          </div>
-
-          <div class = 'col-xs-3'>
-            <%= f.label 'Registered After' %>
-            <%= f.text_field :with_created_at_gte,
-                             :class => 'js-datepicker form-control' %>
-          </div>
-
-          <div class = 'col-xs-3'>
-            <%= f.label 'Sorted By' %>
-            <%= f.select :sorted_by,
-                         @filterrific.select_options[:sorted_by],
-                         {},
-                         { :class => 'form-control' } %>
-          </div>
-      </div>
-    </div>
-    <% end %>
-
 <div id="filterrific_results">
   <%= render :partial => "scores/list", :locals => {:scores => @scores} %>
 </div>

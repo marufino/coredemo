@@ -85,6 +85,16 @@ namespace :app do
         score[k].trainee = a[k].trainees.first
         score[k].assigned_date = a[k].date
 
+
+        # add random complete_date after assignment date by 1-2 days before or up to 2 after or something
+
+        # random number of days mostly before but could be after assigned date
+        random_days = rand(-2..2)
+
+        # make sure completed date is not in the future
+        score[k].completed_date = a[k].date + random_days
+
+
         if (score[k].completed_date < Date.today())
           score[k].completed = 't'
         else

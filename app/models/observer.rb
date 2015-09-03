@@ -6,4 +6,8 @@ class Observer < ActiveRecord::Base
 
   accepts_nested_attributes_for :user
 
+  def self.options_for_select
+    order('id').map { |e| [e.user.full_name, e.id] }
+  end
+
 end

@@ -13,6 +13,8 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
 
+    @curr_page_users = true
+
     @user = User.find(params[:id])
 
     if @user.trainee?

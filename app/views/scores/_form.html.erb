@@ -23,7 +23,9 @@
         <tr style="background-color: lightgrey">
           <th>Category</th>
           <th>Rating</th>
-          <th>Weight</th>
+          <% if !@score.completed? %>
+            <th>Weight</th>
+          <% end %>
         </tr>
         </thead>
         <% block.questions.each_with_index do |q| %>
@@ -32,19 +34,27 @@
 
             <td><% (1..10).each do |i| %>
                 <div style="margin: 20px;display: inline">
-                  <%= radio_button_tag q.id, i, Rating.where(question_id: q.id, score_id: @score.id).first.value == i %>
+                  <% if !@score.completed? %>
+                    <%= radio_button_tag q.id, i, Rating.where(question_id: q.id, score_id: @score.id).first.value == i %>
+                  <% else %>
+                    <%= radio_button_tag q.id, i, Rating.where(question_id: q.id, score_id: @score.id).first.value == i, disabled: true %>
+                  <% end %>
                 </div>
               <% end %></td>
 
-            <td><%= q.weight %></td>
+            <% if !@score.completed? %>
+                <td><%= q.weight %></td>
+            <% end %>
           </tr>
         <% end %>
       </table>
       </div>
   <% end %>
 
-  <div class="actions">
+  <% if !@score.completed? %>
+    <div class="actions">
     <%= submit_tag 'Save', name: 'save' %>
     <%= submit_tag 'Submit', name: 'submit' %>
-  </div>
+    </div>
+  <% end %>
 <% end %>

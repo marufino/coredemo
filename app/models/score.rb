@@ -6,6 +6,8 @@ class Score < ActiveRecord::Base
                 search_query
                 with_trainee_id
                 with_created_at_gte
+                with_survey
+                with_observer_id
               ]
 
   has_many :ratings
@@ -23,8 +25,8 @@ class Score < ActiveRecord::Base
     case sort_option.to_s
       when /^completed_at_/
         order("completed_date #{ direction }")
-      when /^created_at_/
-        order("created_at #{ direction }")
+      when /^assigned_at_/
+        order("assigned_date #{ direction }")
       else
         raise(ArgumentError, "Invalid sort option: #{ sort_option.inspect }")
     end
@@ -60,11 +62,22 @@ class Score < ActiveRecord::Base
     where(:trainee_id => [*trainee_ids])
   }
 
+  scope :with_observer_id, lambda { |observer_ids|
+    obs = Observer.where(:id => [*observer_ids])
+    proj = Project.where(:observer_id => obs.ids)
+    ass = Assignment.where(:projects => proj)
+    where(:assignment => ass)
+  }
+
+  scope :with_survey, lambda { |survey_id|
+    where(:assignment_id => Assignment.where(:survey_id => [*survey_id]))
+  }
+
 
   def self.options_for_sorted_by
     [
-        ['Registration date (newest first)', 'created_at_desc'],
-        ['Registration date (oldest first)', 'created_at_asc'],
+        ['Assigned date (newest first)', 'assigned_at__desc'],
+        ['Assigned date (oldest first)', 'assigned_at__asc'],
         ['Completed date (newest first)', 'completed_at_desc'],
         ['Completed date (oldest first)', 'completed_at_asc']
     ]

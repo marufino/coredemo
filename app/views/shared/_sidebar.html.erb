@@ -14,7 +14,7 @@
              <% if current_user.observer? or current_user.role?('admin') %>
               <li><%= link_to "Conduct a Survey", scores_path %></li>
                 <% if current_user.role?('admin') %>
-                  <li><%= link_to "Data Analysis", new_user_registration_path %></li>
+                  <li><%= link_to "Data Analysis", scores_path %></li>
                   <li><%= link_to "Administration", assignments_path %></li>
                 <% end %>
             <% end %>
@@ -24,48 +24,97 @@
         </ul>
 
         <% if current_user %>
-        <ul class="nav nav-second-level">
+          <% if @curr_page_users %>
+            <ul class="nav nav-second-level">
 
-          <% if !current_user.trainee? %>
-          <div style="margin-bottom: 10px">
-            <% if current_user.role?('admin') %>
-            <li style="padding-top: 10px"><h5><span class="glyphicon glyphicon-user icon-larger"></span>Trainees <%= Trainee.all.count %></h5></li>
-              <div class="scrollable">
-                <% Trainee.all.each do |trainee|%>
-                  <%= render :partial => "shared/side_thumbs", :locals => {:user => trainee.user} %>
+              <% if !current_user.trainee? %>
+              <div style="margin-bottom: 10px">
+                <% if current_user.role?('admin') %>
+                <li style="padding-top: 10px"><h5><span class="glyphicon glyphicon-user icon-larger"></span>Trainees <%= Trainee.all.count %></h5></li>
+                  <div class="scrollable">
+                    <% Trainee.all.each do |trainee|%>
+                      <%= render :partial => "shared/side_thumbs", :locals => {:user => trainee.user} %>
+                    <% end %>
+                  </div>
+                <% else %>
+                  <li style="padding-top: 10px"><h5><span class="glyphicon glyphicon-user icon-larger"></span>Trainees <%= get_trainees_by_observer(current_user.meta).count %></h5></li>
+                  <div class="scrollable" style="max-height: 500px">
+                    <% get_trainees_by_observer(current_user.meta).each do |trainee|%>
+                      <%= render :partial => "shared/side_thumbs", :locals => {:user => trainee.user} %>
+                    <% end %>
+                  </div>
                 <% end %>
               </div>
-            <% else %>
-              <li style="padding-top: 10px"><h5><span class="glyphicon glyphicon-user icon-larger"></span>Trainees <%= get_trainees_by_observer(current_user.meta).count %></h5></li>
-              <div class="scrollable" style="max-height: 500px">
-                <% get_trainees_by_observer(current_user.meta).each do |trainee|%>
-                  <%= render :partial => "shared/side_thumbs", :locals => {:user => trainee.user} %>
-                <% end %>
+              <% end %>
+
+              <% if current_user.role?('admin') %>
+              <div style="margin-bottom: 10px; padding-right: 10px; background-color: #081b29">
+                <li style="padding-top: 10px"><h5><span class="glyphicon glyphicon-user icon-larger"></span>Observers <%= Observer.all.count %></h5></li>
+                  <div class="scrollable">
+                    <% Observer.all.each do |observer|%>
+                      <%= render :partial => "shared/side_thumbs", :locals => {:user => observer.user} %>
+                    <% end %>
+                  </div>
               </div>
-            <% end %>
-          </div>
+              <div style="margin-bottom: 30px">
+                <li style="padding-top: 10px"><h5><span class="glyphicon glyphicon-user icon-larger"></span>Administrators <%= Role.find_by(:name => 'admin').users.count %></h5></li>
+                  <div class="scrollable">
+                    <% Role.find_by(:name => 'admin').users.each do |user|%>
+                      <%= render :partial => "shared/side_thumbs", :locals => {:user => user} %>
+                    <% end %>
+                </div>
+              </div>
+              <% end %>
+
+            </ul>
+          <% elsif @curr_page_scores and current_user.role?('admin')%>
+              <ul class="nav admin-panels" id="side-menu">
+              <%= form_for_filterrific @filterrific do |f| %>
+                <li>
+                    <%= f.label 'Search' %>
+                    <%= f.text_field :search_query, :class => 'filterrific-periodically-observed form-control' %>
+                </li>
+
+                <li>
+                <%= f.label 'Trainee' %>
+                <%= f.select :with_trainee_id,
+                             @filterrific.select_options[:with_trainee_id],
+                             { :include_blank => '- Any -' },
+                             { :class => 'form-control' } %>
+                </li>
+
+                <li>
+                <%= f.label 'Registered After' %>
+                <%= f.text_field :with_created_at_gte,
+                                 :class => 'js-datepicker form-control' %>
+                </li>
+
+                <li>
+                <%= f.label 'Sorted By' %>
+                <%= f.select :sorted_by,
+                             @filterrific.select_options[:sorted_by],
+                             {},
+                             { :class => 'form-control' } %>
+                </li>
+
+                <li>
+                  <%= f.label 'Survey' %>
+                  <%= f.select :with_survey,
+                               @filterrific.select_options[:with_survey],
+                               { :include_blank => '- Any -' },
+                               { :class => 'form-control' } %>
+                </li>
+
+                <li>
+                  <%= f.label 'Observers' %>
+                  <%= f.select :with_observer_id,
+                               @filterrific.select_options[:with_observer_id],
+                               { :include_blank => '- Any -' },
+                               { :class => 'form-control' } %>
+                </li>
+                <% end %>
+                  </ul>
           <% end %>
-
-          <% if current_user.role?('admin') %>
-          <div style="margin-bottom: 10px; padding-right: 10px; background-color: #081b29">
-            <li style="padding-top: 10px"><h5><span class="glyphicon glyphicon-user icon-larger"></span>Observers <%= Observer.all.count %></h5></li>
-              <div class="scrollable">
-                <% Observer.all.each do |observer|%>
-                  <%= render :partial => "shared/side_thumbs", :locals => {:user => observer.user} %>
-                <% end %>
-              </div>
-          </div>
-          <div style="margin-bottom: 30px">
-            <li style="padding-top: 10px"><h5><span class="glyphicon glyphicon-user icon-larger"></span>Administrators <%= Role.find_by(:name => 'admin').users.count %></h5></li>
-              <div class="scrollable">
-                <% Role.find_by(:name => 'admin').users.each do |user|%>
-                  <%= render :partial => "shared/side_thumbs", :locals => {:user => user} %>
-                <% end %>
-            </div>
-          </div>
-          <% end %>
-
-        </ul>
         <% end %>
     </div>
 </div>

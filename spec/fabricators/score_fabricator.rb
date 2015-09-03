@@ -6,7 +6,7 @@ Fabricator(:score) do
   total { Faker::Number.between(0,100) }
 
   completed { %w(t f).sample }
-  completed_date { Faker::Date.between(30.days.ago, 30.days.from_now)}
+  #completed_date { Faker::Date.between(30.days.ago, 30.days.from_now)}
 
 
 end

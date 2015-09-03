@@ -6,16 +6,20 @@ class ScoresController < ApplicationController
 
   def index
 
+    @curr_page_scores = true
+
     # pick out all scores for admin, only observer's own for observer
     if current_user.role?('admin')
-      #@scores = Score.all
+      @scores = Score.all
 
       @filterrific = initialize_filterrific(
           Score,
           params[:filterrific],
           :select_options => {
               sorted_by: Score.options_for_sorted_by,
-              with_trainee_id: Trainee.options_for_select
+              with_trainee_id: Trainee.options_for_select,
+              with_survey: Survey.options_for_select,
+              with_observer_id: Observer.options_for_select
           }
       ) or return
       @scores = @filterrific.find.page(params[:page])
