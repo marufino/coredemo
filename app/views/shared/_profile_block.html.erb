@@ -19,7 +19,9 @@
       <small>Score:</small><small><%= user.meta.previous_scorecard(score).total %></small><br>
 
 
-      <button class="fg-button">View Results</button>
+      <%= link_to scores_path(:filterrific => {:with_trainee_id => user.meta.id, :sorted_by => 'completed_at_desc'}) do %>
+          <button class="btn btn-info">View Results</button>
+       <% end %>
     </div>
     <div class="col-xs-6 user-profile" style="display: inline">
       <% if @percent_improvement %>

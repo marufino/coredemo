@@ -2,32 +2,27 @@ class ScoresController < ApplicationController
   include ApplicationHelper
   before_action :set_score, only: [:show, :edit, :update, :destroy]
 
-  respond_to :html
-
   def index
 
     @curr_page_scores = true
 
-    # pick out all scores for admin, only observer's own for observer
-    if current_user.role?('admin')
-      @scores = Score.all
+    @cards = false
+    @cards = params[:cards]
 
-      @filterrific = initialize_filterrific(
-          Score,
-          params[:filterrific],
-          :select_options => {
-              sorted_by: Score.options_for_sorted_by,
-              with_trainee_id: Trainee.options_for_select,
-              with_survey: Survey.options_for_select,
-              with_observer_id: Observer.options_for_select
-          }
-      ) or return
-      @scores = @filterrific.find.page(params[:page])
-
-    elsif current_user.observer? && !current_user.role?('admin')
-      # extract scores from this user's project
-      @scores = get_scores_by_observer(current_user.meta)
-    end
+    # pick out all scores based on filterrific params
+    @filterrific = initialize_filterrific(
+        Score,
+        params[:filterrific],
+        :select_options => {
+            sorted_by: Score.options_for_sorted_by,
+            with_trainee_id: Trainee.options_for_select,
+            with_survey: Survey.options_for_select,
+            with_observer_id: Observer.options_for_select,
+            with_project: Project.options_for_select
+        }
+    ) or return
+    @scores_all = @filterrific.find
+    @scores = @filterrific.find.page(params[:page])
 
 
     @users = []
@@ -59,7 +54,12 @@ class ScoresController < ApplicationController
     end
 
 
-    respond_with(@scores)
+    respond_to do |format|
+      format.html
+      format.js
+      format.xls
+    end
+
   end
 
   def show

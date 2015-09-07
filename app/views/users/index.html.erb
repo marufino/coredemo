@@ -1,0 +1,27 @@
+<h4>Manage Competencies</h4>
+
+<table class="table table-striped shadow">
+  <thead>
+  <tr style="background-color: white">
+    <th>Name</th>
+    <th>Email</th>
+    <th>Title</th>
+    <th>Role</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @users.each do |user| %>
+      <tr class="pointer" onclick="location.href='<%= edit_user_registration_path(user) %>'">
+        <td><%= user.full_name %></td>
+        <td><%= user.email %></td>
+        <td><%= user.title %></td>
+        <td><%= user.meta_type || user.roles.first.name %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New User', new_user_registration_path %>

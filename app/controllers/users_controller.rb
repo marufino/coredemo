@@ -32,6 +32,7 @@ class UsersController < ApplicationController
 
       @graph = graph_scores_for_trainee(@trainee)
 
+
     elsif @user.observer? & !@user.role?('admin')
       # get next scorecard to be completed by this observer
       scores = get_scores_by_observer(@user.meta)
@@ -95,7 +96,7 @@ class UsersController < ApplicationController
 
       # VIZ 1
       ### scores completed this month
-      month_scores = Score.where(completed_date: Date.today.beginning_of_month..Date.today)
+      month_scores = Score.where(assigned_date: Date.today.beginning_of_month..Date.today)
       if (!month_scores.empty?)
         completed = month_scores.where(:completed => 't')
         not_completed = month_scores.where(:completed => 'f')

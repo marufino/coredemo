@@ -8,5 +8,9 @@ class Project < ActiveRecord::Base
   accepts_nested_attributes_for :assignments
   accepts_nested_attributes_for :trainees
 
+  def self.options_for_select
+    order('id').map { |e| [e.name, e.id] }
+  end
+
 end
 

@@ -12,8 +12,9 @@
           <% if current_user %>
             <li><%= link_to "Overview", user_path(current_user) %></li>
              <% if current_user.observer? or current_user.role?('admin') %>
-              <li><%= link_to "Conduct a Survey", scores_path %></li>
-                <% if current_user.role?('admin') %>
+                <% if !current_user.role?('admin') %>
+                  <li><%= link_to "Conduct a Survey", scores_path(:cards => true)%></li>
+                <% else %>
                   <li><%= link_to "Data Analysis", scores_path %></li>
                   <li><%= link_to "Administration", assignments_path %></li>
                 <% end %>
@@ -69,11 +70,9 @@
             </ul>
           <% elsif @curr_page_scores and current_user.role?('admin')%>
               <ul class="nav admin-panels" id="side-menu">
+                <br>
+                FILTER BY:
               <%= form_for_filterrific @filterrific do |f| %>
-                <li>
-                    <%= f.label 'Search' %>
-                    <%= f.text_field :search_query, :class => 'filterrific-periodically-observed form-control' %>
-                </li>
 
                 <li>
                 <%= f.label 'Trainee' %>
@@ -84,17 +83,11 @@
                 </li>
 
                 <li>
-                <%= f.label 'Registered After' %>
-                <%= f.text_field :with_created_at_gte,
-                                 :class => 'js-datepicker form-control' %>
-                </li>
-
-                <li>
-                <%= f.label 'Sorted By' %>
-                <%= f.select :sorted_by,
-                             @filterrific.select_options[:sorted_by],
-                             {},
-                             { :class => 'form-control' } %>
+                  <%= f.label 'Observer' %>
+                  <%= f.select :with_observer_id,
+                               @filterrific.select_options[:with_observer_id],
+                               { :include_blank => '- Any -' },
+                               { :class => 'form-control' } %>
                 </li>
 
                 <li>
@@ -106,11 +99,22 @@
                 </li>
 
                 <li>
-                  <%= f.label 'Observers' %>
-                  <%= f.select :with_observer_id,
-                               @filterrific.select_options[:with_observer_id],
+                  <%= f.label 'Project' %>
+                  <%= f.select :with_project,
+                               @filterrific.select_options[:with_project],
                                { :include_blank => '- Any -' },
                                { :class => 'form-control' } %>
+                </li>
+
+                <li>
+                  <%= f.label 'Sorted By' %>
+                  <%= f.select :sorted_by,
+                               @filterrific.select_options[:sorted_by],
+                               {},
+                               { :class => 'form-control' } %>
+                </li>
+                <li>
+                  <div class="btn btn-default"><span class="glyphicon glyphicon-floppy-save icon-larger"></span><%= link_to "Export", scores_path(format: "xls") %></div>
                 </li>
                 <% end %>
                   </ul>

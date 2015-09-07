@@ -8,6 +8,7 @@ class Score < ActiveRecord::Base
                 with_created_at_gte
                 with_survey
                 with_observer_id
+                with_project
               ]
 
   has_many :ratings
@@ -64,13 +65,16 @@ class Score < ActiveRecord::Base
 
   scope :with_observer_id, lambda { |observer_ids|
     obs = Observer.where(:id => [*observer_ids])
-    proj = Project.where(:observer_id => obs.ids)
-    ass = Assignment.where(:projects => proj)
-    where(:assignment => ass)
+    ass = Assignment.where(:project_id => obs.first.projects.ids)
+    where(:assignment_id => ass.ids)
   }
 
   scope :with_survey, lambda { |survey_id|
     where(:assignment_id => Assignment.where(:survey_id => [*survey_id]))
+  }
+
+  scope :with_project, lambda { |project_id|
+    where(:assignment_id => Assignment.where(:project_id => [*project_id]))
   }
 
 
@@ -81,6 +85,15 @@ class Score < ActiveRecord::Base
         ['Completed date (newest first)', 'completed_at_desc'],
         ['Completed date (oldest first)', 'completed_at_asc']
     ]
+  end
+
+  def self.to_csv(options = {})
+    CSV.generate(options) do |csv|
+      csv << column_names
+      all.each do |score|
+        csv << score.attributes.values_at(*column_names)
+      end
+    end
   end
 
 end

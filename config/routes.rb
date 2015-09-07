@@ -14,6 +14,8 @@ Rails.application.routes.draw do
 
   match 'users/:id' => 'users#show', via: :get, :as => :user
 
+  match 'users/' => 'users#index', via: :get
+
   resources :surveys
 
   resources :survey_blocks
