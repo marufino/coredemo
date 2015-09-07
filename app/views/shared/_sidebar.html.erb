@@ -13,7 +13,7 @@
             <li><%= link_to "Overview", user_path(current_user) %></li>
              <% if current_user.observer? or current_user.role?('admin') %>
                 <% if !current_user.role?('admin') %>
-                  <li><%= link_to "Conduct a Survey", scores_path(:cards => true)%></li>
+                  <li><%= link_to "Conduct a Survey", scores_path(:cards => true, :filterrific => {:with_observer_id => current_user.meta.id}) %></li>
                 <% else %>
                   <li><%= link_to "Data Analysis", scores_path %></li>
                   <li><%= link_to "Administration", assignments_path %></li>
