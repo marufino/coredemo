@@ -1,5 +1,5 @@
 Fabricator(:rating) do
 
-  value { Faker::Number.between(0,10) }
+  value { Faker::Number.between(1,10) }
 
 end

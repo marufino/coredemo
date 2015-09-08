@@ -42,7 +42,7 @@
 
 
   <%= f.fields_for :survey_blocks do |block_form| %>
-  <h4> Evaluation (   points)</h4>
+  <h4><%= $categorynames[block_form.options[:child_index]-3] %> Evaluation (   points)</h4>
   <div class="scorecard">
       <table class="table shadow">
         <thead>
@@ -54,7 +54,7 @@
         </thead>
             <tr>
               <%= block_form.nested_fields_for :questions, wrapper_tag: :tr do |q_form| %>
-              <td><%= q_form.collection_select :category, @competencies, :name, :name, include_blank: false %>  <span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="color:cornflowerblue"></span></td>
+              <td><%= q_form.collection_select :category, @competencies.where(:category => $categorynames[block_form.options[:child_index]-3]), :name, :name, include_blank: false %>  <span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="color:cornflowerblue"></span></td>
               <td><% (1..10).each do |i| %>
                   <%= radio_button_tag "test", i, 0, options = {:disabled => true} %>
                 <% end %></td>

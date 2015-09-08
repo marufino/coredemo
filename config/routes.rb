@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'sessions/new'
+
   resources :competencies
 
   resources :assignments
@@ -10,7 +12,7 @@ Rails.application.routes.draw do
 
   resources :scores
 
-  devise_for :users,  :controllers => { :registrations => "users/registrations" }
+  devise_for :users,  :controllers => { :registrations => "users/registrations", :sessions => "sessions" }
 
   match 'users/:id' => 'users#show', via: :get, :as => :user
 

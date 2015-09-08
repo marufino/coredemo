@@ -30,8 +30,8 @@
         </thead>
         <% block.questions.each_with_index do |q| %>
           <tr>
-            <td style="padding-left:10px"><%= q.category %><span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="color:cornflowerblue; float:right;"></span></td>
-
+            <td style="padding-left:10px"><%= q.category %><span onclick="myFunction('<%= q.category %>')"class="glyphicon glyphicon-info-sign" aria-hidden="true" style="color:cornflowerblue; float:right;"></span>
+            </td>
             <td><% (1..10).each do |i| %>
                 <div style="margin: 20px;display: inline">
                   <% if !@score.completed? %>
@@ -58,3 +58,18 @@
     </div>
   <% end %>
 <% end %>
+
+<script>
+    function myFunction(location) {
+        var coaching = document.getElementById("competency-"+location);
+
+        // hide all others
+        $(".competencies").each(function (){
+            $(this).css('display', 'none');
+        });
+
+        // show just the clicked one
+        coaching.style.display = "block";
+
+    }
+</script>

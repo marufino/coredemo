@@ -118,6 +118,22 @@
                 </li>
                 <% end %>
                   </ul>
+
+          <% elsif @curr_page_score_edit %>
+            <div>
+              <% @competencies.each do |comp| %>
+                  <div class = "competencies" id = "competency-<%= comp.name %>" style="display:none">
+                    <li><%= comp.name %></li>
+                    <li><%= comp.description %></li>
+                    <li><%= comp.coaching %></li>
+                  </div>
+              <% end %>
+                <div class = "competencies">
+                  <p>Click the <span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="color:cornflowerblue; "></span> icon for category definitions and Coaching suggestions</p>
+                </div>
+            </div>
+
+
           <% end %>
         <% end %>
     </div>
