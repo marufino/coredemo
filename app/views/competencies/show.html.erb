@@ -6,8 +6,18 @@
 </p>
 
 <p>
+  <strong>Category:</strong>
+  <%= @competency.category %>
+</p>
+
+<p>
   <strong>Description:</strong>
   <%= @competency.description %>
+</p>
+
+<p>
+  <strong>Coaching Questions/Comments:</strong>
+  <%= @competency.coaching %>
 </p>
 
 <%= link_to 'Edit', edit_competency_path(@competency) %> |

@@ -26,6 +26,7 @@ class SurveysController < ApplicationController
 
   # GET /surveys/1/edit
   def edit
+    @competencies = Competency.all
   end
 
   # POST /surveys

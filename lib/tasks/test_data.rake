@@ -32,6 +32,11 @@ namespace :app do
     r=[]
     score=[]
 
+    30.times do
+      competency = Fabricate(:competency)
+      competency.save
+    end
+
     n = 10
 
     n.times do |i|
@@ -55,9 +60,7 @@ namespace :app do
     end
 
 
-    30.times do
-      Fabricate(:competency)
-    end
+
     #populate project
 
 
@@ -89,7 +92,7 @@ namespace :app do
         # add random complete_date after assignment date by 1-2 days before or up to 2 after or something
 
         # random number of days mostly before but could be after assigned date
-        random_days = rand(-2..2)
+        random_days = rand(-2..20)
 
         # make sure completed date is not in the future
         score[k].completed_date = a[k].date + random_days

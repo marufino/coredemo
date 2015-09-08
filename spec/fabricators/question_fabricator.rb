@@ -1,7 +1,7 @@
 Fabricator(:question) do
 
-  category { Faker::Company.buzzword }
+  category { (Competency.all.map{|c| c.name}).sample }
   weight { Faker::Number.between(10,30) }
-  description { Faker::Company.bs }
+  description { (Competency.all.map{|c| c.description}).sample }
 
 end
