@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'pages/home'
+
   get 'sessions/new'
 
   resources :competencies
@@ -24,7 +26,7 @@ Rails.application.routes.draw do
 
   resources :questions
 
-  root 'surveys#index'
+  root 'pages#home'
 
   get 'survey_blocks/:id/sign' => 'survey_blocks#show_sign', as: :show_sign_survey
   post 'survey_blocks/:id/sign' => 'survey_blocks#sign', as: :sign_survey

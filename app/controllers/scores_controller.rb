@@ -129,6 +129,9 @@ class ScoresController < ApplicationController
       ratings << rating
     end
 
+    byebug
+
+
     q_knowledge = 0
     q_skills = 0
     q_abilities = 0

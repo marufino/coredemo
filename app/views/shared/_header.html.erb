@@ -21,7 +21,7 @@
       <li><%= link_to "Surveys", surveys_path %></li>
       <li><%= link_to "Projects", projects_path %></li>
       <li><%= link_to "Scores", scores_path %></li>
-      <li> <%= link_to "Logout", destroy_user_session_path, :method => :delete %></li>
+      <li> <%= link_to "Logout", destroy_user_session_path, :method => :delete, :redirect => 'pages/home' %></li>
   <% else %>
       <li><%= link_to "Sign in", new_user_session_path %></li>
       <li><%= link_to "Register", new_user_registration_path %></li>
