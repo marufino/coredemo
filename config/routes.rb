@@ -18,6 +18,8 @@ Rails.application.routes.draw do
 
   match 'users/:id' => 'users#show', via: :get, :as => :user
 
+  match 'users/edit/:id' => 'users#edit', via: :get, :as => :edit_user
+
   match 'users/' => 'users#index', via: :get
 
   resources :surveys

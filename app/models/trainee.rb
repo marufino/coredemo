@@ -19,7 +19,12 @@ class Trainee < ActiveRecord::Base
     scores = Score.where(:trainee_id => self.id)
     totals=[]
     scores.each do |s| totals.push(s.total) end
-    return mean(totals).to_i
+    if(totals!=[])
+      return mean(totals).to_i
+    else
+      return 0
+    end
+
   end
 
   def mean(arr)

@@ -13,6 +13,11 @@
             <span class="glyphicon glyphicon-log-out icon-largest" aria-hidden="true" style="color: #9fb0b7"></span>
         </li>
     <% end %>
+    <%= link_to edit_user_registration_path do %>
+        <li style="border: 0">
+          <span class="glyphicon glyphicon-user icon-largest" aria-hidden="true" style="color: #9fb0b7"></span>
+        </li>
+    <% end %>
     <li><div style="padding: 5px; background-color: #e0e5e8"><%= Date.today.strftime("%B %d, %Y") %></div></li>
   </ul>
 </div>
