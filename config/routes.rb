@@ -28,6 +28,10 @@ Rails.application.routes.draw do
 
   root 'pages#home'
 
+  resources :users do
+    collection { post :import }
+  end
+
   get 'survey_blocks/:id/sign' => 'survey_blocks#show_sign', as: :show_sign_survey
   post 'survey_blocks/:id/sign' => 'survey_blocks#sign', as: :sign_survey
 

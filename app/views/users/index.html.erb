@@ -12,7 +12,7 @@
 
   <tbody>
   <% @users.each do |user| %>
-      <tr class="pointer" onclick="location.href='<%= edit_user_registration_path(user) %>'">
+      <tr class="pointer" onclick="location.href='<%= edit_user_path(user) %>'">
         <td><%= user.full_name %></td>
         <td><%= user.email %></td>
         <td><%= user.title %></td>
@@ -25,3 +25,10 @@
 <br>
 
 <%= link_to 'New User', new_user_registration_path %>
+
+<h2>Import Users</h2>
+
+<%= form_tag import_users_path, multipart: true do %>
+    <%= file_field_tag :file %>
+    <%= submit_tag "Import" %>
+<% end %>

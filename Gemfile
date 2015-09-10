@@ -56,6 +56,8 @@ gem 'will_paginate-bootstrap'
 
 gem 'histogram'
 
+gem 'roo-xls'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

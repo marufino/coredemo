@@ -149,6 +149,11 @@ class UsersController < ApplicationController
 
   end
 
+  def import
+    User.import(params[:file])
+    redirect_to users_path, notice: "Users imported."
+  end
+
   private
 
   # Never trust parameters from the scary internet, only allow the white list through.
