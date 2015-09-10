@@ -8,10 +8,11 @@
 </div>
 <div class="col-xs-4 settings-header">
   <ul>
-    <li style="border: 0"><%= link_to (root_path) do %>
-        <span class="glyphicon glyphicon-cog icon-largest" aria-hidden="true" style="color: #9fb0b7"></span>
-      <% end %>
-    </li>
+    <%= link_to destroy_user_session_path, :method => :delete, :redirect => 'pages/home' do %>
+        <li style="border: 0">
+            <span class="glyphicon glyphicon-log-out icon-largest" aria-hidden="true" style="color: #9fb0b7"></span>
+        </li>
+    <% end %>
     <li><div style="padding: 5px; background-color: #e0e5e8"><%= Date.today.strftime("%B %d, %Y") %></div></li>
   </ul>
 </div>
