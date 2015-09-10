@@ -7,6 +7,8 @@ class Survey < ActiveRecord::Base
 
   accepts_nested_attributes_for :survey_blocks
 
+  validates :name, presence: true
+  validates :description, presence: true
 
   def self.options_for_select
     order('id').map { |e| [e.name, e.id] }

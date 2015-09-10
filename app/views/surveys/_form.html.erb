@@ -23,7 +23,7 @@
     <div class = "col-xs-3">
 
     </div>
-    <div class = "col-xs-3">
+    <div class = "col-xs-3" id="weight-container">
       <table>
         <%= f.fields_for :survey_blocks do |block_form| %>
           <tr>
@@ -33,8 +33,8 @@
         <% end %>
 
         <tr>
-          <td><%= f.label 'Total' %></td>
-          <td><%= f.label '100' %></td>
+          <td>Total</td>
+          <td id="total-weights">100</td>
         </tr>
       </table>
     </div>
@@ -42,7 +42,7 @@
 
 
   <%= f.fields_for :survey_blocks do |block_form| %>
-  <h4><%= $categorynames[block_form.options[:child_index]-3] %> Evaluation (   points)</h4>
+  <h4><%= $categorynames[block_form.options[:child_index]-3] %> Evaluation (<span id="header-current-<%= $categorynames[block_form.options[:child_index]-3] %>"> </span>/<span id="header-<%= $categorynames[block_form.options[:child_index]-3] %>"> </span>  points)</h4>
   <div class="scorecard">
       <table class="table shadow">
         <thead>
@@ -58,7 +58,7 @@
               <td><% (1..10).each do |i| %>
                   <%= radio_button_tag "test", i, 0, options = {:disabled => true} %>
                 <% end %></td>
-              <td><%= q_form.number_field :weight %><%= q_form.remove_nested_fields_link do %>
+              <td><%= q_form.number_field :weight, within: 1...100 , :class =>  $categorynames[block_form.options[:child_index]-3] + '-category-weights' %><%= q_form.remove_nested_fields_link do %>
                   <span class="glyphicon glyphicon-minus-sign" aria-hidden="true" style="color:red"></span>
                   <% end %>
               </td>
@@ -77,3 +77,111 @@
     <%= f.submit %>
   </div>
 <% end %>
+
+<script>
+    // On document load add weights to header labels
+    <% $categorynames.each_with_index do |cat,i| %>
+        $( document ).ready(function() {
+            $("#header-<%= cat %>").html($("#survey_survey_blocks_attributes_<%= i %>_weight").val());
+            compute_total();
+            category_totals_init();
+        });
+    <% end %>
+
+    // calculate and update total
+    function compute_total() {
+        var total = parseInt($("#survey_survey_blocks_attributes_0_weight").val(),10) + parseInt($("#survey_survey_blocks_attributes_1_weight").val(),10) + parseInt($("#survey_survey_blocks_attributes_2_weight").val(),10);
+        $('#total-weights').html(total);
+        if (total != 100) {
+            $('#weight-container').css('border', '1px solid red');
+        }
+        else {
+            $('#weight-container').css('border', '1px solid green');
+        }
+    }
+
+    // on click or keyup update said weights
+    <% $categorynames.each_with_index do |cat,i| %>
+    $("#survey_survey_blocks_attributes_<%= i %>_weight").on('click keyup',function(){
+        compute_total();
+        // and replace the html accordingly
+        $("#header-<%= cat %>").html($(this).val());
+        disable_submit();
+    });
+    <% end %>
+
+
+    // for each category
+    <% $categorynames.each_with_index do |cat,i| %>
+        // whenever each competency weight is changed
+        $(".<%= cat %>-category-weights").each(function(){
+            $(this).on('click keyup',function(){
+                var total = 0;
+                // recompute the total for that section
+                $(".<%= cat %>-category-weights").each(function() {
+                    total = total + parseInt($(this).val(), 10);
+                });
+                // and replace the html accordingly
+                $("#header-current-<%= cat %>").html(total);
+
+                if(total != parseInt($("#header-<%= cat %>").html(),10))
+                {
+                    $("#header-current-<%= cat %>").css('color','red');
+                }
+                else
+                {
+                    $("#header-current-<%= cat %>").css('color','green');
+                }
+                disable_submit();
+            });
+
+        });
+    <% end %>
+
+    function disable_submit(){
+        $(".actions > input").prop('disabled', false);
+        $(".actions > input").css('color', 'green');
+        <% $categorynames.each_with_index do |cat,i| %>
+        if(parseInt($("#header-current-<%= cat %>").html(),10) != parseInt($("#header-<%= cat %>").html(),10))
+        {
+            $(".actions > input").prop('disabled', true);
+            $(".actions > input").css('color', 'red');
+            console.log(parseInt($("#header-current-<%= cat %>").html(),10));
+            console.log(parseInt($("#header-<%= cat %>").html(),10));
+        }
+        <% end %>
+
+        if (parseInt($('#total-weights').html(),10) != 100) {
+            $(".actions > input").prop('disabled', true);
+            $(".actions > input").css('color', 'red');
+        }
+    }
+
+    function category_totals_init(){
+        // for each category
+        <% $categorynames.each_with_index do |cat,i| %>
+        // whenever each competency weight is changed
+        $(".<%= cat %>-category-weights").each(function(){
+                var total = 0;
+                // recompute the total for that section
+                $(".<%= cat %>-category-weights").each(function() {
+                    total = total + parseInt($(this).val(), 10);
+                });
+                // and replace the html accordingly
+                $("#header-current-<%= cat %>").html(total);
+
+                if(total != parseInt($("#header-<%= cat %>").html(),10))
+                {
+                    $("#header-current-<%= cat %>").css('color','red');
+                }
+                else
+                {
+                    $("#header-current-<%= cat %>").css('color','green');
+                }
+                disable_submit();
+        });
+        <% end %>
+    }
+
+
+</script>
