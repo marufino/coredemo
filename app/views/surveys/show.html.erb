@@ -15,7 +15,7 @@
       <% block.questions.each_with_index do |q, index| %>
         <tr>
           <td><%= q.category %></td>
-          <td><% (1..10).each do |i| %>
+          <td><% (1..6).each do |i| %>
               <%= radio_button_tag index.to_s + block.category, i, 0, options = {:disabled => true} %>
             <% end %></td>
           <td><%= q.weight %></td>

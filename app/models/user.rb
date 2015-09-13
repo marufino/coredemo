@@ -58,4 +58,21 @@ class User < ActiveRecord::Base
     end
   end
 
+  def get_picture(email)
+
+    # register API key
+    client = LinkedIn::Client.new('your_consumer_key', 'your_consumer_secret')
+
+    # retrieve picture from linkedin api
+    picture = client.profile(:email => email, :fields => ['picture-url'])
+
+    # add to user model
+    if picture
+      u = User.find_by_email(email).picture = picture
+      u.save
+    end
+
+  end
+
+
 end

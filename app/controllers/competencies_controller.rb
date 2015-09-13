@@ -36,6 +36,11 @@ class CompetenciesController < ApplicationController
     respond_with(@competency)
   end
 
+  def import
+    Competency.import(params[:file])
+    redirect_to competencies_path, notice: "Competencies imported."
+  end
+
   private
     def set_competency
       @competency = Competency.find(params[:id])

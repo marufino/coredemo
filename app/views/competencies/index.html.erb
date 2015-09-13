@@ -25,3 +25,10 @@
 <br>
 
 <%= link_to 'New Competency', new_competency_path %>
+
+<h2>Import Competencies</h2>
+
+<%= form_tag import_competencies_path, multipart: true do %>
+    <%= file_field_tag :file %>
+    <%= submit_tag "Import" %>
+<% end %>
