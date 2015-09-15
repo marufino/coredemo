@@ -11,5 +11,7 @@ Rails.application.initialize!
 
 $categorynames = ['Knowledge', 'Skills', 'Ability']
 
+$colors = ['red', 'yellow', 'green']
 
 $graph_labels = ['Totals','Knowledge', 'Skills', 'Ability']
+

@@ -58,13 +58,22 @@ class User < ActiveRecord::Base
     end
   end
 
+
   def get_picture(email)
 
+
+    byebug
     # register API key
-    client = LinkedIn::Client.new('your_consumer_key', 'your_consumer_secret')
+    client = LinkedIn::Client.new('77jwgldr7lxmyq', 'OAtow3zeU72iWwkD')
+
+    request_token = client.request_token({}, :scope => "r_basicprofile")
+
+    # or authorize from previously fetched access keys
+    client.authorize_from_access("92b97262-7d6d-478c-b91a-9f16b722d7b9", "43d4aef2-ed94-4698-b755-b7101a963acb")
 
     # retrieve picture from linkedin api
     picture = client.profile(:email => email, :fields => ['picture-url'])
+    user = client.profile(:fields => %w(picture-url))
 
     # add to user model
     if picture

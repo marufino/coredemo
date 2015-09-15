@@ -107,6 +107,20 @@
                 </li>
 
                 <li>
+                  <%= f.label 'Area of Strength' %>
+                  <%= f.select :with_area_of_strength,
+                               @filterrific.select_options[:with_area_of_strength],
+                               { :include_blank => '- Any -' },
+                               { :class => 'form-control' } %>
+                </li>
+                <li>
+                  <%= f.label 'Area of Weakness' %>
+                  <%= f.select :with_area_of_weakness,
+                               @filterrific.select_options[:with_area_of_weakness],
+                               { :include_blank => '- Any -' },
+                               { :class => 'form-control' } %>
+                </li>
+                <li>
                   <%= f.label 'Sorted By' %>
                   <%= f.select :sorted_by,
                                @filterrific.select_options[:sorted_by],

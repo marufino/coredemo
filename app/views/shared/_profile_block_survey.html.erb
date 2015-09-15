@@ -6,20 +6,29 @@
       <b><%= user.first_name %> <%= user.last_name %></b><br>
       <small><%= user.title %></small><br>
 
-      <small><%= score.assigned_date %></small><br>
+      <small>Assignment Date: <%= score.assigned_date %></small><br>
 
-      <small>Last evaluation: <%= user.meta.previous_scorecard(score).assigned_date %></small><br>
+      <small>Previous evaluation: <%= user.meta.previous_scorecard(score).assigned_date %></small><br>
 
-      <small>Evaluation by:</small>
+      <small>Evaluated by:</small>
         <% @observers.each do |o| %>
           <small><%= o.user.first_name %> <%= o.user.last_name %></small><br>
         <% end %>
-      <small>Results:</small><small class="text-success">PASSED</small><br>
+      <small>Result:</small><small><%=user.meta.previous_scorecard(score).total%></small><br>
     </div>
     <div class = "col-xs-4">
       Project: <%= Project.find(@score.assignment.project_id).name %><br>
       Date: <%= @score.assigned_date %><br>
-      Observer: <%= current_user.first_name %> <%= current_user.last_name %>
+      Observer: <%= current_user.first_name %> <%= current_user.last_name %><br>
+      Areas of Strength:
+      <% score.area_of_strength.competencies.each do |c| %>
+        <%= c.name %>
+      <% end %><br>
+      Areas of Weakness:
+      <% score.area_of_weakness.competencies.each do |c| %>
+          <%= c.name %>
+      <% end %>
+
     </div>
     <div class = "col-xs-2">
       <h1 style="color: greenyellow"><strong><%= score.total %></strong></h1>

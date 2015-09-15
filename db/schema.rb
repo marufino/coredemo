@@ -11,10 +11,42 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150910182938) do
+ActiveRecord::Schema.define(version: 20150915165443) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "area_of_strengths", force: true do |t|
+    t.integer  "score_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "area_of_strengths", ["score_id"], name: "index_area_of_strengths_on_score_id", using: :btree
+
+  create_table "area_of_strengths_competencies", id: false, force: true do |t|
+    t.integer "area_of_strength_id"
+    t.integer "competency_id"
+  end
+
+  add_index "area_of_strengths_competencies", ["area_of_strength_id", "competency_id"], name: "aos_c", using: :btree
+  add_index "area_of_strengths_competencies", ["area_of_strength_id"], name: "aos", using: :btree
+
+  create_table "area_of_weaknesses", force: true do |t|
+    t.integer  "score_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "area_of_weaknesses", ["score_id"], name: "index_area_of_weaknesses_on_score_id", using: :btree
+
+  create_table "area_of_weaknesses_competencies", id: false, force: true do |t|
+    t.integer "area_of_weakness_id"
+    t.integer "competency_id"
+  end
+
+  add_index "area_of_weaknesses_competencies", ["area_of_weakness_id", "competency_id"], name: "aow_c", using: :btree
+  add_index "area_of_weaknesses_competencies", ["area_of_weakness_id"], name: "aow", using: :btree
 
   create_table "assignments", force: true do |t|
     t.datetime "created_at"
@@ -41,7 +73,17 @@ ActiveRecord::Schema.define(version: 20150910182938) do
   add_index "assignments_trainees", ["assignment_id", "trainee_id"], name: "index_assignments_trainees_on_assignment_id_and_trainee_id", using: :btree
   add_index "assignments_trainees", ["assignment_id"], name: "index_assignments_trainees_on_assignment_id", using: :btree
 
+  create_table "colors", force: true do |t|
+    t.integer  "project_id"
+    t.string   "color"
+    t.integer  "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "competencies", force: true do |t|
+    t.integer  "area_of_strength_id"
+    t.integer  "area_of_weakness_id"
     t.string   "name"
     t.text     "description"
     t.datetime "created_at"
@@ -117,6 +159,8 @@ ActiveRecord::Schema.define(version: 20150910182938) do
     t.boolean  "completed"
     t.date     "completed_date"
     t.date     "assigned_date"
+    t.integer  "area_of_strength_id"
+    t.integer  "area_of_weakness_id"
   end
 
   add_index "scores", ["assignment_id"], name: "index_scores_on_assignment_id", using: :btree

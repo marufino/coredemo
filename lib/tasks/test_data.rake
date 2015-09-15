@@ -104,6 +104,9 @@ namespace :app do
           score[k].completed = 'f'
         end
 
+        score[k].build_area_of_weakness
+        score[k].build_area_of_strength
+
         ### generate ratings
         a[k].surveys.first.survey_blocks.each do |block| block.questions.each_with_index do |q , j |
 

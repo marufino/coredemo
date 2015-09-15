@@ -15,10 +15,19 @@ class ProjectsController < ApplicationController
   def new
     @project = Project.new
     @assignments = @project.assignments.build
+
+
+
+    @colors = []
+    3.times do |i|
+      @colors << @project.colors.build(:color => $colors[i])
+    end
+
     respond_with(@project)
   end
 
   def edit
+    @colors = @project.colors
   end
 
   def create
@@ -123,6 +132,6 @@ class ProjectsController < ApplicationController
     end
 
     def project_params
-      params[:project].permit(:name, :observer_ids, assignments_attributes: [:id, :date, :survey_id, :trainee_ids])
+      params[:project].permit(:name, :observer_ids, assignments_attributes: [:id, :date, :survey_id, :trainee_ids], colors_attributes: [:id, :color, :value])
     end
 end

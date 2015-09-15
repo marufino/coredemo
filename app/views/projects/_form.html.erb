@@ -17,18 +17,25 @@
     <%= f.label :observers %>
     <%= f.select :observer_ids, Observer.all.collect {|x| [x.user.email, x.id]}, {}, :multiple => true %>
 
+    <br><br>
+    <p>Color Cut-offs for CORE score</p>
+    <%= f.fields_for :colors do |color_form| %>
+        <%= color_form.label @colors[color_form.options[:child_index]].color %>
+        <%= color_form.number_field :value , within: 1...100, :value => 20+20*color_form.options[:child_index]  %>
+    <% end %>
+        <br><br>
         <p>Assignments</p>
         <%= f.nested_fields_for :assignments do |assign_form| %>
             <p>
               <%= assign_form.label :date %>
               <%= assign_form.date_field :date %>
 
-              <%= assign_form.label :survey%>
+              <%= assign_form.label 'Scorecard'%>
               <%= assign_form.collection_select :survey_id,
                                                 Survey.all, :id, :name,
-                                                :prompt => true %>
+                                                :prompt => false %>
 
-              <%= assign_form.label :trainee %>
+              <%= assign_form.label 'Trainees' %>
               <%= assign_form.select :trainee_ids, Trainee.all.collect {|x| [x.user.email, x.id]}, {}, :multiple => true %>
 
               <%= assign_form.remove_nested_fields_link %>

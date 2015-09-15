@@ -1,5 +1,8 @@
 class Competency < ActiveRecord::Base
 
+  has_and_belongs_to_many :area_of_strength
+  has_and_belongs_to_many :area_of_weakness
+
   def self.import(file)
     spreadsheet = Roo::Spreadsheet.open(file, :extension => 'xls')
     header = spreadsheet.row(1)
@@ -18,6 +21,10 @@ class Competency < ActiveRecord::Base
       when ".xlsx" then Roo::Excelx.new(file.path, nil, :ignore)
       else raise "Unknown file type: #{file.original_filename}"
     end
+  end
+
+  def self.options_for_select
+    order('id').map { |e| [e.name, e.id] }
   end
 
 end

@@ -19,7 +19,9 @@ class ScoresController < ApplicationController
             with_trainee_id: Trainee.options_for_select,
             with_survey: Survey.options_for_select,
             with_observer_id: Observer.options_for_select,
-            with_project: Project.options_for_select
+            with_project: Project.options_for_select,
+            with_area_of_strength: Competency.options_for_select,
+            with_area_of_weakness: Competency.options_for_select
         }
     ) or return
     @scores_all = @filterrific.find
@@ -84,6 +86,8 @@ class ScoresController < ApplicationController
   def new
     @score = Score.new
     @score.ratings.build
+    @score.build_area_of_weakness
+    @score.build_area_of_strength
     respond_with(@score)
   end
 
@@ -115,13 +119,10 @@ class ScoresController < ApplicationController
 
   def update
 
-    if params[:submit]
-      @score.completed = true
-      @score.completed_date = Date.today
-    end
-
     # pull questions for this score
     questions = @score.assignment.surveys[0].questions
+    blocks = @score.assignment.surveys[0].survey_blocks
+
 
     # init params hash
     update_params = {'ratings_attributes'=>{}}
@@ -134,37 +135,61 @@ class ScoresController < ApplicationController
       ratings << rating
     end
 
-    #byebug
+    if params[:submit]
+
+      @score.completed = true
+      @score.completed_date = Date.today
 
 
-    q_knowledge = 0
-    q_skills = 0
-    q_abilities = 0
-    knowledge = 0
-    abilities = 0
-    skills= 0
-    #generate CORE Scores
-    questions.each_with_index do |q,i|
-      if q.survey_block.category == 'Knowledge'
-        knowledge = knowledge + ratings[i].to_i
-        q_knowledge = q_knowledge + 1
+      # pull areas of strength and areas of weakness
+      rating_map = ratings.zip(questions).sort!
+
+      a_s = AreaOfStrength.where(:score_id => @score.id).first
+      a_w = AreaOfWeakness.where(:score_id => @score.id).first
+
+      3.times do
+        a_s.competencies.build
+        a_w.competencies.build
       end
-      if q.survey_block.category == 'Ability'
-        abilities = abilities + ratings[i].to_i
-        q_abilities = q_abilities + 1
+
+      rating_map.last(3).each do |r|
+        a_s.competencies << Competency.find_by_name(r[1].category)
       end
-      if q.survey_block.category == 'Skills'
-        skills = skills + ratings[i].to_i
-        q_skills = q_skills + 1
+
+      rating_map.first(3).each_with_index do |r,i|
+        a_w.competencies << Competency.find_by_name(r[1].category)
       end
+
+      byebug
+
+      @score.area_of_strength_id = a_s.id
+      @score.area_of_weakness_id = a_w.id
+
+
+      num_options = 6.0
+      knowledge = 0
+      abilities = 0
+      skills= 0
+      #generate CORE Scores
+      questions.each_with_index do |q,i|
+        if q.survey_block.category == 'Knowledge'
+          knowledge = knowledge + ratings[i].to_i * q.weight/num_options
+        end
+        if q.survey_block.category == 'Skills'
+          skills = skills + ratings[i].to_i * q.weight/num_options
+        end
+        if q.survey_block.category == 'Ability'
+          abilities = abilities + ratings[i].to_i * q.weight/num_options
+        end
+      end
+
+      @score.knowledge  = knowledge * 100.0/blocks[0].weight
+      @score.skills     = skills * 100.0/blocks[1].weight
+      @score.abilities  = abilities * 100.0/blocks[2].weight
+      @score.total      = knowledge+abilities+skills
+
     end
 
-
-
-    @score.knowledge  = knowledge / q_knowledge*10
-    @score.abilities  = abilities / q_abilities*10
-    @score.skills     = skills / q_skills*10
-    @score.total      = ratings.map(&:to_f).reduce(:+) / questions.size*10
 
     # update score
     respond_to do |format|

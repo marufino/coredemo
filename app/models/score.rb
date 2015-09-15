@@ -9,9 +9,13 @@ class Score < ActiveRecord::Base
                 with_survey
                 with_observer_id
                 with_project
+                with_area_of_strength
+                with_area_of_weakness
               ]
 
   has_many :ratings
+  has_one :area_of_strength
+  has_one :area_of_weakness
   belongs_to :trainee
   belongs_to :assignment
 
@@ -75,6 +79,16 @@ class Score < ActiveRecord::Base
 
   scope :with_project, lambda { |project_id|
     where(:assignment_id => Assignment.where(:project_id => [*project_id]))
+  }
+
+  scope :with_area_of_strength, lambda { |competency_id|
+    comp = Competency.find_by_id([*competency_id])
+    where(:area_of_strength_id => comp.area_of_strength.ids)
+  }
+
+  scope :with_area_of_weakness, lambda { |competency_id|
+    comp = Competency.find_by_id([*competency_id])
+    where(:area_of_weakness_id => comp.area_of_weakness.ids)
   }
 
 
