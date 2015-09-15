@@ -6,6 +6,7 @@ class ScoresController < ApplicationController
 
     @curr_page_scores = true
 
+    # parameter to decide whether to show cards or table
     @cards = false
     @cards = params[:cards]
 
@@ -24,6 +25,10 @@ class ScoresController < ApplicationController
     @scores_all = @filterrific.find
     @scores = @filterrific.find.page(params[:page])
 
+    # if cards only show last two weeks and not completed scores
+    if @cards
+      @scores = @scores.where(:completed => false).where(:assigned_date =>  15.days.ago..Date.today())
+    end
 
     @users = []
     @last_assignments = []
@@ -129,7 +134,7 @@ class ScoresController < ApplicationController
       ratings << rating
     end
 
-    byebug
+    #byebug
 
 
     q_knowledge = 0

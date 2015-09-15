@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   include ApplicationHelper
   respond_to :html, :json
 
+  before_action :set_user, only: [:edit, :update, :destroy]
 
   # GET /users
   # GET /users.json
@@ -149,10 +150,33 @@ class UsersController < ApplicationController
 
   end
 
-  private
+  def import
+    User.import(params[:file])
+    redirect_to users_path, notice: "Users imported."
+  end
 
+  def edit
+  end
+
+  def update
+    @user.update(user_params)
+    redirect_to users_path, notice: "User updated."
+  end
+
+  def destroy
+    @user.destroy
+    redirect_to users_path, notice: "User deleted."
+  end
+
+
+  private
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
-    params[:user]
+    params[:user].permit(:first_name, :last_name, :email, :phone, :title)
   end
+
+  def set_user
+    @user = User.find(params[:id])
+  end
+
 end

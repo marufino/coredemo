@@ -18,6 +18,8 @@ Rails.application.routes.draw do
 
   match 'users/:id' => 'users#show', via: :get, :as => :user
 
+  match 'users/edit/:id' => 'users#edit', via: :get, :as => :edit_user
+
   match 'users/' => 'users#index', via: :get
 
   resources :surveys
@@ -27,6 +29,14 @@ Rails.application.routes.draw do
   resources :questions
 
   root 'pages#home'
+
+  resources :users do
+    collection { post :import }
+  end
+
+  resources :competencies do
+    collection { post :import }
+  end
 
   get 'survey_blocks/:id/sign' => 'survey_blocks#show_sign', as: :show_sign_survey
   post 'survey_blocks/:id/sign' => 'survey_blocks#sign', as: :sign_survey

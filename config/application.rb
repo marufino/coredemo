@@ -24,5 +24,7 @@ module BootstrapBlogSeriesTodoApp
 
     config.assets.paths << Rails.root.join('vendor', 'assets', 'components')
 
+    config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
+
   end
 end

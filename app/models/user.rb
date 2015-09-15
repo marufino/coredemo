@@ -30,4 +30,49 @@ class User < ActiveRecord::Base
     order('LOWER(last_name)').map { |e| [e.last_name, e.meta.id] }
   end
 
+  def self.import(file)
+    spreadsheet = Roo::Spreadsheet.open(file, :extension => 'xls')
+    header = spreadsheet.row(1)
+    (2..spreadsheet.last_row).each do |i|
+      row = Hash[[header, spreadsheet.row(i)].transpose]
+      user = find_by_email(row["email"]) || new
+      user.attributes = row.to_hash.slice(*row.to_hash.keys)
+      user.password = 'password'
+      if(user.meta_type=='Trainee' and user.meta_id == nil)
+        trainee = Trainee.new
+        user.meta = trainee
+      elsif(user.meta_type=='Observer' and user.meta_id == nil)
+        observer = Observer.new
+        user.meta = observer
+      end
+      user.save!
+    end
+  end
+
+  def self.open_spreadsheet(file)
+    case File.extname(file.original_filename)
+      when ".csv" then Csv.new(file.path, nil, :ignore)
+      when ".xls" then Roo::Excel.new(file.path, nil, :ignore)
+      when ".xlsx" then Roo::Excelx.new(file.path, nil, :ignore)
+      else raise "Unknown file type: #{file.original_filename}"
+    end
+  end
+
+  def get_picture(email)
+
+    # register API key
+    client = LinkedIn::Client.new('your_consumer_key', 'your_consumer_secret')
+
+    # retrieve picture from linkedin api
+    picture = client.profile(:email => email, :fields => ['picture-url'])
+
+    # add to user model
+    if picture
+      u = User.find_by_email(email).picture = picture
+      u.save
+    end
+
+  end
+
+
 end

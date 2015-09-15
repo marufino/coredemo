@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150908032836) do
+ActiveRecord::Schema.define(version: 20150910182938) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "assignments", force: true do |t|
     t.datetime "created_at"
@@ -27,16 +30,16 @@ ActiveRecord::Schema.define(version: 20150908032836) do
     t.integer "survey_id"
   end
 
-  add_index "assignments_surveys", ["assignment_id", "survey_id"], name: "index_assignments_surveys_on_assignment_id_and_survey_id"
-  add_index "assignments_surveys", ["assignment_id"], name: "index_assignments_surveys_on_assignment_id"
+  add_index "assignments_surveys", ["assignment_id", "survey_id"], name: "index_assignments_surveys_on_assignment_id_and_survey_id", using: :btree
+  add_index "assignments_surveys", ["assignment_id"], name: "index_assignments_surveys_on_assignment_id", using: :btree
 
   create_table "assignments_trainees", id: false, force: true do |t|
     t.integer "assignment_id"
     t.integer "trainee_id"
   end
 
-  add_index "assignments_trainees", ["assignment_id", "trainee_id"], name: "index_assignments_trainees_on_assignment_id_and_trainee_id"
-  add_index "assignments_trainees", ["assignment_id"], name: "index_assignments_trainees_on_assignment_id"
+  add_index "assignments_trainees", ["assignment_id", "trainee_id"], name: "index_assignments_trainees_on_assignment_id_and_trainee_id", using: :btree
+  add_index "assignments_trainees", ["assignment_id"], name: "index_assignments_trainees_on_assignment_id", using: :btree
 
   create_table "competencies", force: true do |t|
     t.string   "name"
@@ -57,8 +60,8 @@ ActiveRecord::Schema.define(version: 20150908032836) do
     t.integer "project_id"
   end
 
-  add_index "observers_projects", ["observer_id", "project_id"], name: "index_observers_projects_on_observer_id_and_project_id"
-  add_index "observers_projects", ["observer_id"], name: "index_observers_projects_on_observer_id"
+  add_index "observers_projects", ["observer_id", "project_id"], name: "index_observers_projects_on_observer_id_and_project_id", using: :btree
+  add_index "observers_projects", ["observer_id"], name: "index_observers_projects_on_observer_id", using: :btree
 
   create_table "projects", force: true do |t|
     t.datetime "created_at"
@@ -76,7 +79,7 @@ ActiveRecord::Schema.define(version: 20150908032836) do
     t.datetime "updated_at"
   end
 
-  add_index "questions", ["survey_block_id"], name: "index_questions_on_survey_block_id"
+  add_index "questions", ["survey_block_id"], name: "index_questions_on_survey_block_id", using: :btree
 
   create_table "ratings", force: true do |t|
     t.integer  "observer_id"
@@ -87,9 +90,9 @@ ActiveRecord::Schema.define(version: 20150908032836) do
     t.datetime "updated_at"
   end
 
-  add_index "ratings", ["observer_id"], name: "index_ratings_on_observer_id"
-  add_index "ratings", ["question_id"], name: "index_ratings_on_question_id"
-  add_index "ratings", ["score_id"], name: "index_ratings_on_score_id"
+  add_index "ratings", ["observer_id"], name: "index_ratings_on_observer_id", using: :btree
+  add_index "ratings", ["question_id"], name: "index_ratings_on_question_id", using: :btree
+  add_index "ratings", ["score_id"], name: "index_ratings_on_score_id", using: :btree
 
   create_table "roles", force: true do |t|
     t.string   "name"
@@ -116,8 +119,8 @@ ActiveRecord::Schema.define(version: 20150908032836) do
     t.date     "assigned_date"
   end
 
-  add_index "scores", ["assignment_id"], name: "index_scores_on_assignment_id"
-  add_index "scores", ["trainee_id"], name: "index_scores_on_trainee_id"
+  add_index "scores", ["assignment_id"], name: "index_scores_on_assignment_id", using: :btree
+  add_index "scores", ["trainee_id"], name: "index_scores_on_trainee_id", using: :btree
 
   create_table "survey_blocks", force: true do |t|
     t.integer  "survey_id"
@@ -127,7 +130,7 @@ ActiveRecord::Schema.define(version: 20150908032836) do
     t.datetime "updated_at"
   end
 
-  add_index "survey_blocks", ["survey_id"], name: "index_survey_blocks_on_survey_id"
+  add_index "survey_blocks", ["survey_id"], name: "index_survey_blocks_on_survey_id", using: :btree
 
   create_table "surveys", force: true do |t|
     t.datetime "created_at"
@@ -159,10 +162,11 @@ ActiveRecord::Schema.define(version: 20150908032836) do
     t.string   "first_name"
     t.string   "last_name"
     t.string   "title"
+    t.text     "phone"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["meta_id", "meta_type"], name: "index_users_on_meta_id_and_meta_type"
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["meta_id", "meta_type"], name: "index_users_on_meta_id_and_meta_type", using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end
