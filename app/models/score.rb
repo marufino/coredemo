@@ -21,6 +21,58 @@ class Score < ActiveRecord::Base
 
   accepts_nested_attributes_for :ratings
 
+  def calculate_scores(ratings,questions)
+
+    blocks = self.assignment.surveys[0].survey_blocks
+
+    # pull areas of strength and areas of weakness
+    rating_map = ratings.zip(questions).sort!
+
+    a_s = AreaOfStrength.where(:score_id => self.id).first
+    a_w = AreaOfWeakness.where(:score_id => self.id).first
+
+    3.times do
+      a_s.competencies.build
+      a_w.competencies.build
+    end
+
+    rating_map.last(3).each do |r|
+      a_s.competencies << Competency.find_by_name(r[1].category)
+    end
+
+    rating_map.first(3).each_with_index do |r,i|
+      a_w.competencies << Competency.find_by_name(r[1].category)
+    end
+
+
+    self.area_of_strength_id = a_s.id
+    self.area_of_weakness_id = a_w.id
+
+
+    num_options = 6.0
+    knowledge = 0
+    abilities = 0
+    skills= 0
+    #generate CORE Scores
+    questions.each_with_index do |q,i|
+      if q.survey_block.category == 'Knowledge'
+        knowledge = knowledge + ratings[i].to_i * q.weight/num_options
+      end
+      if q.survey_block.category == 'Skills'
+        skills = skills + ratings[i].to_i * q.weight/num_options
+      end
+      if q.survey_block.category == 'Ability'
+        abilities = abilities + ratings[i].to_i * q.weight/num_options
+      end
+    end
+
+    self.knowledge  = knowledge * 100.0/blocks[0].weight
+    self.skills     = skills * 100.0/blocks[1].weight
+    self.abilities  = abilities * 100.0/blocks[2].weight
+    self.total      = knowledge+abilities+skills
+  end
+
+
   # default for will_paginate
   self.per_page = 20
 
@@ -109,5 +161,6 @@ class Score < ActiveRecord::Base
       end
     end
   end
+
 
 end

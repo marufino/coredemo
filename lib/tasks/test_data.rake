@@ -107,6 +107,7 @@ namespace :app do
         score[k].build_area_of_weakness
         score[k].build_area_of_strength
 
+        ratings=[]
         ### generate ratings
         a[k].surveys.first.survey_blocks.each do |block| block.questions.each_with_index do |q , j |
 
@@ -123,10 +124,14 @@ namespace :app do
             r[j].observer = p.observers.first
 
             r[j].save
-            end
+
+            ratings << r[j].value
+          end
         end
 
         score[k].assignment_id = a[k].id
+        score[k].save
+        score[k].calculate_scores(ratings,score[k].assignment.surveys[0].questions)
         score[k].save
 
         # add assignment to project
