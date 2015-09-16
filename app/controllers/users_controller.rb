@@ -24,7 +24,9 @@ class UsersController < ApplicationController
 
       @score = @user.meta.last_completed_scorecard
 
-      @percent_improvement = @trainee.previous_scorecard(@score).percent_improvement(@trainee)
+      if @score
+        @percent_improvement = @score.percent_improvement(@trainee)
+      end
 
       @graph = graph_scores_for_trainee(@trainee)
 
