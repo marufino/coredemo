@@ -8,7 +8,7 @@
       <small><%= score.assigned_date %></small><br>
       <small>Last evaluation: <%= user.meta.previous_scorecard(score).assigned_date %></small><br>
       <small>Evaluation by:</small>
-        <% @observers.each do |o| %>
+        <% user.meta.previous_scorecard(score).get_observers.each do |o| %>
           <small><%= o.user.first_name %> <%= o.user.last_name %></small><br>
         <% end %>
       <small>Results:</small><small><%= user.meta.previous_scorecard(score).total %></small><br>
@@ -26,21 +26,34 @@
         <% end %>
       <% end %>
     </div>
-    <div class="col-xs-1 user-profile">
-      <%= link_to edit_score_path(score) do %>
-        <div class="center-vertical">
-          Evaluate
+    <% if !score.completed %>
+        <div class="col-xs-1 user-profile">
+          <%= link_to edit_score_path(score) do %>
+            <div class="center-vertical">
+              Evaluate
+            </div>
+          <% end %>
         </div>
-      <% end %>
-    </div>
+    <% elsif score.completed %>
+      <div class="col-xs-1 user-profile">
+        <%= link_to edit_score_path(score) do %>
+            <div class="center-vertical">
+              View
+            </div>
+        <% end %>
+      </div>
+  <% end %>
 </div>
 
 <script type="text/javascript">
 
   <% if @last_assignments %>
       <% if @last_assignments[index] %>
-        <% @values = user.meta.previous_scorecard(score) %>
-
+        <% if score.completed %>
+            <% @values = score %>
+        <% elsif !score.completed %>
+            <% @values = user.meta.previous_scorecard(score) %>
+        <% end %>
           <% if @percent_improvements[index] %>
             <% @percent_improvements[index].each do |p| %>
 

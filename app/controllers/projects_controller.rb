@@ -20,17 +20,19 @@ class ProjectsController < ApplicationController
 
     @colors = []
     3.times do |i|
-      @colors << @project.colors.build(:color => $colors[i])
+      c = @project.colors.build(:color => $colors[i])
+      c.save
+      @colors << c
     end
 
     respond_with(@project)
   end
 
   def edit
-    @colors = @project.colors
   end
 
   def create
+
     @project = Project.new(project_params)
 
     # assign observers to this project

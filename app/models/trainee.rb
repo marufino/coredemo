@@ -27,6 +27,42 @@ class Trainee < ActiveRecord::Base
 
   end
 
+  def get_aos
+    scores = Score.where(:trainee_id => self.id)
+
+    competencies = []
+
+    scores.each do |score|
+      score.area_of_strength.competencies.each do |c| competencies << c.name end
+    end
+
+    counts = Hash.new 0
+
+    competencies.each do |c|
+      counts[c] += 1
+    end
+    counts = counts.sort_by{|k,v| v}.reverse
+    return counts.first(3)
+  end
+
+  def get_aow
+    scores = Score.where(:trainee_id => self.id)
+
+    competencies = []
+
+    scores.each do |score|
+      score.area_of_weakness.competencies.each do |c| competencies << c.name end
+    end
+
+    counts = Hash.new 0
+
+    competencies.each do |c|
+      counts[c] += 1
+    end
+    counts = counts.sort_by{|k,v| v}.reverse
+    return counts.first(3)
+  end
+
   def mean(arr)
     arr.inject{ |sum, el| sum + el }.to_f / arr.size
   end
@@ -37,7 +73,11 @@ class Trainee < ActiveRecord::Base
   end
 
   def next_scorecard
-    return Score.where(:completed => 'f').where(:trainee_id => self.id).order('assigned_date').first
+    return Score.where(:completed => false).where(:trainee_id => self.id).order('assigned_date').first
+  end
+
+  def last_completed_scorecard
+    return Score.where(:completed => true).where(:trainee_id => self.id).order('completed_date').last
   end
 
   def previous_scorecard(score)

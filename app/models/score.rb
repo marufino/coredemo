@@ -72,6 +72,50 @@ class Score < ActiveRecord::Base
     self.total      = knowledge+abilities+skills
   end
 
+  def get_observers
+    ratings = self.ratings
+
+    observers = []
+
+    ratings.each do |r|
+      observers << r.observer
+    end
+
+    return observers.uniq
+  end
+
+  def percent_improvement(trainee)
+    first_score = trainee.previous_scorecard(self)
+    second_score = self
+
+    percent_improvement = Hash.new
+
+    if second_score
+
+      percent_improvement['knowledge'] = ((second_score.knowledge - first_score.knowledge) / first_score.knowledge.to_f) * 100
+      percent_improvement['skills'] = ((second_score.skills - first_score.skills) / first_score.skills.to_f) * 100
+      percent_improvement['abilities'] = ((second_score.abilities - first_score.abilities) / first_score.abilities.to_f) * 100
+      percent_improvement['total'] = ((second_score.total - first_score.total) / first_score.total.to_f) * 100
+
+      # if infinity improvement (i.e. last score is 0) return 0% improvement
+      percent_improvement.each do |p|
+        if p[1] == Float::INFINITY
+          percent_improvement[p[0]] = 0
+        end
+      end
+
+    else
+      percent_improvement['knowledge'] = 0
+      percent_improvement['skills'] = 0
+      percent_improvement['abilities'] = 0
+      percent_improvement['total'] = 0
+    end
+
+
+
+    return percent_improvement
+  end
+
 
   # default for will_paginate
   self.per_page = 20

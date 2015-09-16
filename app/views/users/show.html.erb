@@ -2,6 +2,7 @@
   <% if @user.trainee? %>
     <h4>Your Results</h4>
     <%= render :partial => "shared/profile_block", :locals => {:user => @trainee.user, :score => @score} %>
+    <%= render :partial => "shared/areas_of_user", :locals => {:aos => @aos, :aow => @aow} %>
   <% elsif @user.observer? & !@user.role?('admin') %>
     <% if @trainee %>
       <h4>Upcoming Scorecard</h4>

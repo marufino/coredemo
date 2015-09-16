@@ -1,10 +1,10 @@
 class Project < ActiveRecord::Base
 
-  has_many :assignments
+  has_many :assignments, dependent: :destroy
   has_and_belongs_to_many :observers
   has_many :surveys, through: :assignments
   has_many :trainees, through: :assignments
-  has_many :colors
+  has_many :colors, dependent: :destroy
 
 
 

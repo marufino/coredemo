@@ -11,7 +11,7 @@
 
           <% if @observers %>
           <small>Evaluation by:</small>
-            <% @observers.each do |o| %>
+            <% user.meta.previous_scorecard(score).get_observers.each do |o| %>
               <small><%= o.user.first_name %> <%= o.user.last_name %></small><br>
             <% end %>
           <% end %>
@@ -42,9 +42,8 @@
 
 <script type="text/javascript">
 
-  <% if @last_assignment %>
-    <% @values = Score.where(:assignment_id =>  @last_assignment.id).where(:trainee_id => user.meta.id).first %>
-  <% end %>
+    <% @values = score %>
+
 
   <% if @percent_improvement %>
     <% @percent_improvement.each do |p| %>

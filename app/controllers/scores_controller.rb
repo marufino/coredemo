@@ -79,6 +79,8 @@ class ScoresController < ApplicationController
     @second_to_last_assignment = trainee.get_nth_assignment(-2)
     @observers = Project.find(@last_assignment.project_id).observers
 
+    byebug
+
     respond_with(@score)
 
   end
@@ -92,6 +94,7 @@ class ScoresController < ApplicationController
   end
 
   def edit
+
     @curr_page_score_edit = true
     @blocks = @score.assignment.surveys.first.survey_blocks
     @ratings = @score.ratings

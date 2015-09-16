@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<%= render :partial => "shared/profile_block", :locals => {:user => @score.trainee.user} %>
+<%= render :partial => "shared/profile_block", :locals => {:user => @score.trainee.user, :score => @score} %>
 
 <% @blocks.each_with_index do |block| %>
 

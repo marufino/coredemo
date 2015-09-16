@@ -2,7 +2,7 @@ module ApplicationHelper
 
   def get_scores_by_observer(obs)
     scores = []
-    obs.projects.each {|proj| proj.assignments.order(:date).each {|ass| Score.where(:assignment_id => ass.id).each {|score| scores << score} }}
+    obs.projects.each {|proj| proj.assignments.order(:date).each {|ass| Score.where(:assignment_id => ass.id).where(:completed => true).each {|score| scores << score} }}
     return scores
   end
 
@@ -37,7 +37,7 @@ module ApplicationHelper
   def graph_scores_for_trainee(trainee)
 
     # scores for trainee
-    scores = Score.where( :trainee_id => trainee.id)#.where( :completed => 't')
+    scores = Score.where( :trainee_id => trainee.id).where( :completed => 't')
 
     return create_graph_for_scores(scores)
   end
@@ -94,19 +94,28 @@ module ApplicationHelper
 
     percent_improvement = Hash.new
 
-    percent_improvement['knowledge'] = ((second_score.knowledge - first_score.knowledge) / first_score.knowledge.to_f) * 100
-    percent_improvement['skills'] = ((second_score.skills - first_score.skills) / first_score.skills.to_f) * 100
-    percent_improvement['abilities'] = ((second_score.abilities - first_score.abilities) / first_score.abilities.to_f) * 100
-    percent_improvement['total'] = ((second_score.total - first_score.total) / first_score.total.to_f) * 100
+    if second_score
 
-    # if infinity improvement (i.e. last score is 0) return 0% improvement
-    percent_improvement.each do |p|
-      if p[1] == Float::INFINITY
-        percent_improvement[p[0]] = 0
+      percent_improvement['knowledge'] = ((second_score.knowledge - first_score.knowledge) / first_score.knowledge.to_f) * 100
+      percent_improvement['skills'] = ((second_score.skills - first_score.skills) / first_score.skills.to_f) * 100
+      percent_improvement['abilities'] = ((second_score.abilities - first_score.abilities) / first_score.abilities.to_f) * 100
+      percent_improvement['total'] = ((second_score.total - first_score.total) / first_score.total.to_f) * 100
+
+      # if infinity improvement (i.e. last score is 0) return 0% improvement
+      percent_improvement.each do |p|
+        if p[1] == Float::INFINITY
+          percent_improvement[p[0]] = 0
+        end
       end
+
+    else
+      percent_improvement['knowledge'] = 0
+      percent_improvement['skills'] = 0
+      percent_improvement['abilities'] = 0
+      percent_improvement['total'] = 0
     end
 
-    return percent_improvement
+      return percent_improvement
 
 
   end

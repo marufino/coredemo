@@ -32,6 +32,7 @@ class SurveysController < ApplicationController
   # POST /surveys
   # POST /surveys.json
   def create
+    @competencies = Competency.all
     @survey = Survey.new(survey_params)
 
     respond_to do |format|
@@ -78,6 +79,6 @@ class SurveysController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def survey_params
-      params[:survey].permit(:name, :add_question, survey_blocks_attributes: [:id, :category, :weight, questions_attributes:[:id, :category, :weight, :description, :_destroy]])
+      params[:survey].permit(:name, :description, :add_question, survey_blocks_attributes: [:id, :category, :weight, questions_attributes:[:id, :category, :weight, :description, :_destroy]])
     end
 end
