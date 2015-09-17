@@ -16,10 +16,14 @@ class SurveysController < ApplicationController
   # GET /surveys/new
   def new
     @survey = Survey.new
+
+    @survey_blocks = []
+    @questions = []
     3.times do |i|
-      @survey_blocks = @survey.survey_blocks.build(category: $categorynames[i])
-      @questions = @survey_blocks.questions.build
+      @survey_blocks << @survey.survey_blocks.build
+      @questions << @survey_blocks[i].questions.build
     end
+
     @competencies = Competency.all
 
   end
@@ -27,17 +31,34 @@ class SurveysController < ApplicationController
   # GET /surveys/1/edit
   def edit
     @competencies = Competency.all
+    @survey_blocks = @survey.survey_blocks
   end
 
   # POST /surveys
   # POST /surveys.json
   def create
     @competencies = Competency.all
+
     @survey = Survey.new(survey_params)
+
+    @survey.survey_blocks.each_with_index do |s,i|
+      s.category = $categorynames[i]
+    end
+
+    @survey.survey_blocks.each do |block| block.questions.each do |q|
+      q.description = Competency.find_by_name(q.category).description
+      end
+    end
 
     respond_to do |format|
       if @survey.save
-        format.html { redirect_to @survey, notice: 'Survey was successfully created.' }
+
+        if duplicate_competencies
+          redirect_to edit_survey_path(@survey), notice: 'There are duplicate Competencies in the Scorecard. Please correct'
+          return
+        end
+
+        format.html { redirect_to surveys_path, notice: 'Scorecard was successfully created.' }
         format.json { render :show, status: :created, location: @survey }
       else
         format.html { render :new }
@@ -47,12 +68,40 @@ class SurveysController < ApplicationController
   end
 
 
+  def duplicate_competencies
+    competencies = []
+    for i in 0..2
+      survey_params[:survey_blocks_attributes][i.to_s][:questions_attributes].each do |q|
+        competencies << q.second[:category]
+      end
+    end
+
+    if competencies.uniq.length != competencies.length
+      return true
+    else
+      return false
+    end
+
+  end
+
   # PATCH/PUT /surveys/1
   # PATCH/PUT /surveys/1.json
   def update
+    @competencies = Competency.all
+
+    if duplicate_competencies
+      redirect_to edit_survey_path(@survey), notice: 'There are duplicate Competencies in the Scorecard. Please correct'
+      return
+    end
+
+    @survey.survey_blocks.each do |block| block.questions.each do |q|
+      q.description = Competency.find_by_name(q.category).description
+      end
+    end
+
     respond_to do |format|
       if @survey.update(survey_params)
-        format.html { redirect_to @survey, notice: 'Survey block was successfully updated.' }
+        format.html { redirect_to surveys_path, notice: 'Scorecard was successfully updated.' }
         format.json { render :show, status: :ok, location: @survey }
       else
         format.html { render :edit }
@@ -66,7 +115,7 @@ class SurveysController < ApplicationController
   def destroy
     @survey.destroy
     respond_to do |format|
-      format.html { redirect_to surveys_url, notice: 'Survey was successfully destroyed.' }
+      format.html { redirect_to surveys_url, notice: 'Scorecard was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

@@ -41,35 +41,39 @@
   </div>
 
 
-  <%= f.fields_for :survey_blocks do |block_form| %>
-  <h4><%= $categorynames[block_form.options[:child_index]-3] %> Evaluation (<span id="header-current-<%= $categorynames[block_form.options[:child_index]-3] %>"> </span>/<span id="header-<%= $categorynames[block_form.options[:child_index]-3] %>"> </span>  points)</h4>
-  <div class="scorecard">
-      <table class="table shadow">
-        <thead>
-        <tr style="background-color: lightgrey">
-          <th>Category</th>
-          <th>Rating</th>
-          <th>Weight</th>
-        </tr>
-        </thead>
-            <tr>
-              <%= block_form.nested_fields_for :questions, wrapper_tag: :tr do |q_form| %>
-              <td><%= q_form.collection_select :category, @competencies.where(:category => $categorynames[block_form.options[:child_index]-3]), :name, :name, include_blank: false %>  <span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="color:cornflowerblue"></span></td>
-              <td><% (1..6).each do |i| %>
-                  <%= radio_button_tag "test", i, 0, options = {:disabled => true} %>
-                <% end %></td>
-              <td><%= q_form.number_field :weight, within: 1...100 , :class =>  $categorynames[block_form.options[:child_index]-3] + '-category-weights' %><%= q_form.remove_nested_fields_link do %>
-                  <span class="glyphicon glyphicon-minus-sign" aria-hidden="true" style="color:red"></span>
-                  <% end %>
-              </td>
+  <% @survey_blocks.each_with_index do |item, i| %>
+    <%= f.fields_for :survey_blocks, item, :child_index => i do |block_form| %>
+      <h4><%= $categorynames[block_form.options[:child_index]-3] %> Evaluation (<span id="header-current-<%= $categorynames[block_form.options[:child_index]-3] %>"> </span>/<span id="header-<%= $categorynames[block_form.options[:child_index]-3] %>"> </span>  points)</h4>
+      <div class="scorecard">
+          <table class="table shadow">
+            <thead>
+            <tr style="background-color: lightgrey">
+              <th>Category</th>
+              <th>Rating</th>
+              <th>Weight</th>
             </tr>
-          <% end %>
-          <tr>
-            <td><%= block_form.add_nested_fields_link :questions, 'Add new +' %></td>
-          </tr>
+            </thead>
+                <tr>
+                  <%= block_form.nested_fields_for :questions, wrapper_tag: :tr do |q_form| %>
+                  <td><%= q_form.collection_select :category, @competencies.where(:category => $categorynames[block_form.options[:child_index]-3]), :name, :name, include_blank: false %>  <span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="color:cornflowerblue"></span></td>
+                  <td><% (1..6).each do |i| %>
+                      <%= radio_button_tag "rating", i, 0, options = {:disabled => true} %>
+                    <% end %></td>
+                  <td>
+                    <%= q_form.number_field :weight, within: 1...100 , :class =>  $categorynames[block_form.options[:child_index]-3] + '-category-weights' %>
+                    <%= q_form.remove_nested_fields_link do %>
+                      <span class="glyphicon glyphicon-minus-sign" aria-hidden="true" style="color:red"></span>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+              <tr>
+                <td><%= block_form.add_nested_fields_link :questions, 'Add new +' %></td>
+              </tr>
 
-      </table>
+          </table>
     <% end %>
+  <% end %>
   </div>
 
 

@@ -1,6 +1,6 @@
 class Survey < ActiveRecord::Base
 
-  has_many :survey_blocks
+  has_many :survey_blocks, dependent: :destroy
   has_many :questions , through: :survey_blocks
   has_and_belongs_to_many :assignments
 
