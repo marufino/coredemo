@@ -14,7 +14,7 @@ Rails.application.routes.draw do
 
   resources :scores
 
-  devise_for :users,  :controllers => { :registrations => "users/registrations", :sessions => "sessions" }
+  devise_for :users,  :controllers => { :registrations => "users/registrations", :sessions => "sessions", :passwords => "passwords" }
 
   match 'users/:id' => 'users#show', via: :get, :as => :user
 

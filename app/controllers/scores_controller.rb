@@ -19,7 +19,9 @@ class ScoresController < ApplicationController
             with_trainee_id: Trainee.options_for_select,
             with_survey: Survey.options_for_select,
             with_observer_id: Observer.options_for_select,
-            with_project: Project.options_for_select
+            with_project: Project.options_for_select,
+            with_area_of_strength: Competency.options_for_select,
+            with_area_of_weakness: Competency.options_for_select
         }
     ) or return
     @scores_all = @filterrific.find
@@ -77,6 +79,7 @@ class ScoresController < ApplicationController
     @second_to_last_assignment = trainee.get_nth_assignment(-2)
     @observers = Project.find(@last_assignment.project_id).observers
 
+
     respond_with(@score)
 
   end
@@ -84,10 +87,13 @@ class ScoresController < ApplicationController
   def new
     @score = Score.new
     @score.ratings.build
+    @score.build_area_of_weakness
+    @score.build_area_of_strength
     respond_with(@score)
   end
 
   def edit
+
     @curr_page_score_edit = true
     @blocks = @score.assignment.surveys.first.survey_blocks
     @ratings = @score.ratings
@@ -115,11 +121,6 @@ class ScoresController < ApplicationController
 
   def update
 
-    if params[:submit]
-      @score.completed = true
-      @score.completed_date = Date.today
-    end
-
     # pull questions for this score
     questions = @score.assignment.surveys[0].questions
 
@@ -129,42 +130,22 @@ class ScoresController < ApplicationController
     ratings = []
     # for each questions extract the rating and add to params hash
     questions.each do |q|
+
       rating = params[q.id.to_s]
       update_params['ratings_attributes'][q.id.to_s] = {'value' => rating.to_s, 'id' => Rating.where(question_id: q.id, score_id: @score.id).first.id.to_s}
       ratings << rating
     end
 
-    #byebug
+    if params[:submit]
+
+      @score.completed = true
+      @score.completed_date = Date.today
 
 
-    q_knowledge = 0
-    q_skills = 0
-    q_abilities = 0
-    knowledge = 0
-    abilities = 0
-    skills= 0
-    #generate CORE Scores
-    questions.each_with_index do |q,i|
-      if q.survey_block.category == 'Knowledge'
-        knowledge = knowledge + ratings[i].to_i
-        q_knowledge = q_knowledge + 1
-      end
-      if q.survey_block.category == 'Ability'
-        abilities = abilities + ratings[i].to_i
-        q_abilities = q_abilities + 1
-      end
-      if q.survey_block.category == 'Skills'
-        skills = skills + ratings[i].to_i
-        q_skills = q_skills + 1
-      end
+      @score.calculate_scores(ratings,questions)
+
     end
 
-
-
-    @score.knowledge  = knowledge / q_knowledge*10
-    @score.abilities  = abilities / q_abilities*10
-    @score.skills     = skills / q_skills*10
-    @score.total      = ratings.map(&:to_f).reduce(:+) / questions.size*10
 
     # update score
     respond_to do |format|

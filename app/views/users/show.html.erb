@@ -2,6 +2,9 @@
   <% if @user.trainee? %>
     <h4>Your Results</h4>
     <%= render :partial => "shared/profile_block", :locals => {:user => @trainee.user, :score => @score} %>
+  <% if @percent_improvement %>
+    <%= render :partial => "shared/areas_of_user", :locals => {:aos => @aos, :aow => @aow} %>
+  <% end %>
   <% elsif @user.observer? & !@user.role?('admin') %>
     <% if @trainee %>
       <h4>Upcoming Scorecard</h4>
@@ -111,7 +114,7 @@
           </div>
           <div class="row">
             <div class = 'timeline-date timeline-date-<%= index.to_s %>' style = 'visibility: hidden'>
-              <small><%= score.completed_date.strftime("%B %d, %Y") %></small>
+              <small><%= score.completed_date.strftime("%B %d") %></small>
             </div>
           </div>
         </div>

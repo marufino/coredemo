@@ -9,13 +9,106 @@ class Score < ActiveRecord::Base
                 with_survey
                 with_observer_id
                 with_project
+                with_area_of_strength
+                with_area_of_weakness
               ]
 
   has_many :ratings
+  has_one :area_of_strength
+  has_one :area_of_weakness
   belongs_to :trainee
   belongs_to :assignment
 
   accepts_nested_attributes_for :ratings
+
+  def calculate_scores(ratings,questions)
+
+    blocks = self.assignment.surveys[0].survey_blocks
+
+    # pull areas of strength and areas of weakness
+    rating_map = ratings.zip(questions).sort!
+
+    a_s = AreaOfStrength.where(:score_id => self.id).first
+    a_w = AreaOfWeakness.where(:score_id => self.id).first
+
+    3.times do
+      a_s.competencies.build
+      a_w.competencies.build
+    end
+
+    rating_map.last(3).each do |r|
+      a_s.competencies << Competency.find_by_name(r[1].category)
+    end
+
+    rating_map.first(3).each_with_index do |r,i|
+      a_w.competencies << Competency.find_by_name(r[1].category)
+    end
+
+
+    self.area_of_strength_id = a_s.id
+    self.area_of_weakness_id = a_w.id
+
+
+    num_options = 6.0
+    knowledge = 0
+    abilities = 0
+    skills= 0
+    #generate CORE Scores
+    questions.each_with_index do |q,i|
+      if q.survey_block.category == 'Knowledge'
+        knowledge = knowledge + ratings[i].to_i * q.weight/num_options
+      end
+      if q.survey_block.category == 'Skills'
+        skills = skills + ratings[i].to_i * q.weight/num_options
+      end
+      if q.survey_block.category == 'Ability'
+        abilities = abilities + ratings[i].to_i * q.weight/num_options
+      end
+    end
+
+    self.knowledge  = knowledge * 100.0/blocks[0].weight
+    self.skills     = skills * 100.0/blocks[1].weight
+    self.abilities  = abilities * 100.0/blocks[2].weight
+    self.total      = knowledge+abilities+skills
+  end
+
+  def get_observers
+
+    return Project.find_by_id(self.assignment.project_id).observers.uniq
+  end
+
+  def percent_improvement(trainee)
+    first_score = trainee.previous_scorecard(self)
+    second_score = self
+
+    percent_improvement = Hash.new
+
+    if second_score
+
+      percent_improvement['knowledge'] = ((second_score.knowledge - first_score.knowledge) / first_score.knowledge.to_f) * 100
+      percent_improvement['skills'] = ((second_score.skills - first_score.skills) / first_score.skills.to_f) * 100
+      percent_improvement['abilities'] = ((second_score.abilities - first_score.abilities) / first_score.abilities.to_f) * 100
+      percent_improvement['total'] = ((second_score.total - first_score.total) / first_score.total.to_f) * 100
+
+      # if infinity improvement (i.e. last score is 0) return 0% improvement
+      percent_improvement.each do |p|
+        if p[1] == Float::INFINITY
+          percent_improvement[p[0]] = 0
+        end
+      end
+
+    else
+      percent_improvement['knowledge'] = 0
+      percent_improvement['skills'] = 0
+      percent_improvement['abilities'] = 0
+      percent_improvement['total'] = 0
+    end
+
+
+
+    return percent_improvement
+  end
+
 
   # default for will_paginate
   self.per_page = 20
@@ -77,6 +170,16 @@ class Score < ActiveRecord::Base
     where(:assignment_id => Assignment.where(:project_id => [*project_id]))
   }
 
+  scope :with_area_of_strength, lambda { |competency_id|
+    comp = Competency.find_by_id([*competency_id])
+    where(:area_of_strength_id => comp.area_of_strength.ids)
+  }
+
+  scope :with_area_of_weakness, lambda { |competency_id|
+    comp = Competency.find_by_id([*competency_id])
+    where(:area_of_weakness_id => comp.area_of_weakness.ids)
+  }
+
 
   def self.options_for_sorted_by
     [
@@ -95,5 +198,6 @@ class Score < ActiveRecord::Base
       end
     end
   end
+
 
 end

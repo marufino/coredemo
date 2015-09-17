@@ -15,13 +15,23 @@ class ProjectsController < ApplicationController
   def new
     @project = Project.new
     @assignments = @project.assignments.build
+
+
+
+    @colors = []
+    3.times do
+      @colors << @project.colors.build
+    end
+
     respond_with(@project)
   end
 
   def edit
+    @colors = @project.colors
   end
 
   def create
+
     @project = Project.new(project_params)
 
     # assign observers to this project
@@ -29,6 +39,11 @@ class ProjectsController < ApplicationController
     @obs_ids.reject!(&:empty?)
     @obs = Observer.find(@obs_ids)
     @project.observers = @obs
+
+    @project.colors.each_with_index do |c,i|
+      c.color = $colors[i]
+      c.save
+    end
 
     # for every assignment
     @project.assignments.each_with_index { | assignment , i |
@@ -51,10 +66,14 @@ class ProjectsController < ApplicationController
         @score.trainee = trainee
         @score.assignment = assignment
         @score.assigned_date = assignment.date
+        @score.completed = false
+        @score.build_area_of_weakness
+        @score.build_area_of_strength
 
         # build ratings for every question
         @survey.questions.each do |q|
           rating = @score.ratings.build
+          rating.question = q
           q.rating = rating
         end
 
@@ -76,6 +95,11 @@ class ProjectsController < ApplicationController
     @obs = Observer.find(@obs_ids)
     @project.observers = @obs
 
+    @project.colors.each_with_index do |c,i|
+      c.color = $colors[i]
+      c.save
+    end
+
     # for every assignment
     @project.assignments.each_with_index { | assignment , i |
 
@@ -101,6 +125,7 @@ class ProjectsController < ApplicationController
         # build ratings for every question
         @survey.questions.each do |q|
           rating = @score.ratings.build
+          rating.question = q
           q.rating = rating
         end
 
@@ -123,6 +148,6 @@ class ProjectsController < ApplicationController
     end
 
     def project_params
-      params[:project].permit(:name, :observer_ids, assignments_attributes: [:id, :date, :survey_id, :trainee_ids])
+      params[:project].permit(:name, :observer_ids, assignments_attributes: [:id, :date, :survey_id, :trainee_ids], colors_attributes: [:id, :value])
     end
 end

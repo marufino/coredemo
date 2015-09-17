@@ -21,40 +21,33 @@ class UsersController < ApplicationController
     if @user.trainee?
 
       @trainee = @user.meta
-      @last_assignment = @trainee.get_nth_assignment(-1)
-      @second_to_last_assignment = @trainee.get_nth_assignment(-2)
 
-      if @last_assignment && @second_to_last_assignment
-        @observers = Project.find(@last_assignment.project_id).observers
-        @percent_improvement = compute_percent_improvement(@last_assignment, @second_to_last_assignment, @trainee)
+      @score = @user.meta.last_completed_scorecard
+
+      if @score
+        @percent_improvement = @score.percent_improvement(@trainee)
       end
 
-      @score = @user.meta.next_scorecard
-
       @graph = graph_scores_for_trainee(@trainee)
+
+      @aos = @user.meta.get_aos
+      @aow = @user.meta.get_aow
 
 
     elsif @user.observer? & !@user.role?('admin')
       # get next scorecard to be completed by this observer
       scores = get_scores_by_observer(@user.meta)
 
-
       # date for survey/profile card
-      @score = scores.first
+      @score = scores.last
 
       if @score
         @trainee = @score.trainee
-        @last_assignment = @trainee.get_nth_assignment(-1)
-        @second_to_last_assignment = @trainee.get_nth_assignment(-2)
-
 
         # get all trainees under this observer
         @trainees = get_trainees_by_observer(@user.meta)
 
-        if @last_assignment && @second_to_last_assignment
-          @observers = Project.find(@last_assignment.project_id).observers
-          @percent_improvement = compute_percent_improvement(@last_assignment, @second_to_last_assignment, @trainee)
-        end
+        @percent_improvement = @trainee.previous_scorecard(@score).percent_improvement(@trainee)
 
         # generate graph
         @graph = graph_scores_for_observer(@user.meta)
@@ -64,7 +57,7 @@ class UsersController < ApplicationController
     elsif @user.role?('admin')
 
       # get last N(10) completed scores
-      @scores = Score.where(:completed => 't').order(completed_date: :asc).limit(10)
+      @scores = Score.where(:completed => 't').order(completed_date: :desc).first(10)
 
       @users = []
       @last_assignments = []
@@ -77,19 +70,17 @@ class UsersController < ApplicationController
         @users.push(s.trainee.user)
       end
 
-      @users.each_with_index do |u,i|
+      @scores.each do |s|
+        @percent_improvements.push(s.percent_improvement(s.trainee))
+      end
 
+      @users.each_with_index do |u,i|
         trainee = u.meta
         last_assignment = trainee.get_nth_assignment(-1)
         second_to_last_assignment = trainee.get_nth_assignment(-2)
 
         @last_assignments.push(last_assignment)
         @second_to_last_assignments.push(second_to_last_assignment)
-
-        if last_assignment && second_to_last_assignment
-          @percent_improvements.push(compute_percent_improvement(last_assignment,second_to_last_assignment,trainee))
-        end
-        #@observers[i].push(Project.find(u.meta.assignments.last.project_id).observers)
       end
 
       # generate graph
@@ -112,7 +103,9 @@ class UsersController < ApplicationController
       # calculate diff of completed date vs assigned date
       @time_taken=[]
       scores.each do |s|
-        @time_taken.push((s.completed_date - s.assignment.date).to_i)
+        if s.completed
+          @time_taken.push((s.completed_date - s.assignment.date).to_i)
+        end
       end
       # replace negatives with 0s
       @time_taken.map!{|val| if val<0 then 0 else val end}

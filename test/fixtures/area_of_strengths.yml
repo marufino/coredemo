@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  has_many: MyString
+  competencies: MyString
+
+two:
+  has_many: MyString
+  competencies: MyString
