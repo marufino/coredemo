@@ -11,8 +11,8 @@
     </div>
   <% end %>
 
-  <div class = "col-xs-12 shadow survey-topbar ">
-    <div class = "col-xs-6">
+  <div class = "col-xs-12 shadow survey-topbar " style="width: 70%; margin-bottom: 1em; margin-top: 1em;">
+    <div class = "col-xs-6 editform" style="background-color: none; box-shadow: none; width: 70%;">
       <%= f.label :name, 'Survey Name'  %>
       <%= f.text_field :name , :style => "float: right;" %><br>
 
@@ -20,29 +20,29 @@
       <%= f.text_area :description, cols: "30", rows: "5" , :style => "float: right;" %>
       <br>
     </div>
-    <div class = "col-xs-3">
+    <div class = "col-xs-3" style="margin-left: 1em; border: 2px solid lightgrey; margin-top: 2.4em;">
+      <div class = "col-xs-3" id="weight-container" style="border: 1px solid white;margin-top: -0.6em;">
+        <table style="width: 80%;">
+          <%= f.fields_for :survey_blocks do |block_form| %>
+            <tr>
+              <td><%= block_form.label @survey.survey_blocks[block_form.options[:child_index]].category%></td>
+              <td><%= block_form.number_field :weight , within: 1...100 %></td>
+            </tr>
+          <% end %>
 
-    </div>
-    <div class = "col-xs-3" id="weight-container">
-      <table>
-        <%= f.fields_for :survey_blocks do |block_form| %>
           <tr>
-            <td><%= block_form.label @survey.survey_blocks[block_form.options[:child_index]].category%></td>
-            <td><%= block_form.number_field :weight , within: 1...100 %></td>
+            <td>Total</td>
+            <td id="total-weights">100</td>
           </tr>
-        <% end %>
-
-        <tr>
-          <td>Total</td>
-          <td id="total-weights">100</td>
-        </tr>
-      </table>
+        </table>
+      </div>
     </div>
-  </div>
+    </div>
+
 
 
   <%= f.fields_for :survey_blocks do |block_form| %>
-  <h4><%= $categorynames[block_form.options[:child_index]-3] %> Evaluation (<span id="header-current-<%= $categorynames[block_form.options[:child_index]-3] %>"> </span>/<span id="header-<%= $categorynames[block_form.options[:child_index]-3] %>"> </span>  points)</h4>
+  <h4 style="display: inline-block;"><%= $categorynames[block_form.options[:child_index]-3] %> Evaluation (<span id="header-current-<%= $categorynames[block_form.options[:child_index]-3] %>"> </span>/<span id="header-<%= $categorynames[block_form.options[:child_index]-3] %>"> </span>  points)</h4>
   <div class="scorecard">
       <table class="table shadow">
         <thead>
@@ -73,7 +73,7 @@
   </div>
 
 
-  <div class="actions">
+  <div class="actions button" style="width: 20%; text-align: center; text-decoration: none;">
     <%= f.submit %>
   </div>
 <% end %>
@@ -93,7 +93,7 @@
         var total = parseInt($("#survey_survey_blocks_attributes_0_weight").val(),10) + parseInt($("#survey_survey_blocks_attributes_1_weight").val(),10) + parseInt($("#survey_survey_blocks_attributes_2_weight").val(),10);
         $('#total-weights').html(total);
         if (total != 100) {
-            $('#weight-container').css('border', '1px solid red');
+            $('#weight-container').css('margin-left: 2em;');
         }
         else {
             $('#weight-container').css('border', '1px solid green');

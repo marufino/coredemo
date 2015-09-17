@@ -14,7 +14,7 @@
 
 .logo {
 	max-width: 200px;
-	margin-top: 10%;
+	margin-top: 5%;
 	display: block;
 	margin-bottom: 50px;
     margin-left: auto;
@@ -162,9 +162,9 @@ div#message {
 	color: #000;
 }
 /*~~~~~~~~~~~~~~~~~~~~~INPUTS~~~~~~~~~~~~~~~~~~~~~~~~*/
-form.minimal input[type="text"],
-form.minimal input[type="password"],
-form.minimal textarea {
+div.minimal input[type="email"],
+div.minimal input[type="password"],
+div.minimal textarea {
 
 	background-color: #fff;
 	border: 1px solid rgb(186, 186, 186);
@@ -176,7 +176,7 @@ form.minimal textarea {
 	font-size: .85em;
 	margin: 6px 0 12px 0;
 	padding: 8px;	
-	width: 100%;
+	width: 165%;
 	
 	-webkit-transition: all 0.1s ease-in;
 	-moz-transition: all 0.1s ease-in;
@@ -193,6 +193,7 @@ form.minimal textarea {
 	text-align: left;
 	display: inline-block;
 	margin-left: .5em;
+    margin-bottom: 1em;
 }
 
 /*~~messages~~*/

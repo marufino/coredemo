@@ -1,3 +1,6 @@
+<%= link_to 'Back', competencies_path, {:class=> 'button'} %>
+<br />
+<div class="editform" style="margin-top: 2em;   ">
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -20,5 +23,6 @@
   <%= @competency.coaching %>
 </p>
 
-<%= link_to 'Edit', edit_competency_path(@competency) %> |
-<%= link_to 'Back', competencies_path %>
+<%= link_to 'Edit', edit_competency_path(@competency), {:class=> 'button', :style=> 'margin-top: 1.5em;'} %>
+
+</div>

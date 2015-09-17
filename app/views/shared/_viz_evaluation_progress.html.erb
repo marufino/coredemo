@@ -1,11 +1,11 @@
-<div class="viz-square">
+<div class="viz-square" style="width: 97%; margin-left: -5px; height: 100%;">
     <% @eval_keys.each do |k| %>
         <row>
-            <div>
-              <div class="col-xs-6" style="padding:0px">
+            <div style="text-align: left; font-size: .8em; margin-top: .4em;">
+              <div class="col-xs-6" style="padding: 0px;">
                 <small><%=  k  %></small>
               </div>
-              <div class="col-xs-6" style="padding:0px; padding-top: 10px">
+              <div class="col-xs-6" style="display: inline  ; width: 45%; margin-left: .4em; padding:0px; padding-top: 6px">
                   <div class="progress">
                         <div class="progress-bar progress-bar-success" role="progressbar" style="width:<%= @eval_progress[k] %>%"></div>
                   </div>
@@ -15,7 +15,7 @@
         </row>
     <% end %>
 
-    <div class="center-block">
+    <div class="center-block" style="margin-top: 0em;">
         <%= will_paginate @eval_keys, renderer: BootstrapPagination::Rails, :previous_label => "<", :next_label => ">", :page_links=> false %>
     </div>
 </div>

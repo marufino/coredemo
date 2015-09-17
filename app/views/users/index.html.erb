@@ -1,8 +1,19 @@
 <h4>Manage Users</h4>
 
-<table class="table table-striped shadow">
+<br />
+<%= link_to '+ New User', new_user_registration_path, {:class=> 'button'} %>
+
+<div class="editform" style="margin-bottom: 2em; margin-top: 2em; width: 30%;">
+
+  <h4 style="margin-bottom: 1em; margin-top: 0em;">Import Users</h4>
+  <%= form_tag import_users_path, multipart: true do %>
+    <%= file_field_tag :file, {:style=> 'margin-bottom: 1em;'} %>
+    <%= submit_tag "Import", {:style=> 'background-color: #005983; color: #ffffff;'} %>
+  <% end %>
+</div>
+<table class="table table-striped shadow" style="font-size: 1em;">
   <thead>
-  <tr style="background-color: white">
+  <tr style="background-color: white;">
     <th>Name</th>
     <th>Email</th>
     <th>Title</th>
@@ -21,14 +32,3 @@
   <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New User', new_user_registration_path %>
-
-<h2>Import Users</h2>
-
-<%= form_tag import_users_path, multipart: true do %>
-    <%= file_field_tag :file %>
-    <%= submit_tag "Import" %>
-<% end %>

@@ -2,6 +2,7 @@
 
 <h4>Editing <%= @question.category %></h4>
 
+<table class="table table-striped shadow"
 <div class = "col-xs-12 shadow admin-panels">
   <div class = "col-xs-6">
     <li>Name of Competency:</li>
@@ -14,6 +15,7 @@
     <li>Weight:</li>
   </div>
 </div>
+</table>
 
 <%= link_to 'Edit', edit_question_path(@question) %> |
 <%= link_to 'Back', questions_path %>

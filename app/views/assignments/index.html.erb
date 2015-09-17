@@ -1,5 +1,5 @@
 <h4>Administration Home</h4>
-
+<div style="margin-bottom: 100%;"
   <row>
 
     <%= link_to users_path do %>
@@ -7,7 +7,7 @@
       <div class ="admin-panels">
         <div class = "shadow">
           <li>Users</li>
-          <li style="padding: 30px; padding-left: 60px"><%= image_tag("users.png", size: "70x70", :alt => "surveys") %></li>
+          <li style="padding: 30px;"><%= image_tag("users2.png", size: "150x150", :alt => "Users") %></li>
           <li> <%= User.all.size %> total</li>
         </div>
       </div>
@@ -19,7 +19,7 @@
       <div class ="admin-panels">
         <div class = "shadow">
           <li>Projects</li>
-          <li style="padding: 30px; padding-left: 60px"><%= image_tag("projects.png", size: "70x70", :alt => "surveys") %></li>
+          <li style="padding: 30px;"><%= image_tag("projects2.png", size: "150x150", :alt => "Projects") %></li>
           <li> <%= Project.all.size %> total</li>
         </div>
       </div>
@@ -31,7 +31,7 @@
       <div class ="admin-panels">
         <div class = "shadow">
           <li>Competencies</li>
-          <li style="padding: 30px; padding-left: 60px"><%= image_tag("competencies.png", size: "80x70", :alt => "surveys") %></li>
+          <li style="padding: 30px;"><%= image_tag("comps.png", size: "150x150", :alt => "Competencies") %></li>
           <li> <%= Competency.all.size %> total</li>
         </div>
       </div>
@@ -45,7 +45,7 @@
         <div class ="admin-panels">
           <div class = "shadow">
             <li>Scorecards</li>
-            <li style="padding: 30px; padding-left: 60px"><%= image_tag("surveys.png", size: "60x70", :alt => "surveys") %></li>
+            <li style="padding: 30px;"><%= image_tag("scorecards.png", size: "150x150", :alt => "Scorecards") %></li>
             <li> <%= Survey.all.size %> total</li>
           </div>
         </div>
@@ -54,3 +54,4 @@
 </row>
 
 
+</div>

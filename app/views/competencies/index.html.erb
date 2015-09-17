@@ -1,6 +1,17 @@
 <h1>Listing competencies</h1>
 
-<table>
+<br />
+<%= link_to 'New Competency', new_competency_path, :class =>"button" %>
+
+<div class="editform" style="margin-bottom: 2em; margin-top: 2em; width: 30%;">
+<h4>Import Competencies</h4>
+
+<%= form_tag import_competencies_path, multipart: true do %>
+  <%= file_field_tag :file, {:style=> 'margin-bottom: 1em;'} %>
+  <%= submit_tag "Import", {:style=> 'background-color: #005983; color: #ffffff;'} %>
+<% end %>
+</div>
+<table class="table table-striped shadow">
   <thead>
     <tr>
       <th>Name</th>
@@ -21,14 +32,3 @@
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Competency', new_competency_path %>
-
-<h2>Import Competencies</h2>
-
-<%= form_tag import_competencies_path, multipart: true do %>
-    <%= file_field_tag :file %>
-    <%= submit_tag "Import" %>
-<% end %>

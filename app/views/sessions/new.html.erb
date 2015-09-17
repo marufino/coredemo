@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>The CORE Results&#x2122;</title>
-  <%= stylesheet_link_tag    'signin', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag  'signin', media: 'all', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700,300' rel='stylesheet' type='text/css'>
   <meta name="viewport" content="initial-scale=1" />
@@ -13,37 +13,43 @@
   <%= favicon_link_tag 'favicon.ico' %>
 </head>
 
-<body class="body">
+<body class="bg">
 
 
-<%= image_tag("core.png", :alt => "logo") %>
+<%= image_tag("core.png", :alt => "logo", :class => "logo")    %>
 
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
 
-    <div id="loginbox" class="loginbox">
-      <label for="username"><!--"User ID" label-->
+      <div id="loginBox" class="loginbox">
+      <div class="minimal">
+      <label for="username" id="username" style="display:inline-block; margin-top: .5em;"><!--"User ID" label-->
         User ID:
+        <br />
         <%= f.email_field :email, autofocus: true %>
       </label>
 
-      <label for="password"><!--"Password" label-->
+      <label for="password" style="display:inline-block; margin-top: .5em;"><!--"Password" label-->
         Password:
         <%= f.password_field :password, autocomplete: "off" %>
       </label>
 
       <button lang="" type="submit" class="btn-submit" title="Sign In"  href="" tabindex="5">Sign in</button><!--sign in button-->
-      <div class="aboutcontainer">
-        <div class="copyright" style="margin-top: 1em;"><!--copyright statement-->&copy; 2015 Michigan and Manchester.</div>
-      </div>
+
 
       <% if devise_mapping.rememberable? -%>
-          <div class="field">
+          <div class="field" style="margin-top: 1em;">
             <%= f.check_box :remember_me %>
             <%= f.label :remember_me %>
           </div>
       <% end -%>
+        <br />
       <%= render "devise/shared/links" %>
+
+        <div class="aboutcontainer">
+          <div class="copyright" style="margin-top: 1em;"><!--copyright statement-->&copy; 2015 Michigan and Manchester.</div>
+        </div>
     </div>
+</div>
 
 <% end %>
 

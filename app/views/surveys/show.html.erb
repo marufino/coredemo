@@ -1,5 +1,10 @@
+
 <p id="notice"><%= notice %></p>
 
+<div style="margin-bottom: 2em;">
+<%= link_to 'Edit', edit_survey_path(@survey), {:class=> 'button'} %>
+<%= link_to 'Back', surveys_path, {:class=> 'button'} %>
+</div>
 
 <% @survey.survey_blocks.each_with_index do |block| %>
   <h4><%= block.category %> Evaluation ( <%= block.weight %> points)</h4>
@@ -25,7 +30,3 @@
   </div>
 <% end %>
 
-
-
-<%= link_to 'Edit', edit_survey_path(@survey) %> |
-<%= link_to 'Back', surveys_path %>
