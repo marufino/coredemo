@@ -39,7 +39,7 @@
             <td><% (1..6).each do |i| %>
                 <div style="margin: 20px;display: inline">
                   <% if !@score.completed? %>
-                    <%= radio_button_tag q.id, i, Rating.where(question_id: q.id, score_id: @score.id).first.value == i %>
+                    <%= radio_button_tag q.id, i, if Rating.where(question_id: q.id, score_id: @score.id).first then (Rating.where(question_id: q.id, score_id: @score.id).first.value == i) else 1 end  %>
                   <% else %>
                     <%= radio_button_tag q.id, i, Rating.where(question_id: q.id, score_id: @score.id).first.value == i, disabled: true %>
                   <% end %>

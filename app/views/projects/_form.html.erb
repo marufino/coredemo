@@ -19,10 +19,12 @@
 
     <br><br>
     <p>Color Cut-offs for CORE score</p>
+
     <%= f.fields_for :colors do |color_form| %>
-        <%= color_form.label @colors[color_form.options[:child_index]].color %>
-        <%= color_form.number_field :value , within: 1...100, :value => 20+20*color_form.options[:child_index]  %>
+        <%= color_form.label $colors[color_form.options[:child_index]] %>
+        <%= color_form.number_field :value , within: 1...100  %>
     <% end %>
+
         <br><br>
         <p>Assignments</p>
         <%= f.nested_fields_for :assignments do |assign_form| %>

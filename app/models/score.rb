@@ -73,15 +73,8 @@ class Score < ActiveRecord::Base
   end
 
   def get_observers
-    ratings = self.ratings
 
-    observers = []
-
-    ratings.each do |r|
-      observers << r.observer
-    end
-
-    return observers.uniq
+    return Project.find_by_id(self.assignment.project_id).observers.uniq
   end
 
   def percent_improvement(trainee)

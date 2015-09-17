@@ -33,6 +33,7 @@ class UsersController < ApplicationController
       @aos = @user.meta.get_aos
       @aow = @user.meta.get_aow
 
+
     elsif @user.observer? & !@user.role?('admin')
       # get next scorecard to be completed by this observer
       scores = get_scores_by_observer(@user.meta)
@@ -102,7 +103,9 @@ class UsersController < ApplicationController
       # calculate diff of completed date vs assigned date
       @time_taken=[]
       scores.each do |s|
-        @time_taken.push((s.completed_date - s.assignment.date).to_i)
+        if s.completed
+          @time_taken.push((s.completed_date - s.assignment.date).to_i)
+        end
       end
       # replace negatives with 0s
       @time_taken.map!{|val| if val<0 then 0 else val end}

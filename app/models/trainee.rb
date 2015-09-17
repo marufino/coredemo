@@ -20,7 +20,7 @@ class Trainee < ActiveRecord::Base
     totals=[]
     scores.each do |s| totals.push(s.total) end
     if(totals!=[])
-      return mean(totals).to_i
+      return mean(totals.compact).to_i
     else
       return 0
     end
@@ -33,7 +33,9 @@ class Trainee < ActiveRecord::Base
     competencies = []
 
     scores.each do |score|
-      score.area_of_strength.competencies.each do |c| competencies << c.name end
+      if score.completed
+        score.area_of_strength.competencies.each do |c| competencies << c.name end
+      end
     end
 
     counts = Hash.new 0
@@ -51,7 +53,9 @@ class Trainee < ActiveRecord::Base
     competencies = []
 
     scores.each do |score|
-      score.area_of_weakness.competencies.each do |c| competencies << c.name end
+      if score.completed
+        score.area_of_weakness.competencies.each do |c| competencies << c.name end
+      end
     end
 
     counts = Hash.new 0

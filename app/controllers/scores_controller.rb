@@ -79,7 +79,6 @@ class ScoresController < ApplicationController
     @second_to_last_assignment = trainee.get_nth_assignment(-2)
     @observers = Project.find(@last_assignment.project_id).observers
 
-    byebug
 
     respond_with(@score)
 
@@ -131,6 +130,7 @@ class ScoresController < ApplicationController
     ratings = []
     # for each questions extract the rating and add to params hash
     questions.each do |q|
+
       rating = params[q.id.to_s]
       update_params['ratings_attributes'][q.id.to_s] = {'value' => rating.to_s, 'id' => Rating.where(question_id: q.id, score_id: @score.id).first.id.to_s}
       ratings << rating

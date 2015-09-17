@@ -94,7 +94,7 @@ module ApplicationHelper
 
     percent_improvement = Hash.new
 
-    if second_score
+    if first_score.knowledge and second_score.knowledge
 
       percent_improvement['knowledge'] = ((second_score.knowledge - first_score.knowledge) / first_score.knowledge.to_f) * 100
       percent_improvement['skills'] = ((second_score.skills - first_score.skills) / first_score.skills.to_f) * 100
