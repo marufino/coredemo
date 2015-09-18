@@ -16,8 +16,6 @@ class ProjectsController < ApplicationController
     @project = Project.new
     @assignments = @project.assignments.build
 
-#test
-
     @colors = []
     3.times do
       @colors << @project.colors.build
