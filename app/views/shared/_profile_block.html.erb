@@ -21,7 +21,7 @@
 
       <% if score %>
           <%= link_to scores_path(:filterrific => {:with_trainee_id => user.meta.id, :sorted_by => 'completed_at_desc'}) do %>
-              <button class="btn btn-info" style="width: 60%; margin-top: 1em;">View Results</button>
+              <button class="button" style="width: 80%; margin-top: 1em;">View Results</button>
            <% end %>
       <% end %>
 
