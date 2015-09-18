@@ -4,7 +4,7 @@ class CreateAreaOfWeaknessesCompetencies < ActiveRecord::Migration
       t.references :area_of_weakness
       t.references :competency
     end
-    add_index :area_of_weaknesses_competencies, [:area_of_weakness_id, :competency_id], name: 'aow_c'
-    add_index :area_of_weaknesses_competencies, :area_of_weakness_id, name: 'aow'
+    add_index :area_of_weaknesses_competencies, [:area_of_weakness_id, :competency_id], name: 'aow_c';
+    add_index :area_of_weaknesses_competencies, :area_of_weakness_id, name: 'aow';
   end
 end
