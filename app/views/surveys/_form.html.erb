@@ -11,7 +11,7 @@
     </div>
   <% end %>
 
-  <div class = "col-xs-12 shadow survey-topbar " style="width: 70%; margin-bottom: 1em; margin-top: 1em;">
+  <div class = "col-xs-12 shadow survey-topbar " style="width: 100%; margin-bottom: 1em; margin-top: 1em;">
     <div class = "col-xs-6 editform" style="background-color: none; box-shadow: none; width: 70%;">
       <%= f.label :name, 'Scorecard Name'  %>
       <%= f.text_field :name , :style => "float: right;" %><br>
@@ -23,13 +23,14 @@
     <div class = "col-xs-3" style="margin-left: 1em; border: 2px solid lightgrey; margin-top: 2.4em;">
       <div class = "col-xs-3" id="weight-container" style="border: 1px solid white;margin-top: -0.6em;">
         <table style="width: 80%;">
-          <%= f.fields_for :survey_blocks do |block_form| %>
-            <tr>
-              <td><%= @survey.survey_blocks[block_form.options[:child_index]].category %></td>
-              <td><%= block_form.number_field :weight , within: 1...100 %></td>
-            </tr>
+          <% @survey_blocks.each_with_index do |item, i| %>
+              <%= f.fields_for :survey_blocks, item, :child_index => i do |block_form| %>
+                <tr>
+                  <td><%= $categorynames[i] %></td>
+                  <td><%= block_form.number_field :weight , within: 1...100 %></td>
+                </tr>
+              <% end %>
           <% end %>
-
           <tr>
             <td>Total</td>
             <td id="total-weights">100</td>
@@ -109,7 +110,7 @@
         compute_total();
         // and replace the html accordingly
         $("#header-<%= cat %>").html($(this).val());
-        disable_submit();
+        //disable_submit();
     });
     <% end %>
 
@@ -135,7 +136,7 @@
                 {
                     $("#header-current-<%= cat %>").css('color','green');
                 }
-                disable_submit();
+                //disable_submit();
             });
 
         });
@@ -181,7 +182,7 @@
                 {
                     $("#header-current-<%= cat %>").css('color','green');
                 }
-                disable_submit();
+                //disable_submit();
         });
         <% end %>
     }

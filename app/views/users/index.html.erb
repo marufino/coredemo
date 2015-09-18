@@ -26,6 +26,7 @@
 
   <tbody>
   <% @users.each do |user| %>
+    <% if !user.role?('admin') %>
       <tr class="pointer" onclick="location.href='<%= edit_user_path(user) %>'">
         <td><%= user.full_name %></td>
         <td><%= user.email %></td>
@@ -40,6 +41,7 @@
           <% end %>
         </td>
       </tr>
+    <% end %>
   <% end %>
   </tbody>
 </table>

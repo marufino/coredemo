@@ -21,6 +21,26 @@ class Score < ActiveRecord::Base
 
   accepts_nested_attributes_for :ratings
 
+
+  def get_color
+    colors = Project.find_by_id(self.assignment.project_id).colors.reverse
+
+    if self.total
+      colors.each do |c|
+        if self.total < c.value
+          return c.color
+        end
+      end
+    else
+      return 'black'
+    end
+
+  end
+
+  def filled_out?
+    self.ratings.collect{|r| r.value}.compact.size == self.assignment.surveys.first.questions.size
+  end
+
   def calculate_scores(ratings,questions)
 
     blocks = self.assignment.surveys[0].survey_blocks
@@ -73,7 +93,6 @@ class Score < ActiveRecord::Base
   end
 
   def get_observers
-
     return Project.find_by_id(self.assignment.project_id).observers.uniq
   end
 

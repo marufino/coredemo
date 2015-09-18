@@ -10,6 +10,26 @@ class Survey < ActiveRecord::Base
   validates :name, presence: true
   validates :description, presence: true
 
+  def valid_block_weights
+
+    if self.survey_blocks.map(&:weight).inject(0, &:+) != 100
+      return false
+    else
+      return true
+    end
+  end
+
+  def valid_question_weights
+
+    self.survey_blocks.each do |block|
+      if block.questions.map(&:weight).inject(0, &:+) != block.weight
+        return false
+      end
+    end
+    return true
+
+  end
+
   def self.options_for_select
     order('id').map { |e| [e.name, e.id] }
   end

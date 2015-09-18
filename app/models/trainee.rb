@@ -19,7 +19,7 @@ class Trainee < ActiveRecord::Base
     scores = Score.where(:trainee_id => self.id)
     totals=[]
     scores.each do |s| totals.push(s.total) end
-    if(totals!=[])
+    if(totals.compact!=[])
       return mean(totals.compact).to_i
     else
       return 0

@@ -136,21 +136,27 @@ class ScoresController < ApplicationController
       ratings << rating
     end
 
-    if params[:submit]
-
-      @score.completed = true
-      @score.completed_date = Date.today
-
-
-      @score.calculate_scores(ratings,questions)
-
-    end
-
-
     # update score
     respond_to do |format|
       if @score.update(update_params)
-        format.html { redirect_to scores_path, notice: 'Scorecard successfully completed' }
+
+        if params[:submit]
+
+          @score.completed = true
+          @score.completed_date = DateTime.now
+
+
+          if !@score.filled_out?
+            redirect_to edit_score_path(@score), alert: "Please rate all competencies before submitting Scorecard"
+            return
+          end
+
+          @score.calculate_scores(ratings,questions)
+
+          @score.save
+        end
+
+        format.html { redirect_to scores_path, notice: 'Scorecard successfully' + if params[:submit] then ' Completed' else ' Saved' end }
         format.json { render :show, status: :ok, location: scores_path }
       else
         format.html { render :edit }

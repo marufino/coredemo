@@ -16,7 +16,7 @@
             <% end %>
           <% end %>
 
-        <small>Score:</small><small><%= user.meta.previous_scorecard(score).total %></small><br>
+        <small>Score:</small><small style="color:<%= user.meta.previous_scorecard(score).get_color.to_s %> "><%= user.meta.previous_scorecard(score).total %></small><br>
       <% end %>
 
       <% if score %>
@@ -56,7 +56,7 @@
       value:        '<%= @values["#{p[0]}"] %>',
       maxValue:     100,
       width:        10,
-      text:         '<row><%= @values["#{p[0]}"].to_i.to_s %></row><br><row><span style="font-size:0.6em"><%="#{p[0]}" %></span><br><span style="font-size:0.6em">Score</span></row></div>',// #{Date.today.strftime('%B')}-Evaluations Completed"
+      text:         '<row style="color:<%= @values.get_color.to_s %>"><%= @values["#{p[0]}"].to_i.to_s %></row><br><row><span style="font-size:0.6em"><%="#{p[0]}" %></span><br><span style="font-size:0.6em">Score</span></row></div>',// #{Date.today.strftime('%B')}-Evaluations Completed"
       colors:       ['lightgray', '#1ab3db'],
       duration:       200,
       textClass:      'circles-text'
