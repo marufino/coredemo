@@ -18,6 +18,9 @@
     <th>Email</th>
     <th>Title</th>
     <th>Role</th>
+    <th>Edit</th>
+    <th>Delete</th>
+    <th colspan="3"></th>
   </tr>
   </thead>
 
@@ -28,6 +31,14 @@
         <td><%= user.email %></td>
         <td><%= user.title %></td>
         <td><%= user.meta_type || user.roles.first.name %></td>
+        <td><%= link_to edit_user_path(user) do %>
+              <span class="glyphicon glyphicon-edit icon-larger .edit-button-color"></span>
+          <% end %>
+        </td>
+        <td><%= link_to user, method: :delete, data: { confirm: 'Delete user? Are you sure?' } do %>
+              <span class="glyphicon glyphicon-remove icon-larger delete-button-color"></span>
+          <% end %>
+        </td>
       </tr>
   <% end %>
   </tbody>

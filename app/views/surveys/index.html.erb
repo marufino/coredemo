@@ -1,11 +1,14 @@
-<h1>Listing surveys</h1>
+<h1>Listing Scorecards</h1>
 <div style="margin-top: 2em; margin-bottom: 2em;">
-<%= link_to '+ New Survey', new_survey_path, :class=> 'button' %>
+<%= link_to '+ New Scorecard', new_survey_path, :class=> 'button' %>
 </div>
 <table class="table table-striped shadow" style="font-size: 8pt,">
   <thead>
     <tr>
-      <th colspan="3">Name</th>
+      <th>Scorecard Name</th>
+      <th>Edit</th>
+      <th>Delete</th>
+      <th colspan="3"></th>
     </tr>
   </thead>
 
@@ -13,9 +16,14 @@
     <% @surveys.each do |survey| %>
       <tr>
         <td><%= survey.name %></td>
-        <td><%= link_to 'Show', survey %></td>
-        <td><%= link_to 'Edit', edit_survey_path(survey) %></td>
-        <td><%= link_to 'Destroy', survey, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to edit_survey_path(survey) do %>
+              <span class="glyphicon glyphicon-edit icon-larger .edit-button-color"></span>
+          <% end %>
+        </td>
+        <td><%= link_to survey, method: :delete, data: { confirm: 'Delete Scorecard? Are you sure?' } do %>
+              <span class="glyphicon glyphicon-remove icon-larger delete-button-color"></span>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
