@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :set_project
+  before_action :set_project, only: [:show, :edit, :update, :destroy]
 
   respond_to :html
 
@@ -15,8 +15,6 @@ class ProjectsController < ApplicationController
   def new
     @project = Project.new
     @assignments = @project.assignments.build
-
-
 
     @colors = []
     3.times do
