@@ -33,7 +33,7 @@
           <tr>
             <td><%= trainee.user.full_name %></td>
             <td><%= trainee.assignments.last.date %></td>
-            <td style="color:<%= trainee.next_scorecard.get_color.to_s %>"><%= trainee.get_core_score %></td>
+            <td style="color:<%= if trainee.next_scorecard then trainee.next_scorecard.get_color.to_s end %>"><%= trainee.get_core_score %></td>
             <td><% if trainee.need_for_eval < 10 %>
                   <span style="color:green">Low</span>
                 <% elsif trainee.need_for_eval >= 10 and trainee.need_for_eval < 20%>
