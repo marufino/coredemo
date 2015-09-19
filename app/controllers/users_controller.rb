@@ -144,8 +144,15 @@ class UsersController < ApplicationController
   end
 
   def import
-    User.import(params[:file])
-    redirect_to users_path, notice: "Users imported."
+    respond_to do |format|
+      if User.import(params[:file])
+        format.html { redirect_to users_path, notice: 'Users successfully imported.' }
+        format.json { render :index, status: :ok, location: @user }
+      else
+        format.html { redirect_to users_path , alert: 'Wrong formatting. Could not import' }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def edit
@@ -165,7 +172,7 @@ class UsersController < ApplicationController
   private
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
-    params[:user].permit(:first_name, :last_name, :email, :phone, :title)
+    params[:user].permit(:first_name, :last_name, :email, :phone, :title, :meta_type)
   end
 
   def set_user

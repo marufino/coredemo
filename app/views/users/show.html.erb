@@ -33,7 +33,7 @@
           <tr>
             <td><%= trainee.user.full_name %></td>
             <td><%= trainee.assignments.last.date %></td>
-            <td><%= trainee.get_core_score %></td>
+            <td style="color:<%= if trainee.next_scorecard then trainee.next_scorecard.get_color.to_s end %>"><%= trainee.get_core_score %></td>
             <td><% if trainee.need_for_eval < 10 %>
                   <span style="color:green">Low</span>
                 <% elsif trainee.need_for_eval >= 10 and trainee.need_for_eval < 20%>
@@ -110,7 +110,9 @@
       <% @scores.each_with_index do |score, index| %>
         <div class = 'timeline-inside' style="display:inline-block">
           <div class="row" style="padding-left: 20px">
-            <div class = 'timeline-dot'></div>
+            <div class = 'timeline-dot'>
+              <!--<span class="glyphicon glyphicon-unchecked icon-larger"></span>-->
+            </div>
           </div>
           <div class="row">
             <div class = 'timeline-date timeline-date-<%= index.to_s %>' style = 'visibility: hidden'>

@@ -37,6 +37,11 @@
       <%= f.text_field :title %>
     </div>
 
+    <div class="field">
+      <%= f.label 'Role' %><br />
+      <%= f.select :meta_type , $roles, include_blank: false %>
+    </div>
+
     <div class="actions" style="width: 100%;">
       <%= f.submit %>
     </div>

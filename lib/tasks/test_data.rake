@@ -69,6 +69,10 @@ namespace :app do
       # assign random observers
       p.observers << o[rand(0..n-1)]
 
+      3.times do |i|
+        p.colors << Color.new(:color => $colors[i], :value => 10*i+10)
+      end
+
       10.times do |k|
         # make assignments
         a[k] = Fabricate(:assignment)
@@ -98,7 +102,7 @@ namespace :app do
         score[k].completed_date = a[k].date + random_days
 
 
-        if (score[k].completed_date < Date.today())
+        if (score[k].completed_date < DateTime.now())
           score[k].completed = 't'
         else
           score[k].completed = 'f'

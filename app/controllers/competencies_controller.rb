@@ -22,13 +22,28 @@ class CompetenciesController < ApplicationController
 
   def create
     @competency = Competency.new(competency_params)
-    @competency.save
-    respond_with(@competency)
+
+    respond_to do |format|
+      if @competency.save
+        format.html { redirect_to competencies_path, notice: 'Competency was successfully created.' }
+        format.json { render :index, status: :created, location: @competency }
+      else
+        format.html { render :new }
+        format.json { render json: @competency.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def update
-    @competency.update(competency_params)
-    respond_with(@competency)
+    respond_to do |format|
+      if @competency.update(competency_params)
+        format.html { redirect_to competencies_path, notice: 'Competency was successfully updated.' }
+        format.json { render :index, status: :ok, location: @competency }
+      else
+        format.html { render :edit }
+        format.json { render json: @competency.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def destroy
@@ -37,8 +52,15 @@ class CompetenciesController < ApplicationController
   end
 
   def import
-    Competency.import(params[:file])
-    redirect_to competencies_path, notice: "Competencies imported."
+    respond_to do |format|
+      if Competency.import(params[:file])
+        format.html { redirect_to competencies_path, notice: 'Competencies successfully imported.' }
+        format.json { render :index, status: :ok, location: @competency }
+      else
+        format.html { redirect_to competencies_path , alert: 'Wrong formatting. Could not import' }
+        format.json { render json: @competency.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   private

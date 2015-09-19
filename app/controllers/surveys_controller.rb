@@ -50,6 +50,8 @@ class SurveysController < ApplicationController
       end
     end
 
+    @survey_blocks = @survey.survey_blocks
+
     respond_to do |format|
       if @survey.save
 
@@ -57,6 +59,17 @@ class SurveysController < ApplicationController
           redirect_to edit_survey_path(@survey), notice: 'There are duplicate Competencies in the Scorecard. Please correct'
           return
         end
+
+        if !@survey.valid_block_weights
+          redirect_to edit_survey_path(@survey), notice: "category weights don't add up to 100"
+          return
+        end
+
+        if !@survey.valid_question_weights
+          redirect_to edit_survey_path(@survey), notice: "Question weights don't add up to category weights"
+          return
+        end
+
 
         format.html { redirect_to surveys_path, notice: 'Scorecard was successfully created.' }
         format.json { render :show, status: :created, location: @survey }
@@ -90,7 +103,7 @@ class SurveysController < ApplicationController
     @competencies = Competency.all
 
     if duplicate_competencies
-      redirect_to edit_survey_path(@survey), notice: 'There are duplicate Competencies in the Scorecard. Please correct'
+      redirect_to edit_survey_path(@survey), alert: 'There are duplicate Competencies in the Scorecard. Please correct'
       return
     end
 
@@ -101,6 +114,17 @@ class SurveysController < ApplicationController
 
     respond_to do |format|
       if @survey.update(survey_params)
+
+        if !@survey.valid_block_weights
+          redirect_to edit_survey_path(@survey), alert: "category weights don't add up to 100"
+          return
+        end
+
+        if !@survey.valid_question_weights
+          redirect_to edit_survey_path(@survey), alert: "Question weights don't add up to category weights"
+          return
+        end
+
         format.html { redirect_to surveys_path, notice: 'Scorecard was successfully updated.' }
         format.json { render :show, status: :ok, location: @survey }
       else

@@ -14,7 +14,7 @@
         <% user.meta.previous_scorecard(score).get_observers.each do |o| %>
           <small><%= o.user.first_name %> <%= o.user.last_name %></small><br>
         <% end %>
-      <small>Result:</small><small><%=user.meta.previous_scorecard(score).total%></small><br>
+      <small>Result:</small><small style="color:<%= user.meta.previous_scorecard(score).get_color.to_s %>"><%=user.meta.previous_scorecard(score).total%></small><br>
     </div>
     <div class = "col-xs-4">
       Project: <small><%= Project.find(score.assignment.project_id).name %></small><br>
@@ -28,7 +28,7 @@
       <% end %>
     </div>
     <div class = "col-xs-2 user-profile" style="height: 100%; border-left: 1px solid lightgrey;">
-      <h1 style="color: lawngreen; text-align:center;"><strong><%= score.total %></strong></h1>
+      <h1 style="text-align:center;"><strong  style="color:<%= score.get_color.to_s %>" ><%= score.total %></strong></h1>
       <h4 style="text-align: center;">CORE Score</h4>
     </div>
 </div>

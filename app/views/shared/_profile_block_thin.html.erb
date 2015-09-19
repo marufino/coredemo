@@ -14,7 +14,11 @@
       <small>Results:</small><small><%= user.meta.previous_scorecard(score).total %></small><br>
       <%= link_to edit_score_path(score) do %>
         <div class="button" style="width: 60%; text-align: center; margin-top: .5em;">
-          Evaluate
+          <% if !score.completed %>
+            Evaluate
+          <% elsif score.completed %>
+              View
+          <% end %>
         </div>
       <% end %>
     </div>
@@ -31,23 +35,6 @@
         <% end %>
       <% end %>
     </div>
-    <% if !score.completed %>
-        <div class="col-xs-1 user-profile">
-          <%= link_to edit_score_path(score) do %>
-            <div class="center-vertical">
-              Evaluate
-            </div>
-          <% end %>
-        </div>
-    <% elsif score.completed %>
-      <div class="col-xs-1 user-profile">
-        <%= link_to edit_score_path(score) do %>
-            <div class="center-vertical">
-              View
-            </div>
-        <% end %>
-      </div>
-  <% end %>
 </div>
 
 <script type="text/javascript">

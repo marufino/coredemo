@@ -19,7 +19,7 @@ class Trainee < ActiveRecord::Base
     scores = Score.where(:trainee_id => self.id)
     totals=[]
     scores.each do |s| totals.push(s.total) end
-    if(totals!=[])
+    if(totals.compact!=[])
       return mean(totals.compact).to_i
     else
       return 0
@@ -72,8 +72,12 @@ class Trainee < ActiveRecord::Base
   end
 
   def need_for_eval
-    date = self.next_scorecard.assigned_date
-    return (Date.today() - date).to_i
+    if self.next_scorecard
+      date = self.next_scorecard.assigned_date
+      return (Date.today() - date).to_i
+    else
+      return 1
+    end
   end
 
   def next_scorecard

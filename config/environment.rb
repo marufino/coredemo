@@ -15,3 +15,5 @@ $colors = ['red', 'yellow', 'green']
 
 $graph_labels = ['Totals','Knowledge', 'Skills', 'Ability']
 
+$roles = ['Observer', 'Trainee']
+
