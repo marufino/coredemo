@@ -1,17 +1,19 @@
 <%= stylesheet_link_tag  'signin', media: 'all', 'data-turbolinks-track' => true %>
 <body class="bg">
-<h2>Forgot your password?</h2>
+<h2 style="text-align: center; margin-top: 10%; color: #fff; margin-bottom: 2em; font-weight: 700;">Forgot your password?</h2>
 <div class="editform">
 <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
     <%= devise_error_messages! %>
 
-    <div id="loginbox" class="loginbox">
-      <label for="email"><!--"User ID" label-->
+    <div id="loginbox" class="loginbox" style="padding: 1em;">
+      <div class="minimal">
+      <label for="email" class="minimal"><!--"User ID" label-->
         Email
         <%= f.email_field :email, autofocus: true %>
       </label>
+      </div>
 
-      <button lang="" type="submit" class="btn-submit" title="Sign In"  href="" tabindex="5">Send me reset password instructions</button><!--sign in button-->
+      <button lang="" type="submit" class="btn-submit" title="Sign In"  href="" tabindex="5">Email me instructions</button><!--sign in button-->
 
       <div class="aboutcontainer">
         <div class="copyright" style="margin-top: 1em;"><!--copyright statement-->&copy; 2015 Michigan and Manchester.</div>

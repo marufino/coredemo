@@ -32,7 +32,7 @@ h6 {
 }
 
 .mmlogo224 {
-    width: 300px; margin-top: .3em; margin-left: 1.5em; vertical-align: middle;
+    width: 15%; margin-top: 1em; margin-left: 4em; vertical-align: middle;
 }
 
 .logobanner224 {
@@ -304,13 +304,13 @@ body {
 }
 .wrapper {
     width: 100%;
+    text-align: center;
 
 
 }
 .pricing-table {
-    width: 100%;
+    width: 70%;
     margin: 0px auto;
-    text-align: center;
     padding: 10px;
     padding-right: 0;
 }
@@ -321,7 +321,7 @@ body {
     margin-bottom: 4rem;
 }
 .block{
-    width: 30%;
+    width: 25%;
     margin: 0 15px;
     overflow: hidden;
     -webkit-border-radius: 5px;

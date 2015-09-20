@@ -13,11 +13,11 @@
 
     <%= f.label :name %>
     <%= f.text_field :name %>
-
-    <%= f.label :observers %>
+    <div style="margin: 2em;"></div>
+    <%= f.label :observers %><br />
     <%= f.select :observer_ids, Observer.all.collect {|x| [x.user.email, x.id]}, {}, :multiple => true %>
 
-    <br><br>
+    <div style="margin: 2em;"></div>
     <p>Color Cut-offs for CORE score</p>
 
     <%= f.fields_for :colors do |color_form| %>
