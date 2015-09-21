@@ -14,11 +14,11 @@
     <%= f.label :name %>
     <%= f.text_field :name %>
     <div style="margin: 2em;"></div>
-    <%= f.label :observers %><br />
-    <%= f.select :observer_ids, Observer.all.collect {|x| [x.user.email, x.id]}, {}, :multiple => true %>
+    <%= f.label :observers %><p>Multi-select with shift or ctrl + click</p>
+    <%= f.select :observer_ids, Observer.all.collect {|x| [x.user.email, x.id]}, {}, :multiple => true, :style => 'height: 15em;' %>
 
     <div style="margin: 2em;"></div>
-    <p>Color Cut-offs for CORE score</p>
+    <h4>Color Cut-offs for CORE score</h4>
 
     <%= f.fields_for :colors do |color_form| %>
         <%= color_form.label $colors[color_form.options[:child_index]] %>
@@ -26,26 +26,29 @@
     <% end %>
 
         <br><br>
-        <p>Assignments</p>
+        <h4>Assignments</h4>
         <%= f.nested_fields_for :assignments do |assign_form| %>
             <p>
               <%= assign_form.label :date %>
               <%= assign_form.date_field :date %>
 
-              <%= assign_form.label 'Scorecard'%>
+              <%= assign_form.label 'Scorecard'%><br/>
               <%= assign_form.collection_select :survey_id,
                                                 Survey.all, :id, :name,
                                                 :prompt => false %>
-
-              <%= assign_form.label 'Trainees' %>
-              <%= assign_form.select :trainee_ids, Trainee.all.collect {|x| [x.user.email, x.id]}, {}, :multiple => true %>
-
-              <%= assign_form.remove_nested_fields_link %>
+              <br/>
+              <%= assign_form.label 'Trainees', :style => 'display: inline-block;' %>
+              <br/>
+              <%= assign_form.select :trainee_ids, Trainee.all.collect {|x| [x.user.email, x.id]}, {}, :multiple => true, :style => 'height: 15em; width: 70%;' %>
+              <br/>
+              <%= assign_form.remove_nested_fields_link 'X Remove Assignment' %>
             </p>
         <% end -%>
-
-        <%= f.add_nested_fields_link :assignments %>
-
+        <br/>
+  <br/>
+        <%= f.add_nested_fields_link :assignments, '+Add Assignment', :class => 'button' %>
+        <br/>
+        <br/>
   <div class="actions">
     <%= f.submit %>
   </div>
