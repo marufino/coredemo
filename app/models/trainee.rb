@@ -1,9 +1,9 @@
 class Trainee < ActiveRecord::Base
 
   has_and_belongs_to_many :assignments
-  has_and_belongs_to_many :scores
+  has_many :scores
 
-  has_one :user, as: :meta, dependent: :destroy
+  has_one :user, as: :meta
 
   accepts_nested_attributes_for :user
 
@@ -77,6 +77,15 @@ class Trainee < ActiveRecord::Base
       return (Date.today() - date).to_i
     else
       return 1
+    end
+  end
+
+  def delete_all_scores
+
+    scores = Score.where(:trainee_id => self.id)
+
+    scores.each do |s|
+      s.destroy
     end
   end
 

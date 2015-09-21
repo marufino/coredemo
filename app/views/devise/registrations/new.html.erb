@@ -14,13 +14,23 @@
   </div>
 
   <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email%>
+  </div>
+
+  <div class="field">
+    <%= f.label :phone %><br />
+    <%= f.phone_field :phone%>
+  </div>
+
+  <div class="field">
     <%= f.label :title %><br />
     <%= f.text_field :title%>
   </div>
 
   <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email%>
+    <%= f.label 'Role' %><br />
+    <%= f.select :meta_type , $roles, include_blank: false %>
   </div>
 
   <div class="field">
