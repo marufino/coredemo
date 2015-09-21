@@ -137,8 +137,10 @@
             <div>
               <% @competencies.each do |comp| %>
                   <div class = "competencies" id = "competency-<%= comp.name %>" style="display:none">
-                    <li><%= comp.name %></li>
+                    <ul style="border: none; text-transform: uppercase; margin-bottom: 0em;"><%= comp.name %></ul>
+                    <br/>
                     <li><%= comp.description %></li>
+                    <br/>
                     <li><%= comp.coaching %></li>
                   </div>
               <% end %>

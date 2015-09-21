@@ -38,7 +38,7 @@
             </td>
             <div style="width: 100%;">
             <td><% (1..6).each do |i| %>
-                <div style="margin: 20px;display: inline; width: 100%;">
+                <div style="margin-left: 1%;display: inline; width: 100%;">
                   <% if !@score.completed? %>
                     <%= radio_button_tag q.id, i, if Rating.where(question_id: q.id, score_id: @score.id).first then (Rating.where(question_id: q.id, score_id: @score.id).first.value == i) else 1 end  %>
                   <% else %>
@@ -59,8 +59,8 @@
 
   <% if !@score.completed? %>
     <div class="actions">
-    <%= submit_tag 'Save', name: 'save' %>
-    <%= submit_tag 'Submit', name: 'submit' %>
+    <%= submit_tag 'Save', name: 'save', :class => 'button', :style => 'width: 10%;' %>
+    <%= submit_tag 'Submit', name: 'submit', :class => 'button', :style => 'width: 10%;' %>
     </div>
   <% end %>
 <% end %>
