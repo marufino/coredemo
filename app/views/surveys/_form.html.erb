@@ -21,8 +21,8 @@
       <br>
     </div>
     <div class = "col-xs-3" style="margin-left: 1em; border: 2px solid lightgrey; margin-top: 2.4em;">
-      <div class = "col-xs-3" id="weight-container" style="border: 1px solid white;margin-top: -0.6em;">
-        <table style="width: 80%;">
+      <div class = "col-xs-3" id="weight-container" style="width: 100%; border: 1px solid white;">
+        <table style="width: 100%; padding: 1em; margin-top: 0;">
           <% @survey_blocks.each_with_index do |item, i| %>
               <%= f.fields_for :survey_blocks, item, :child_index => i do |block_form| %>
                 <tr>
@@ -77,8 +77,8 @@
   <% end %>
 
 
-  <div class="actions button" style="width: 20%; text-align: center; text-decoration: none;">
-    <%= f.submit %>
+  <div class="actions">
+    <%= f.submit :class => 'button', :style => "width: 20%; text-align: center; text-decoration: none;" %>
   </div>
 <% end %>
 

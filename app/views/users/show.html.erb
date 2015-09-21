@@ -16,8 +16,8 @@
     <row>
       <h4>Trainees</h4>
       <table class="table table-striped shadow">
-        <thead>
-        <tr  style="background-color: lightgray">
+        <thead style="font-size: 0.8em;">
+        <tr>
           <th>Name</th>
           <th>Last Effective Date</th>
           <th>CORE Score</th>
@@ -28,7 +28,7 @@
         </tr>
         </thead>
 
-        <tbody>
+        <tbody class="tabl table-striped shadow" style="font-size: .8em">
         <% @trainees.each do |trainee| %>
           <tr>
             <td><%= trainee.user.full_name %></td>
@@ -44,7 +44,7 @@
             </td>
             <td><%= trainee.user.phone %></td>
             <td><%= trainee.user.email %></td>
-            <td><%= link_to 'See Details', user_path(trainee.user.id) %></td>
+            <td style="width: 10%; margin: .2em"><%= link_to 'See Details', user_path(trainee.user.id) %></td>
           </tr>
         <% end %>
         </tbody>
@@ -95,7 +95,7 @@
         </div>
       </div>
     </div>
-
+    <div>&nbsp&nbsp&nbsp</div>
     <h4 style="display: inline-block; margin-top: 1em; text-align: left;">Recent Events</h4>
 
     <% @scores.each_with_index do |score, index| %>
@@ -104,7 +104,7 @@
       </div>
     <% end %>
 
-    <div style="width: 80%; margin: auto;">
+    <div style="width: 100%; margin-left: 1em;">
       <div class = 'timeline'>
       <% @scores.each_with_index do |score, index| %>
         <div class = 'timeline-inside' style="display:inline-block">
