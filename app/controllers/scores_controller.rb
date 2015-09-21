@@ -29,7 +29,7 @@ class ScoresController < ApplicationController
 
     # if cards only show last two weeks and not completed scores
     if @cards
-      @scores = @scores.where(:completed => false).where(:assigned_date =>  15.days.ago..Date.today())
+      @scores = @scores.where(:completed => false).where(:assigned_date =>  15.days.ago..Date.today()+15)
     end
 
     @users = []

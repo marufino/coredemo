@@ -6,6 +6,13 @@ module ApplicationHelper
     return scores
   end
 
+  def get_non_completed_scores_by_observer(obs)
+    scores = []
+    obs.projects.each {|proj| proj.assignments.order(:date).each {|ass| Score.where(:assignment_id => ass.id).where(:completed => false).each {|score| scores << score} }}
+    return scores
+  end
+
+
   def get_trainees_by_observer(obs)
     trainees = []
     obs.projects.each {|proj| proj.assignments.order(:date).each {|ass| ass.trainees.each{|t| trainees << t} }}
