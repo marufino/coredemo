@@ -33,10 +33,10 @@ class ProjectsController < ApplicationController
     @project = Project.new(project_params)
 
     # assign observers to this project
-    @obs_ids = params[:project][:observer_ids]
-    @obs_ids.reject!(&:empty?)
-    @obs = Observer.find(@obs_ids)
-    @project.observers = @obs
+    obs_ids = params[:project][:observer_ids]
+    obs_ids.reject!(&:empty?)
+    obs = Observer.find(obs_ids)
+    @project.observers = obs
 
     @project.colors.each_with_index do |c,i|
       c.color = $colors[i]
@@ -47,36 +47,36 @@ class ProjectsController < ApplicationController
     @project.assignments.each_with_index { | assignment , i |
 
       # add trainees to assignments
-      @trainee_ids = params[:project][:assignments_attributes].values[i][:trainee_ids]
-      @trainee_ids.reject!(&:empty?)
-      @trainees = Trainee.find(@trainee_ids)
-      assignment.trainees = @trainees
+      trainee_ids = params[:project][:assignments_attributes].values[i][:trainee_ids]
+      trainee_ids.reject!(&:empty?)
+      trainees = Trainee.find(trainee_ids)
+      assignment.trainees = trainees
 
       # assign survey to project
-      @survey = Survey.find(params[:project][:assignments_attributes].values[i][:survey_id])
+      survey = Survey.find(params[:project][:assignments_attributes].values[i][:survey_id])
       assignment.surveys = []
-      assignment.surveys << @survey
+      assignment.surveys.first = survey
 
       # for every trainee create a score object
-      @trainees.each_with_index { |trainee, i |
+      trainees.each_with_index { |trainee, i |
 
-        @score = Score.new()
-        @score.trainee = trainee
-        @score.assignment = assignment
-        @score.assigned_date = assignment.date
-        @score.completed = false
-        @score.build_area_of_weakness
-        @score.build_area_of_strength
+        score = Score.new()
+        score.trainee = trainee
+        score.assignment = assignment
+        score.assigned_date = assignment.date
+        score.completed = false
+        score.build_area_of_weakness
+        score.build_area_of_strength
 
         # build ratings for every question
-        @survey.questions.each do |q|
-          rating = @score.ratings.build
+        survey.questions.each do |q|
+          rating = score.ratings.build
           rating.question = q
           q.rating = rating
         end
 
-        @survey.save
-        @score.save
+        survey.save
+        score.save
       }
     }
 
@@ -95,10 +95,10 @@ class ProjectsController < ApplicationController
     @project.update(project_params)
 
     # assign current user (observer) to this project
-    @obs_ids = params[:project][:observer_ids]
-    @obs_ids.reject!(&:empty?)
-    @obs = Observer.find(@obs_ids)
-    @project.observers = @obs
+    obs_ids = params[:project][:observer_ids]
+    obs_ids.reject!(&:empty?)
+    obs = Observer.find(obs_ids)
+    @project.observers = obs
 
     @project.colors.each_with_index do |c,i|
       c.color = $colors[i]
@@ -109,33 +109,42 @@ class ProjectsController < ApplicationController
     @project.assignments.each_with_index { | assignment , i |
 
       # add trainees to assignments
-      @trainee_ids = params[:project][:assignments_attributes].values[i][:trainee_ids]
-      @trainee_ids.reject!(&:empty?)
-      @trainees = Trainee.find(@trainee_ids)
-      assignment.trainees = @trainees
+      trainee_ids = params[:project][:assignments_attributes].values[i][:trainee_ids]
+      trainee_ids.reject!(&:empty?)
+      trainees = Trainee.find(trainee_ids)
+      assignment.update(:trainees => trainees)
 
       # assign survey to project
-      @survey = Survey.find(params[:project][:assignments_attributes].values[i][:survey_id])
+      survey = Survey.find(params[:project][:assignments_attributes].values[i][:survey_id])
       assignment.surveys = []
-      assignment.surveys << @survey
+      assignment.surveys << survey
 
       # for every trainee create a score object
-      @trainees.each_with_index { |trainee, i |
+      trainees.each_with_index { |trainee, i |
 
-        @score = Score.new()
-        @score.trainee = trainee
-        @score.assignment = assignment
-        @score.assigned_date = assignment.date
+        # if score exists update its date
+        if score = Score.where(:trainee_id => trainee.id, :assignment_id => assignment.id).first
+          score.update(:assigned_date => assignment.date)
+        else
 
-        # build ratings for every question
-        @survey.questions.each do |q|
-          rating = @score.ratings.build
-          rating.question = q
-          q.rating = rating
+          # if score doesn't exist build it
+          score = Score.new()
+          score.trainee = trainee
+          score.assignment = assignment
+          score.assigned_date = assignment.date
+
+          # build ratings for every question
+          survey.questions.each do |q|
+            rating = score.ratings.build
+            rating.question = q
+            q.rating = rating
         end
 
-        @survey.save
-        @score.save
+
+        end
+
+        survey.save
+        score.save
       }
     }
 

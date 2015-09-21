@@ -13,9 +13,9 @@ class Score < ActiveRecord::Base
                 with_area_of_weakness
               ]
 
-  has_many :ratings
-  has_one :area_of_strength
-  has_one :area_of_weakness
+  has_many :ratings, dependent: :destroy
+  has_one :area_of_strength, dependent: :destroy
+  has_one :area_of_weakness, dependent: :destroy
   belongs_to :trainee
   belongs_to :assignment
 

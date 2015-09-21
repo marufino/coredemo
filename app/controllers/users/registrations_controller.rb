@@ -7,34 +7,34 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def new
     # Override Devise default behaviour and create a profile as well
     @user = User.new
-    @user.roles.build
   end
 
   def create
 
-    user_type = params[:user][:roles_attributes].values.first[:name]
+    user_type = params[:user][:meta_type]
 
-    @user = User.create!(sign_up_params)
-
-    # if observer, create an observer, assign it the user params
-    if user_type == 'observer'
-      @observer = Observer.create()
-      @observer.user = @user
-      @observer.save
-    # if trainee, create a trainee
-    elsif user_type =='trainee'
-      @trainee = Trainee.create()
-      @trainee.user = @user
-      @trainee.save
-    end
-
+    @user = User.create(sign_up_params)
 
     respond_to do |format|
+
       if @user.save
-        format.html { redirect_to root_url, notice: 'User was successfully created.' }
+
+        # if observer, create an observer, assign it the user params
+        if user_type.casecmp('Observer') == 0
+          @observer = Observer.create()
+          @observer.user = @user
+          @observer.save
+          # if trainee, create a trainee
+        elsif user_type.casecmp('Trainee') == 0
+          @trainee = Trainee.create()
+          @trainee.user = @user
+          @trainee.save
+        end
+
+        format.html { redirect_to users_path, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
-        format.html { render :new }
+        format.html { render :new, alert: @user.errors  }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end

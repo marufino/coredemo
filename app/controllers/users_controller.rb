@@ -164,6 +164,23 @@ class UsersController < ApplicationController
   end
 
   def destroy
+    if @user.trainee?
+      @user.meta.delete_all_scores
+      Trainee.destroy(@user.meta_id)
+    elsif @user.observer?
+      # check if project becomes "orphan" and if so don't allow delete
+      projects = @user.meta.projects
+
+      projects.each do |p|
+        if p.observers.size == 1
+          redirect_to users_path, alert: "Can't delete Observer. Project:'" + p.name + "' would be left without observers. Please assign additional observers before deleting."
+          return
+        end
+      end
+
+      Observer.destroy(@user.meta_id)
+    end
+
     @user.destroy
     redirect_to users_path, notice: "User deleted."
   end

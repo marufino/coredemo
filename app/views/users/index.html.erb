@@ -27,7 +27,7 @@
   <tbody>
   <% @users.each do |user| %>
     <% if !user.role?('admin') %>
-      <tr class="pointer" onclick="location.href='<%= edit_user_path(user) %>'">
+      <tr>
         <td><%= user.full_name %></td>
         <td><%= user.email %></td>
         <td><%= user.title %></td>
@@ -36,7 +36,7 @@
               <span class="glyphicon glyphicon-edit icon-larger .edit-button-color"></span>
           <% end %>
         </td>
-        <td><%= link_to user, method: :delete, data: { confirm: 'Delete user? Are you sure?' } do %>
+        <td><%= link_to user, method: :delete, data: if user.observer? then  { confirm: 'Delete Observer? Are you sure? This might leave a Project without any graders!' } else { confirm: 'Delete Trainee? Are you sure? This will delete all associated Scorecards!' } end do %>
               <span class="glyphicon glyphicon-remove icon-larger delete-button-color"></span>
           <% end %>
         </td>

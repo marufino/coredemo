@@ -29,17 +29,12 @@
 
     <div class="field">
       <%= f.label :phone %><br>
-      <%= f.text_field :phone %>
+      <%= f.phone_field :phone %>
     </div>
 
     <div class="field">
       <%= f.label :title %><br>
       <%= f.text_field :title %>
-    </div>
-
-    <div class="field">
-      <%= f.label 'Role' %><br />
-      <%= f.select :meta_type , $roles, include_blank: false %>
     </div>
 
     <div class="actions" style="width: 100%;">
