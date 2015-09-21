@@ -55,7 +55,7 @@ class ProjectsController < ApplicationController
       # assign survey to project
       survey = Survey.find(params[:project][:assignments_attributes].values[i][:survey_id])
       assignment.surveys = []
-      assignment.surveys.first = survey
+      assignment.surveys << survey
 
       # for every trainee create a score object
       trainees.each_with_index { |trainee, i |

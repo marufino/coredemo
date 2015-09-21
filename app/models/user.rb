@@ -27,6 +27,10 @@ class User < ActiveRecord::Base
     return self.first_name + ' ' + self.last_name
   end
 
+  def initial_last_name
+    return self.first_name[0] + '. ' + self.last_name
+  end
+
   def self.options_for_select_trainee
     order('LOWER(last_name)').map { |e| [e.last_name, e.meta.id] }
   end

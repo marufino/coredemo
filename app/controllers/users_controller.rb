@@ -36,7 +36,7 @@ class UsersController < ApplicationController
 
     elsif @user.observer? & !@user.role?('admin')
       # get next scorecard to be completed by this observer
-      scores = get_scores_by_observer(@user.meta)
+      scores = get_non_completed_scores_by_observer(@user.meta)
 
       # date for survey/profile card
       @score = scores.last
@@ -47,7 +47,9 @@ class UsersController < ApplicationController
         # get all trainees under this observer
         @trainees = get_trainees_by_observer(@user.meta)
 
-        @percent_improvement = @trainee.previous_scorecard(@score).percent_improvement(@trainee)
+        if @trainee.previous_scorecard(@score).completed?
+          @percent_improvement = @trainee.previous_scorecard(@score).percent_improvement(@trainee)
+        end
 
         # generate graph
         @graph = graph_scores_for_observer(@user.meta)
@@ -125,7 +127,7 @@ class UsersController < ApplicationController
       @eval_progress = Hash.new
       # for each user
       trainees.each do |t|
-        @eval_progress[t.user.full_name] = t.percent_scores_completed
+        @eval_progress[t.user.initial_last_name] = t.percent_scores_completed
       end
       @eval_keys = @eval_progress.keys.paginate(:page => params[:page],:per_page => 8)
 
