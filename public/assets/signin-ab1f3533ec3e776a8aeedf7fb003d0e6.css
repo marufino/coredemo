@@ -1,0 +1,328 @@
+@charset "UTF-8";
+/*~~~~~~~~~~~~~~~~~CUSTOMIZABLE ASSETS~~~~~~~~~~~~~~~~~*/
+/*~~background color~~*/
+
+.bg {
+	width: 100%;
+	height: 100%;
+	background: -webkit-radial-gradient(#305263, #092531); /* Safari 5.1 to 6.0 */ /* For Opera 11.6 to 12.0 */ /* For Firefox 3.6 to 15 */
+  	background: radial-gradient(#305263, #092531); /* Standard syntax */
+}
+
+/*~~logo~~*/
+
+.logo {
+	max-width: 200px;
+	margin-top: 5%;
+	display: block;
+	margin-bottom: 50px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.logotext {
+	font-family:'Lato', Helvetica, Arial, sans-serif;
+	font-weight: 100;
+	font-size: 3em;
+	color: #fff;
+	margin-top: -2em;
+	position: relative;
+	text-align: center;
+}
+
+/*~~general button formatting DO NOT EDIT~~*/
+
+[class*='btn-'] {
+	border-bottom: 2px solid rgba(0,0,0,.15);
+	border-top: 1px solid rgba(255,255,255,.15);
+	border-radius: 5px;
+	color: #fff;
+	display: inline-block;
+	font-size: .8em; 
+	line-height: 140%;
+	padding: 10px 20px;
+	width: 100%;
+	text-transform: uppercase;
+	text-align: left;
+	margin-top: .2em;
+	
+	-webkit-transition: all 0.1s linear;
+	  transition: all 0.1s linear;
+}
+
+
+/*~~general button formatting DO NOT EDIT~~*/
+
+/*~~"Sign In" button~~*/
+
+.btn-submit {
+		/*background-color: #297ca6; /*customizable*/
+		border-radius: 5px;
+		border: 1px solid rgb( 186, 186, 186 );
+		color: #fff;
+		max-width: 100%;
+		text-align: center;
+		background: -webkit-linear-gradient(#305263, #092531);
+		background: linear-gradient(#305263, #092531);
+	}
+	
+		.btn-submit:hover {
+			background-color: #287eab; /*customizable*/
+			border: 1px solid rgba(0,0,0,.1);
+			color: rgb(255,255,255);
+			cursor: pointer;
+
+			box-shadow: 0 1px 3px #888;
+		}
+		
+		.btn-submit:active {
+			box-shadow: 0 3px 1px rgba(0,0,0,0.15) inset;
+
+			box-shadow: 0 2px 7px #000;
+		}
+
+
+
+/*~~"Guest" button~~*/
+
+.btn-submitout {
+	border-radius: 5px;
+	color: #000;
+	max-width: 100%;
+	text-align: center;
+	margin-top: 1em;
+	border: 1px solid #d4d4d4;
+	text-decoration: none;
+	background: -webkit-linear-gradient(#ededed, #d4d4d4);
+	background: linear-gradient(#ededed, #d4d4d4);
+}
+
+.btn-submitout:hover {
+	background-color: #ededed; /*customizable*/
+			border: 1px solid rgba(0,0,0,.1);
+			color: #000;
+			cursor: pointer;
+
+			box-shadow: 0 1px 3px #888;
+}
+
+/*~~~~~~~~~~~~~~~~~END CUSTOMIZABLE ASSETS~~~~~~~~~~~~~~~~~*/
+
+
+/*~~~~~~~~~~~~~~~~~CONTAINERS~~~~~~~~~~~~~~~~~*/
+
+/*~~main form~~*/
+
+div#loginBox {
+	background-color: #fff;
+	border: 1px solid rgba(0,0,0,.15);
+	border-radius: 5px;
+	box-shadow: 0 5px 0 rgba(255,255,255,0.7) inset, 0 4px 4px rgba(0,0,0,0.2);
+	margin: 1em auto; /*aligns center*/
+	margin-top: -1em;
+	padding-top: 1.5em;
+	padding-left: 1.5em;
+	padding-right: 1.5em;
+	padding-bottom: .5em;
+	max-width: 300px;
+	width: 50%;
+	font-family: 'Lato', Helvetica, Arial, sans-serif;
+}
+
+/*~~message div~~*/
+
+div#message {
+	background-color: #fff;
+	border-radius: 5px;
+	border: 1px solid rgba(0,0,0,.15);
+	box-shadow: 0 5px 0 rgba(255,255,255,0.7) inset, 0 4px 4px rgba(0,0,0,0.2);
+	margin: 10px auto; /*aligns center*/
+	margin-top: -20px;
+	padding: .5em 2em .5em 2em;
+	margin-bottom: 30px;
+	width: 50%;
+	max-width: 310px;
+	font-family: 'Lato', Helvetica, Arial, sans-serif;
+	font-size: .7em;
+	color: #000;
+}
+
+.customizations {
+	background-color: #fff;
+	border-radius: 5px;
+	box-shadow: 0 5px 0 rgba(255,255,255,0.7) inset, 0 4px 4px rgba(0,0,0,0.2);
+	margin: 10px auto; /*aligns center*/
+	padding: .5em 2em .5em 2em;
+	margin-bottom: 20px;
+	width: 50%;
+	max-width: 300px;
+	font-family: 'Lato', Helvetica, Arial, sans-serif;
+	font-size: .8em;
+	color: #000;
+}
+/*~~~~~~~~~~~~~~~~~~~~~INPUTS~~~~~~~~~~~~~~~~~~~~~~~~*/
+div.minimal input[type="email"],
+div.minimal input[type="password"],
+div.minimal textarea {
+
+	background-color: #fff;
+	border: 1px solid rgb(186, 186, 186);
+	border-radius: 5px;
+	box-shadow: 0 0px 0px rgba(0, 0, 0, 0.2);
+	display: block;
+	font-size: .85em;
+	margin: 6px 0 12px 0;
+	padding: 8px;	
+	width: 100%;
+	
+	-webkit-transition: all 0.1s ease-in;
+	  transition: all 0.1s ease-in;
+}
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+/*~~copyright line~~*/
+.copyright {
+
+	font-size: .8rem;
+	width: 90%;
+	text-align: left;
+	display: inline-block;
+	margin-left: .5em;
+    margin-bottom: 1em;
+}
+
+/*~~messages~~*/
+.smalltext {
+	font-weight: 400;
+	font-size: .9em;
+}
+
+.primary {
+	font-size: 1.4em;
+	font-weight: 700;
+}
+
+.secondary {
+	font-size: 1.2em;
+}
+
+/*~~sign out styling~~*/
+.signout {
+	margin-left: 40%;
+	color: #000;
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~FONTS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+p {
+	font-family: 'Lato', Helvetica, Arial, sans-serif;
+}
+
+h2, h3, h4, h5, h6 {
+	font-family: 'Lato', Helvetica, Arial, sans-serif;
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~~~MEDIA QUERY (AND ELEMENTS AFFECTED) FOR RESPONSIVENESS~~~~~~~~~~~~~~~~~~~~~~*/
+
+@-ms-viewport { width: device-width; }
+@-o-viewport { width: device-width; }
+@viewport { width: device-width; }
+
+@media (max-width: 600px) {
+	
+	.logo {
+	max-width: 150px;
+	margin-bottom: 30px;
+	margin-top: 30px;
+	display: block;
+    margin-left: auto;
+    margin-right: auto }
+
+	div#loginBox {
+	width: 210px;
+	font-size: .9em }
+
+	div#message {
+	background-color: #fff;
+	border-radius: 5px;
+	box-shadow: 0 5px 0 rgba(255,255,255,0.7) inset, 0 4px 4px rgba(0,0,0,0.2);
+	margin: 10px auto; /*aligns center*/
+	margin-top: -20px;
+	padding: .5em 2em .5em 2em;
+	margin-bottom: 30px;
+	width: 215px;
+	font-family: 'Lato', Helvetica, Arial, sans-serif;
+	font-size: .6em;
+	color: #000;
+	}
+
+	.modalDialog {
+    font-size: .7em; }
+
+    .logotext {
+	font-family: 'Lato', Helvetica, Arial, sans-serif;
+	font-weight: 300;
+	font-size: 2.2em;
+	color: #fff;
+	margin-top: -80px;
+	margin-bottom: 30px;
+	text-align: center; }
+
+	.copyright {
+	font-size: 10px;
+	width: 90%;
+	text-align: left;
+	display: inline-block;
+	margin-left: .5em;
+	}
+}
+
+@media (max-width: 300px) {
+	
+	.logo {
+	max-width: 70%;
+	margin-bottom: 30px;
+	margin-top: 20px;
+	display: block;
+    margin-left: auto;
+    margin-right: auto }
+
+	div#loginBox {
+	width: 70%;
+	font-size: .5em;
+	padding-top: 2em; }
+
+	div#message {
+	background-color: #fff;
+	border-radius: 5px;
+	box-shadow: 0 5px 0 rgba(255,255,255,0.7) inset, 0 4px 4px rgba(0,0,0,0.2);
+	margin: 10px auto; /*aligns center*/
+	padding: .5em 2em .5em 2em;
+	margin-bottom: 18px;
+	width: 65%;
+	max-width: 250px;
+	font-family: 'Lato', Helvetica, Arial, sans-serif;
+	font-size: .5em;
+	color: #000; }
+
+	.modalDialog {
+    font-size: .5em; }
+
+    .logotext {
+	font-family: 'Lato', Helvetica, Arial, sans-serif;
+	font-weight: 300;
+	font-size: 140%;
+	color: #fff;
+	margin-top: -70px;
+	margin-bottom: 20px;
+	text-align: center; }
+
+	.copyright {
+	margin-top: .8em;
+	font-size: 5px;
+	width: 50%;
+	text-align: left;
+	display: inline-block;
+	margin-left: .5em;
+	}
+
+}
