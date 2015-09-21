@@ -16,15 +16,15 @@ class Competency < ActiveRecord::Base
       (2..spreadsheet.last_row).each do |i|
         row = Hash[[header, spreadsheet.row(i)].transpose]
         competency = find_by_name(row["name"]) || new
+
         competency.attributes = row.to_hash.slice(*row.to_hash.keys)
 
-        # check if category is valid
-        if !($categorynames.all? != competency.category)
-          return false
+        # check if competency is valid
+        if !competency.save
+          return competency.errors
         end
-
-        competency.save!
       end
+      return true
     end
   end
 
