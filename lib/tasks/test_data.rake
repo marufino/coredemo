@@ -56,14 +56,12 @@ namespace :app do
       end
       s[i].save
 
-      p[i] = Fabricate(:project)
+      p[i] = Fabricate.build(:project)
     end
 
 
 
     #populate project
-
-
     p.each_with_index do |p,i|
 
       # assign random observers
@@ -75,7 +73,8 @@ namespace :app do
 
       10.times do |k|
         # make assignments
-        a[k] = Fabricate(:assignment)
+        a[k] = Fabricate.build(:assignment)
+        a[k].save(validate: false)
 
         # add survey to assignment
         p_survey = s[rand(0..n-1)]

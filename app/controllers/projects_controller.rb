@@ -32,6 +32,7 @@ class ProjectsController < ApplicationController
 
     @project = Project.new(project_params)
 
+    @colors = @project.colors
     # assign observers to this project
     obs_ids = params[:project][:observer_ids]
     obs_ids.reject!(&:empty?)
