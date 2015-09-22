@@ -20,9 +20,11 @@
     <div style="margin: 2em;"></div>
     <h4>Color Cut-offs for CORE score</h4>
 
-    <%= f.fields_for :colors do |color_form| %>
-        <%= color_form.label $colors[color_form.options[:child_index]] %>
-        <%= color_form.number_field :value , within: 1...100  %>
+    <% @colors.each_with_index do |item, i| %>
+        <%= f.fields_for :colors, item, :child_index => i do |color_form| %>
+            <%= color_form.label :value, $colors[i] %>
+            <%= color_form.number_field :value , within: 1...100  %>
+        <% end %>
     <% end %>
 
         <br><br>

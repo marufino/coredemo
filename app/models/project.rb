@@ -13,9 +13,9 @@ class Project < ActiveRecord::Base
   accepts_nested_attributes_for :trainees
 
 
-  validates_associated :assignments, presence: true
-  validates_associated :observers, presence: true
-  validates_associated :colors, presence: true
+  validates_associated :assignments
+  validates :observers, presence: true
+  validates_associated :colors
   validates :name, presence: true
 
 

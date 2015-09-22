@@ -92,6 +92,9 @@ class ProjectsController < ApplicationController
   end
 
   def update
+
+    @colors = @project.colors
+
     @project.update(project_params)
 
     # assign current user (observer) to this project
@@ -170,6 +173,6 @@ class ProjectsController < ApplicationController
     end
 
     def project_params
-      params[:project].permit(:name, :observer_ids, assignments_attributes: [:id, :date, :survey_id, :trainee_ids], colors_attributes: [:id, :value])
+      params[:project].permit(:id, :name, :observer_ids, assignments_attributes: [:id, :date, :survey_id, :trainee_ids], colors_attributes: [:id, :value])
     end
 end
