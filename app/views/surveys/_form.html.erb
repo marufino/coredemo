@@ -97,7 +97,7 @@
         var total = parseInt($("#survey_survey_blocks_attributes_0_weight").val(),10) + parseInt($("#survey_survey_blocks_attributes_1_weight").val(),10) + parseInt($("#survey_survey_blocks_attributes_2_weight").val(),10);
         $('#total-weights').html(total);
         if (total != 100) {
-            $('#weight-container').css('margin-left: 2em;');
+            $('#weight-container').css('border','1px solid red');
         }
         else {
             $('#weight-container').css('border', '1px solid green');

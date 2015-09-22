@@ -53,11 +53,11 @@ class CompetenciesController < ApplicationController
 
   def import
     respond_to do |format|
-      if Competency.import(params[:file])
+      if Competency.import(params[:file]) == true
         format.html { redirect_to competencies_path, notice: 'Competencies successfully imported.' }
         format.json { render :index, status: :ok, location: @competency }
       else
-        format.html { redirect_to competencies_path , alert: 'Wrong formatting. Could not import' }
+        format.html { redirect_to competencies_path , alert: 'Wrong formatting. Could not import '+ Competency.import(params[:file]).messages.to_s }
         format.json { render json: @competency.errors, status: :unprocessable_entity }
       end
     end
