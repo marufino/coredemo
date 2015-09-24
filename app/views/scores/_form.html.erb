@@ -1,6 +1,6 @@
 <%= form_for(@score) do |f| %>
   <% if @score.errors.any? %>
-    <div id="error_explanation">
+    <div id="error_explanation" style="z-index: 9999;">
       <h2><%= pluralize(@score.errors.count, "error") %> prohibited this score from being saved:</h2>
 
       <ul>
