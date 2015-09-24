@@ -40,7 +40,7 @@ h6 {
 }
 
 .logobanner224 {
-    position: fixed;
+    position: absolute;
     padding: 5px;
     width: 100%;
     top: 0;
