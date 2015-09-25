@@ -106,7 +106,7 @@
 
     // on click or keyup update said weights
     <% $categorynames.each_with_index do |cat,i| %>
-    $("#survey_survey_blocks_attributes_<%= i %>_weight").on('click keyup',function(){
+    $("#nested_fields nested_survey_survey_blocks_<%= i %>_questions").on('click keyup', "#survey_survey_blocks_attributes_<%= i %>_weight",function(){
         compute_total();
         // and replace the html accordingly
         $("#header-<%= cat %>").html($(this).val());
@@ -119,7 +119,7 @@
     <% $categorynames.each_with_index do |cat,i| %>
         // whenever each competency weight is changed
         $(".<%= cat %>-category-weights").each(function(){
-            $(this).on('click keyup',function(){
+            $("#nested_fields nested_survey_survey_blocks_<%= i %>_questions").on('click keyup', ".<%= cat %>-category-weights",function(){
                 var total = 0;
                 // recompute the total for that section
                 $(".<%= cat %>-category-weights").each(function() {
