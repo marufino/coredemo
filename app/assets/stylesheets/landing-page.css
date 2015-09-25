@@ -28,18 +28,23 @@ h6 {
 }
 
 .logo224 {
-    width: 40%;
+    width: 70%;
 }
 
 .mmlogo224 {
-    width: 15%; margin-top: 1em; margin-left: 4em; vertical-align: middle;
+    position: absolute;
+    width: 175px;
+    top: 3em;
+    margin-left: 4em;
+    vertical-align: middle;
 }
 
 .logobanner224 {
+    position: absolute;
     padding: 5px;
     width: 100%;
-    margin-top: 1em;
-    height: 5em;
+    top: 0;
+    height: 6em;
 }
 
 .getapp {
@@ -193,6 +198,10 @@ h6 {
         font-size: 3em;
     }
 
+    .intro-message {
+        margin-top: 35%;
+        width: 100%;
+    }
     ul.banner-social-buttons > li {
         display: block;
         margin-bottom: 20px;
