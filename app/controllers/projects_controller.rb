@@ -174,6 +174,6 @@ class ProjectsController < ApplicationController
     end
 
     def project_params
-      params[:project].permit(:id, :name, :observer_ids, assignments_attributes: [:id, :date, :survey_id, :trainee_ids], colors_attributes: [:id, :value])
+      params[:project].permit(:name, :observer_ids, assignments_attributes: [:id, :date, :survey_id, :trainee_ids, :_destroy], colors_attributes: [:id, :value])
     end
 end

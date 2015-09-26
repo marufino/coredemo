@@ -62,6 +62,13 @@ namespace :app do
 
 
     #populate project
+
+    p.each do |p|
+      p.observers.each do |s|
+        s.destroy!
+      end
+    end
+
     p.each_with_index do |p,i|
 
       # assign random observers

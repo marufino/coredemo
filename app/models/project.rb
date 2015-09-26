@@ -9,7 +9,7 @@ class Project < ActiveRecord::Base
 
 
   accepts_nested_attributes_for :colors
-  accepts_nested_attributes_for :assignments
+  accepts_nested_attributes_for :assignments, allow_destroy: true
   accepts_nested_attributes_for :trainees
 
 
