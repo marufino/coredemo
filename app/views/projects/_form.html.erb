@@ -29,23 +29,23 @@
 
         <br><br>
         <h4>Assignments</h4>
-        <%= f.nested_fields_for :assignments do |assign_form| %>
-            <p>
-              <%= assign_form.label :date %>
-              <%= assign_form.date_field :date %>
+            <%= f.nested_fields_for :assignments do |assign_form| %>
+                <p>
+                  <%= assign_form.label :date %>
+                  <%= assign_form.text_field :date %>
 
-              <%= assign_form.label 'Scorecard'%><br/>
-              <%= assign_form.collection_select :survey_id,
-                                                Survey.all, :id, :name,
-                                                :prompt => false %>
-              <br/>
-              <%= assign_form.label 'Trainees', :style => 'display: inline-block;' %>
-              <br/>
-              <%= assign_form.select :trainee_ids, Trainee.all.collect {|x| [x.user.email, x.id]}, {}, :multiple => true, :style => 'height: 15em; width: 70%;' %>
-              <br/>
-              <%= assign_form.remove_nested_fields_link 'X Remove Assignment' %>
-            </p>
-        <% end -%>
+                  <%= assign_form.label 'Scorecard'%><br/>
+                  <%= assign_form.collection_select :survey_id,
+                                                    Survey.all, :id, :name,
+                                                    :prompt => false %>
+                  <br/>
+                  <%= assign_form.label 'Trainees', :style => 'display: inline-block;' %>
+                  <br/>
+                  <%= assign_form.select :trainee_ids, Trainee.all.collect {|x| [x.user.email, x.id]}, {}, :multiple => true, :style => 'height: 15em; width: 70%;' %>
+                  <br/>
+                  <%= assign_form.remove_nested_fields_link 'X Remove Assignment' %>
+                </p>
+            <% end %>
         <br/>
   <br/>
         <%= f.add_nested_fields_link :assignments, '+Add Assignment', :class => 'button' %>
@@ -55,3 +55,31 @@
     <%= f.submit %>
   </div>
 <% end %>
+
+<script>
+    $( document ).ready(function() {
+
+        var value = $("input[name$='[date]']");
+
+        value.each(function(){
+            console.log($(this));
+            $(this).datepicker({
+                dateFormat: "yy-mm-dd"
+            });
+        });
+    });
+
+    $('.add_nested_fields_link').mouseup(function() {
+        setTimeout(function() {
+            var value = $("input[name$='[date]']");
+
+            value.each(function(){
+                console.log($(this));
+                $(this).datepicker({
+                    dateFormat: "yy-mm-dd"
+                });
+            });
+        }, 100);
+    });
+
+</script>

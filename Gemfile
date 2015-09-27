@@ -62,6 +62,8 @@ gem 'linkedin'
 
 gem 'pg'
 
+gem 'jquery-ui-rails'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

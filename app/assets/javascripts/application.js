@@ -13,6 +13,7 @@
 //= require jquery
 //= require nested_form_fields
 //= require jquery_ujs
+//= require jquery-ui/datepicker
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require chartkick
