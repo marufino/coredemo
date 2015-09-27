@@ -131,11 +131,11 @@
     // for each category
     <% $categorynames.each_with_index do |cat,i| %>
         // whenever each competency weight is changed
-        $(".<%= cat %>-category-weights").each(function(){
-            $(".<%= cat %>-category-weights").on('click keyup',function(){
+        $(".<%= cat %>-category-weights:visible").each(function(){
+            $(".<%= cat %>-category-weights:visible").on('click keyup',function(){
                 var total = 0;
                 // recompute the total for that section
-                $(".<%= cat %>-category-weights").each(function() {
+                $(".<%= cat %>-category-weights:visible").each(function() {
                     total = total + parseInt($(this).val(), 10);
                 });
                 // and replace the html accordingly
@@ -154,6 +154,64 @@
 
         });
     <% end %>
+
+    $('.add_nested_fields_link').mouseup(function() {
+        setTimeout(function() {
+            <% $categorynames.each_with_index do |cat,i| %>
+            // whenever each competency weight is changed
+            $(".<%= cat %>-category-weights:visible").each(function(){
+                $(".<%= cat %>-category-weights:visible").on('click keyup',function(){
+                    var total = 0;
+                    // recompute the total for that section
+                    $(".<%= cat %>-category-weights:visible").each(function() {
+                        total = total + parseInt($(this).val(), 10);
+                    });
+                    // and replace the html accordingly
+                    $("#header-current-<%= cat %>").html(total);
+
+                    if(total != parseInt($("#header-<%= cat %>").html(),10))
+                    {
+                        $("#header-current-<%= cat %>").css('color','red');
+                    }
+                    else
+                    {
+                        $("#header-current-<%= cat %>").css('color','green');
+                    }
+                    //disable_submit();
+                });
+
+            });
+            <% end %>
+        }, 100);
+    });
+
+    $('.remove_nested_fields_link').mouseup(function() {
+        setTimeout(function() {
+            <% $categorynames.each_with_index do |cat,i| %>
+            // whenever each competency weight is changed
+            $(".<%= cat %>-category-weights:visible").each(function(){
+
+                    var total = 0;
+                    // recompute the total for that section
+                    $(".<%= cat %>-category-weights:visible").each(function() {
+                        total = total + parseInt($(this).val(), 10);
+                    });
+                    // and replace the html accordingly
+                    $("#header-current-<%= cat %>").html(total);
+
+                    if(total != parseInt($("#header-<%= cat %>").html(),10))
+                    {
+                        $("#header-current-<%= cat %>").css('color','red');
+                    }
+                    else
+                    {
+                        $("#header-current-<%= cat %>").css('color','green');
+                    }
+
+            });
+            <% end %>
+        }, 100);
+    });
 
     function disable_submit(){
         $(".actions > input").prop('disabled', false);
