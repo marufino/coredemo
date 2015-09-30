@@ -65,8 +65,6 @@ class ProjectsController < ApplicationController
       # for every trainee create a score object
       trainees.each_with_index { |trainee, i |
 
-        TestScores.new(:project => @project, :trainee => trainee)
-
         score = Score.new()
         score.trainee = trainee
         score.assignment = assignment
@@ -89,6 +87,14 @@ class ProjectsController < ApplicationController
 
     respond_to do |format|
       if @project.save
+
+        @project.assignments.each { | assignment|
+          assignment.trainees.each { |trainee|
+            t_s = TestScores.new(:project_id => @project.id, :trainee => trainee)
+            t_s.save
+          }
+        }
+
         format.html { redirect_to projects_path, notice: 'Project was successfully created.' }
         format.json { render :show, status: :created, location: @project }
       else

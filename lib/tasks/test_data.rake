@@ -146,11 +146,20 @@ namespace :app do
 
         # add assignment to project
         p.assignments << a[k]
+
       end
 
       a[i].save
       p.save
 
+      p.assignments.each do |a|
+        a.trainees.each do |t|
+          t_s = Fabricate(:test_scores)
+          t_s.trainee = t
+          t_s.project = p
+          t_s.save
+        end
+      end
 
     end
 

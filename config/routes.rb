@@ -28,6 +28,8 @@ Rails.application.routes.draw do
 
   resources :questions
 
+  resources :test_scores
+
   root 'pages#home'
 
   resources :users do

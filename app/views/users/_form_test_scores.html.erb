@@ -1,5 +1,5 @@
 
-<%= form_for test_scores do |f| %>
+<%= form_for (test_scores) do |f| %>
     <% if test_scores.errors.any? %>
         <div id="error_explanation">
           <h2><%= pluralize(test_scores.errors.count, "error") %> prohibited this test score from being saved:</h2>
