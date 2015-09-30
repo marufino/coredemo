@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  starting: 1
+  midterm: 1
+  final: 1
+
+two:
+  starting: 1
+  midterm: 1
+  final: 1

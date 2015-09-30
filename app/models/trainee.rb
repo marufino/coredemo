@@ -2,6 +2,7 @@ class Trainee < ActiveRecord::Base
 
   has_and_belongs_to_many :assignments
   has_many :scores
+  has_many :test_scores
 
   has_one :user, as: :meta
 

@@ -60,8 +60,12 @@ class ProjectsController < ApplicationController
       assignment.save
 
 
+
+
       # for every trainee create a score object
       trainees.each_with_index { |trainee, i |
+
+        TestScores.new(:project => @project, :trainee => trainee)
 
         score = Score.new()
         score.trainee = trainee

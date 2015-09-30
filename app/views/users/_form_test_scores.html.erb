@@ -1,0 +1,33 @@
+
+<%= form_for test_scores do |f| %>
+    <% if test_scores.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(test_scores.errors.count, "error") %> prohibited this test score from being saved:</h2>
+
+          <ul>
+            <% test_scores.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :starting %><br>
+      <%= f.number_field :starting %>
+    </div>
+
+    <div class="field">
+      <%= f.label :midterm %><br>
+      <%= f.number_field :midterm %>
+    </div>
+
+    <div class="field">
+      <%= f.label :final %><br>
+      <%= f.number_field :final %>
+    </div>
+
+    <div class="actions" style="width: 100%;">
+      <%= f.submit %>
+    </div>
+<% end %>

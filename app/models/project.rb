@@ -5,7 +5,7 @@ class Project < ActiveRecord::Base
   has_many :surveys, through: :assignments
   has_many :trainees, through: :assignments
   has_many :colors, dependent: :destroy
-
+  has_many :test_scores, dependent: :destroy
 
 
   accepts_nested_attributes_for :colors
