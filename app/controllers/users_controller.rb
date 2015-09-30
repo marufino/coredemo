@@ -36,10 +36,10 @@ class UsersController < ApplicationController
 
     elsif @user.observer? & !@user.role?('admin')
       # get next scorecard to be completed by this observer
-      scores = get_non_completed_scores_by_observer(@user.meta)
+      scores = get_non_completed_scores_by_observer(@user.meta).sort_by{ |s| s.assigned_date}
 
       # date for survey/profile card
-      @score = scores.last
+      @score = scores.first
 
       if @score
         @trainee = @score.trainee

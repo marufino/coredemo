@@ -57,6 +57,8 @@ class ProjectsController < ApplicationController
       survey = Survey.find(params[:project][:assignments_attributes].values[i][:survey_id])
       assignment.surveys = []
       assignment.surveys << survey
+      assignment.save
+
 
       # for every trainee create a score object
       trainees.each_with_index { |trainee, i |
@@ -122,6 +124,7 @@ class ProjectsController < ApplicationController
       survey = Survey.find(params[:project][:assignments_attributes].values[i][:survey_id])
       assignment.surveys = []
       assignment.surveys << survey
+      assignment.save
 
       # for every trainee create a score object
       trainees.each_with_index { |trainee, i |
@@ -129,6 +132,20 @@ class ProjectsController < ApplicationController
         # if score exists update its date
         if score = Score.where(:trainee_id => trainee.id, :assignment_id => assignment.id).first
           score.update(:assigned_date => assignment.date)
+
+          # if scorecard changed then scores must be re-done
+          score.completed = false
+
+          # delete all ratings from score
+          score.delete_ratings
+          score.clear_score
+
+          # update ratings for every question
+          survey.questions.each do |q|
+            rating = score.ratings.build
+            rating.question = q
+            q.rating = rating
+          end
         else
 
           # if score doesn't exist build it
@@ -136,13 +153,16 @@ class ProjectsController < ApplicationController
           score.trainee = trainee
           score.assignment = assignment
           score.assigned_date = assignment.date
+          score.completed = false
+          score.build_area_of_weakness
+          score.build_area_of_strength
 
           # build ratings for every question
           survey.questions.each do |q|
             rating = score.ratings.build
             rating.question = q
             q.rating = rating
-        end
+          end
 
 
         end

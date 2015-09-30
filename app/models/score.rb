@@ -41,6 +41,19 @@ class Score < ActiveRecord::Base
     self.ratings.collect{|r| r.value}.compact.size == self.assignment.surveys.first.questions.size
   end
 
+  def delete_ratings
+    self.ratings.each do |r|
+      r.destroy
+    end
+  end
+
+  def clear_score
+    self.abilities = nil
+    self.knowledge = nil
+    self.skills = nil
+    self.total = nil
+  end
+
   def calculate_scores(ratings,questions)
 
     blocks = self.assignment.surveys[0].survey_blocks
@@ -50,6 +63,7 @@ class Score < ActiveRecord::Base
 
     a_s = AreaOfStrength.where(:score_id => self.id).first
     a_w = AreaOfWeakness.where(:score_id => self.id).first
+
 
     3.times do
       a_s.competencies.build
