@@ -2,13 +2,13 @@ require 'test_helper'
 
 class TestScoresControllerTest < ActionController::TestCase
   setup do
-    @test_score = test_scores(:one)
+    test_score = test_scores(:one)
   end
 
   test "should get index" do
     get :index
     assert_response :success
-    assert_not_nil assigns(:test_scores)
+    assert_not_nil assigns(:TestScores)
   end
 
   test "should get new" do
@@ -25,23 +25,23 @@ class TestScoresControllerTest < ActionController::TestCase
   end
 
   test "should show test_score" do
-    get :show, id: @test_score
+    get :show, id: test_score
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, id: @test_score
+    get :edit, id: test_score
     assert_response :success
   end
 
   test "should update test_score" do
-    patch :update, id: @test_score, test_score: {  }
+    patch :update, id: test_score, test_score: {  }
     assert_redirected_to test_score_path(assigns(:test_score))
   end
 
   test "should destroy test_score" do
     assert_difference('TestScore.count', -1) do
-      delete :destroy, id: @test_score
+      delete :destroy, id: test_score
     end
 
     assert_redirected_to test_scores_path

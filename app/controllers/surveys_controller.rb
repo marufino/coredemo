@@ -137,11 +137,18 @@ class SurveysController < ApplicationController
   # DELETE /surveys/1
   # DELETE /surveys/1.json
   def destroy
-    @survey.destroy
-    respond_to do |format|
-      format.html { redirect_to surveys_url, notice: 'Scorecard was successfully destroyed.' }
-      format.json { head :no_content }
+
+    # if survey exists in a project don't delete it
+    if Assignment.where(:surveys => @survey) != []
+      redirect_to surveys_url, alert: "Can't delete this scorecard. It is currently being used in a project."
+      return
     end
+
+    @survey.destroy
+      respond_to do |format|
+        format.html { redirect_to surveys_url, notice: 'Scorecard was successfully destroyed.' }
+        format.json { head :no_content }
+      end
   end
 
   private

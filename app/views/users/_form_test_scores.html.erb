@@ -12,22 +12,27 @@
         </div>
     <% end %>
 
-    <div class="field">
-      <%= f.label :starting %><br>
-      <%= f.number_field :starting %>
-    </div>
 
-    <div class="field">
-      <%= f.label :midterm %><br>
-      <%= f.number_field :midterm %>
-    </div>
+        <div class="field">
+          <small><%= f.label :starting %><br></small>
+          <%= f.number_field :starting, within: 0...101 %>
+        </div>
 
-    <div class="field">
-      <%= f.label :final %><br>
-      <%= f.number_field :final %>
-    </div>
+
+        <div class="field">
+          <small><%= f.label :midterm %><br></small>
+          <%= f.number_field :midterm, within: 0...101 %>
+        </div>
+
+
+
+        <div class="field">
+          <small><%= f.label :final %><br></small>
+          <%= f.number_field :final, within: 0...101 %>
+        </div>
+
 
     <div class="actions" style="width: 100%;">
-      <%= f.submit %>
+      <%= f.submit 'Update Test Scores', data: { confirm: 'Are you sure? Once a test score is submitted it cannot be modified!'} %>
     </div>
 <% end %>

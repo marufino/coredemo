@@ -18,7 +18,7 @@
               <%= o.user.first_name %> <%= o.user.last_name %></small>
         <% end %>
           <br>
-      <small>Results:</small><small><%= user.meta.previous_scorecard(score).total %></small><br>
+      <small>Results:</small><small style="color:<%= user.meta.previous_scorecard(score).get_color.to_s %>"><%= user.meta.previous_scorecard(score).total %></small><br>
       <% end %>
       <%= link_to edit_score_path(score) do %>
         <div class="button" style="width: 60%; text-align: center; margin-top: .5em;">

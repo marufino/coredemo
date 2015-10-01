@@ -90,7 +90,7 @@ class ProjectsController < ApplicationController
 
         @project.assignments.each { | assignment|
           assignment.trainees.each { |trainee|
-            t_s = TestScores.new(:project_id => @project.id, :trainee => trainee)
+            t_s = TestScore.new(:project_id => @project.id, :trainee => trainee)
             t_s.save
           }
         }

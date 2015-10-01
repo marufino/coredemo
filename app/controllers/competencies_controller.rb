@@ -47,8 +47,15 @@ class CompetenciesController < ApplicationController
   end
 
   def destroy
+
+    # if survey exists in a project don't delete it
+    if Question.where(:category => @competency.name) != []
+      redirect_to competencies_path, alert: "Can't delete this competency. It is currently being used in a scorecard."
+      return
+    end
+
     @competency.destroy
-    respond_with(@competency)
+    redirect_to competencies_path, notice: 'Competency was successfully deleted.'
   end
 
   def import

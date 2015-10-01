@@ -1,4 +1,4 @@
-Fabricator(:test_scores) do
+Fabricator(:TestScore) do
 
   starting { Faker::Number.between(0,100) }
   midterm { Faker::Number.between(0,100) }

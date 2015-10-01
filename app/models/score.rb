@@ -23,16 +23,17 @@ class Score < ActiveRecord::Base
 
 
   def get_color
+
     colors = Project.find_by_id(self.assignment.project_id).colors.reverse
 
     if self.total
-      colors.each do |c|
-        if self.total < c.value
-          return c.color
-        end
+      if self.total < colors[0].value
+        return 'red'
+      elsif colors[0].value < self.total and self.total < colors[1].value
+        return 'orange'
+      else
+        return 'green'
       end
-    else
-      return 'black'
     end
 
   end
@@ -103,7 +104,18 @@ class Score < ActiveRecord::Base
     self.knowledge  = knowledge * 100.0/blocks[0].weight
     self.skills     = skills * 100.0/blocks[1].weight
     self.abilities  = abilities * 100.0/blocks[2].weight
-    self.total      = knowledge+abilities+skills
+    self.total      = ((knowledge+abilities+skills) )# + self.current_test_score) / 2.0
+  end
+
+  def current_test_score
+    ts = TestScore.where(:trainee => self, :project => Project.find_by_id(self.assignment.project_id)).first
+    if ts.final
+      return ts.final
+    elsif ts.midterm
+      return ts.midterm
+    elsif ts.starting
+      return ts.starting
+    end
   end
 
   def get_observers

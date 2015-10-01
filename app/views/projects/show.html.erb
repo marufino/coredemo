@@ -1,26 +1,14 @@
-<%= link_to 'Back', projects_path, {:class=> 'button'} %>
-<br />
-<p id="notice"><%= notice %></p>
+<div class='disable_input'>
+  <%= link_to 'Back', projects_path, {:class=> 'button'} %>
 
-<p>
-  Project Title:
-  <%= @project.name %> <br>
+  <h1>Project</h1>
+  <div class="editform" style="width: 100%;">
+    <%= render 'form' %>
 
-  Observers:
-  <% @project.observers.each do |o| %>
-      <%= o.user.email %>
-  <% end %>
+  </div>
+</div>
 
-  <% @project.assignments.each do |a| %>
-    <p></p>
-    <%= a.date %>
-    <% a.surveys.each do |s| %>
-        <%= s.name %>
-    <% end %>
-    <% a.trainees.each do |t| %>
-        <%= t.user.email %>
-        <% end %>
-    <% end %>
-</p>
 
-<%= link_to 'Edit', edit_project_path(@project), {:class=> 'button'} %>
+<script>
+    $('.disable_input :input').prop('disabled', true);
+</script>

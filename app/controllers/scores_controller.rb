@@ -151,6 +151,12 @@ class ScoresController < ApplicationController
             return
           end
 
+          # if there's at least one test_score
+          if !TestScore.where(:trainee => @score.trainee, :project => Project.find_by_id(@score.assignment.project_id)).first.has_one?
+            redirect_to edit_score_path(@score), alert: "Please add a test_score to this trainee before submitting any scorecards"
+            return
+          end
+
           @score.calculate_scores(ratings,questions)
 
           @score.save

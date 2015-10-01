@@ -1,7 +1,14 @@
+<div class='disable_input'>
 <%= link_to 'Back', projects_path, {:class=> 'button'} %>
 
-<h1>Editing project</h1>
+<h1>Project</h1>
 <div class="editform" style="width: 100%;">
 <%= render 'form' %>
 
 </div>
+</div>
+
+
+<script>
+    $('.disable_input :input').prop('disabled', true);
+</script>

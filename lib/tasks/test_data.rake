@@ -141,8 +141,6 @@ namespace :app do
 
         score[k].assignment_id = a[k].id
         score[k].save
-        score[k].calculate_scores(ratings,score[k].assignment.surveys[0].questions)
-        score[k].save
 
         # add assignment to project
         p.assignments << a[k]
@@ -152,13 +150,28 @@ namespace :app do
       a[i].save
       p.save
 
+      all_trainees = []
       p.assignments.each do |a|
         a.trainees.each do |t|
-          t_s = Fabricate(:test_scores)
+          all_trainees << t
+        end
+      end
+
+      all_trainees.uniq.each do |t|
+          t_s = Fabricate.build(:TestScore)
           t_s.trainee = t
           t_s.project = p
           t_s.save
+      end
+
+      10.times do |k|
+
+        ratings = []
+        score[k].ratings.each do |r|
+          ratings << r.value
         end
+        score[k].calculate_scores(ratings,score[k].assignment.surveys[0].questions)
+        score[k].save
       end
 
     end

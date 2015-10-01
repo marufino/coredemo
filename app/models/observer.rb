@@ -10,6 +10,7 @@ class Observer < ActiveRecord::Base
     order('id').map { |e| [e.user.full_name, e.id] }
   end
 
+
   def previous_scorecard(score)
     proj = self.projects
     ass = []
