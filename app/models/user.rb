@@ -38,22 +38,24 @@ class User < ActiveRecord::Base
   end
 
   def self.import(file)
-    spreadsheet = Roo::Spreadsheet.open(file, :extension => 'xls')
-    header = spreadsheet.row(1)
-    if header == ["first_name", "last_name", "email", "phone", "meta_type", "title"]
-      (2..spreadsheet.last_row).each do |i|
-        row = Hash[[header, spreadsheet.row(i)].transpose]
-        user = find_by_email(row["email"]) || new
-        user.attributes = row.to_hash.slice(*row.to_hash.keys)
-        user.password = 'password'
-        if(user.meta_type=='Trainee' and user.meta_id == nil)
-          trainee = Trainee.new
-          user.meta = trainee
-        elsif(user.meta_type=='Observer' and user.meta_id == nil)
-          observer = Observer.new
-          user.meta = observer
+    if file
+      spreadsheet = Roo::Spreadsheet.open(file, :extension => 'xls')
+      header = spreadsheet.row(1)
+      if header == ["first_name", "last_name", "email", "phone", "meta_type", "title"]
+        (2..spreadsheet.last_row).each do |i|
+          row = Hash[[header, spreadsheet.row(i)].transpose]
+          user = find_by_email(row["email"]) || new
+          user.attributes = row.to_hash.slice(*row.to_hash.keys)
+          user.password = 'password'
+          if(user.meta_type=='Trainee' and user.meta_id == nil)
+            trainee = Trainee.new
+            user.meta = trainee
+          elsif(user.meta_type=='Observer' and user.meta_id == nil)
+            observer = Observer.new
+            user.meta = observer
+          end
+          user.save!
         end
-        user.save!
       end
     end
   end

@@ -11,6 +11,9 @@ class SurveysController < ApplicationController
   # GET /surveys/1
   # GET /surveys/1.json
   def show
+    @survey_blocks = @survey.survey_blocks
+    @competencies = Competency.all
+
   end
 
   # GET /surveys/new
@@ -37,6 +40,7 @@ class SurveysController < ApplicationController
   # POST /surveys
   # POST /surveys.json
   def create
+
     @competencies = Competency.all
 
     @survey = Survey.new(survey_params)

@@ -1,32 +1,15 @@
+<div class='disable_input'>
+  <%= link_to 'Back', surveys_path, {:class=> 'button'} %>
 
-<p id="notice"><%= notice %></p>
+  <h3>View your custom Scorecard</h3>
 
-<div style="margin-bottom: 2em;">
-<%= link_to 'Edit', edit_survey_path(@survey), {:class=> 'button'} %>
-<%= link_to 'Back', surveys_path, {:class=> 'button'} %>
+  <%= render 'form' %>
+
 </div>
 
-<% @survey.survey_blocks.each_with_index do |block| %>
-  <h4><%= block.category %> Evaluation ( <%= block.weight %> points)</h4>
-  <div class="scorecard">
-    <table class="table shadow">
-      <thead>
-      <tr>
-        <th>Category</th>
-        <th>Rating</th>
-        <th>Weight</th>
-      </tr>
-      </thead>
-      <% block.questions.each_with_index do |q, index| %>
-        <tr>
-          <td><%= q.category %></td>
-          <td><% (1..6).each do |i| %>
-              <%= radio_button_tag index.to_s + block.category, i, 0, options = {:disabled => true} %>
-            <% end %></td>
-          <td><%= q.weight %></td>
-        </tr>
-      <% end %>
-    </table>
-  </div>
-<% end %>
+
+<script>
+    $('.disable_input :input').prop('disabled', true);
+</script>
+
 

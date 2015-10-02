@@ -162,7 +162,7 @@ class UsersController < ApplicationController
         format.html { redirect_to users_path, notice: 'Users successfully imported.' }
         format.json { render :index, status: :ok, location: @user }
       else
-        format.html { redirect_to users_path , alert: 'Wrong formatting. Could not import' }
+        format.html { redirect_to competencies_path , alert: 'Wrong formatting. Could not import '+ if User.import(params[:file]) then User.import(params[:file]).messages.to_s else "No file provided" end }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end

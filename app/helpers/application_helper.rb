@@ -12,6 +12,12 @@ module ApplicationHelper
     return scores
   end
 
+  def get_trainees_by_observer(obs)
+    trainees = []
+    obs.projects.each {|proj| proj.assignments.order(:date).each {|ass| ass.trainees.each{|t| trainees << t} }}
+    return trainees.uniq
+  end
+
 
   def get_trainees_by_project(project)
     trainees = []

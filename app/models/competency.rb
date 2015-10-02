@@ -10,21 +10,23 @@ class Competency < ActiveRecord::Base
                                 message: "%{value} is not a valid category" }
 
   def self.import(file)
-    spreadsheet = Roo::Spreadsheet.open(file, :extension => 'xls')
-    header = spreadsheet.row(1)
-    if header == ["name", "description", "category", "coaching"]
-      (2..spreadsheet.last_row).each do |i|
-        row = Hash[[header, spreadsheet.row(i)].transpose]
-        competency = find_by_name(row["name"]) || new
+    if file
+      spreadsheet = Roo::Spreadsheet.open(file, :extension => 'xls')
+      header = spreadsheet.row(1)
+      if header == ["name", "description", "category", "coaching"]
+        (2..spreadsheet.last_row).each do |i|
+          row = Hash[[header, spreadsheet.row(i)].transpose]
+          competency = find_by_name(row["name"]) || new
 
-        competency.attributes = row.to_hash.slice(*row.to_hash.keys)
+          competency.attributes = row.to_hash.slice(*row.to_hash.keys)
 
-        # check if competency is valid
-        if !competency.save
-          return competency.errors
+          # check if competency is valid
+          if !competency.save
+            return competency.errors
+          end
         end
+        return true
       end
-      return true
     end
   end
 

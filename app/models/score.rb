@@ -57,7 +57,7 @@ class Score < ActiveRecord::Base
 
   def calculate_scores(ratings,questions)
 
-    blocks = self.assignment.surveys[0].survey_blocks
+    blocks = self.assignment.surveys[0].survey_blocks.reverse
 
     # pull areas of strength and areas of weakness
     rating_map = ratings.zip(questions).sort!

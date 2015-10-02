@@ -64,7 +64,7 @@ class CompetenciesController < ApplicationController
         format.html { redirect_to competencies_path, notice: 'Competencies successfully imported.' }
         format.json { render :index, status: :ok, location: @competency }
       else
-        format.html { redirect_to competencies_path , alert: 'Wrong formatting. Could not import '+ Competency.import(params[:file]).messages.to_s }
+        format.html { redirect_to competencies_path , alert: 'Wrong formatting. Could not import '+ if Competency.import(params[:file]) then Competency.import(params[:file]).messages.to_s else "No file provided" end }
         format.json { render json: @competency.errors, status: :unprocessable_entity }
       end
     end

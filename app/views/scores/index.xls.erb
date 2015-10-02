@@ -3,9 +3,11 @@
   <tr style="background-color: white">
     <th>Trainee</th>
     <th>Project</th>
+    <th>Observer</th>
     <th>Date Assigned</th>
     <th>Completed</th>
     <th>Date Completed</th>
+    <th>Scorecard</th>
     <th>Knowledge</th>
     <th>Skills</th>
     <th>Abilities</th>
@@ -14,16 +16,21 @@
   </thead>
   <tbody>
 
-  <% @scores_all.each_with_index do |score, index| %>
+  <% scores.each_with_index do |score, index| %>
       <row>
 
         <tr class="pointer" onclick="location.href='<%= edit_score_path(score) %>'">
           <td><%= score.trainee.user.full_name %></td>
           <td><%= Project.find(score.assignment.project_id).name %></td>
-          <td><%= Project.find(score.assignment.project_id).name %></td>
-          <td><%= Survey.find(score.assignment.survey_id).name %></td>
+          <td>
+            <% if Project.find(score.assignment.project_id).observers.first %>
+                <%= Project.find(score.assignment.project_id).observers.first.user.full_name %>
+            <% end %>
+          </td>
+          <td><%= score.assigned_date %></td>
           <td><%= score.completed? %></td>
           <td><%= score.completed_date %></td>
+          <td><%= Survey.find(score.assignment.survey_id).name %></td>
           <td><%= score.knowledge %></td>
           <td><%= score.skills %></td>
           <td><%= score.abilities %></td>
@@ -35,4 +42,3 @@
 
   </tbody>
 </table>
-

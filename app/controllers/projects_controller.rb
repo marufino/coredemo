@@ -9,23 +9,26 @@ class ProjectsController < ApplicationController
   end
 
   def show
+    @assignments = @project.assignments
+    @colors = @project.colors
     respond_with(@project)
   end
 
   def new
     @project = Project.new
-    @assignments = @project.assignments.build
+    @assignments = []
+    @assignments << @project.assignments.build
 
     @colors = []
     3.times do
       @colors << @project.colors.build
     end
 
-    respond_with(@project)
   end
 
   def edit
     @colors = @project.colors
+    @assignments = @project.assignments
   end
 
   def create
@@ -41,8 +44,9 @@ class ProjectsController < ApplicationController
 
     @project.colors.each_with_index do |c,i|
       c.color = $colors[i]
-      c.save
     end
+
+    scores_all = []
 
     # for every assignment
     @project.assignments.each_with_index { | assignment , i |
@@ -57,9 +61,6 @@ class ProjectsController < ApplicationController
       survey = Survey.find(params[:project][:assignments_attributes].values[i][:survey_id])
       assignment.surveys = []
       assignment.surveys << survey
-      assignment.save
-
-
 
 
       # for every trainee create a score object
@@ -80,20 +81,25 @@ class ProjectsController < ApplicationController
           q.rating = rating
         end
 
-        survey.save
-        score.save
+        scores_all << score
+
       }
     }
 
     respond_to do |format|
       if @project.save
 
-        @project.assignments.each { | assignment|
-          assignment.trainees.each { |trainee|
-            t_s = TestScore.new(:project_id => @project.id, :trainee => trainee)
-            t_s.save
-          }
-        }
+        @project.colors.each do |c|
+          c.save
+        end
+
+        @project.assignments.each do |a|
+          a.save
+        end
+
+        scores_all.each do |s|
+          s.save
+        end
 
         format.html { redirect_to projects_path, notice: 'Project was successfully created.' }
         format.json { render :show, status: :created, location: @project }
@@ -107,6 +113,7 @@ class ProjectsController < ApplicationController
   def update
 
     @colors = @project.colors
+    @assignments = @project.assignments
 
     @project.update(project_params)
 
@@ -134,7 +141,7 @@ class ProjectsController < ApplicationController
       survey = Survey.find(params[:project][:assignments_attributes].values[i][:survey_id])
       assignment.surveys = []
       assignment.surveys << survey
-      assignment.save
+
 
       # for every trainee create a score object
       trainees.each_with_index { |trainee, i |
@@ -204,6 +211,6 @@ class ProjectsController < ApplicationController
     end
 
     def project_params
-      params[:project].permit(:name, :observer_ids, assignments_attributes: [:id, :date, :survey_id, :trainee_ids, :_destroy], colors_attributes: [:id, :value])
+      params[:project].permit(:name, :observer_ids, assignments_attributes: [:date, :survey_id, :trainee_ids, :_destroy], colors_attributes: [:value])
     end
 end

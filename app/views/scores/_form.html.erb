@@ -18,7 +18,7 @@
     <%= render :partial => "shared/areas_of", :locals => {:score => @score} %>
   <% end %>
 
-  <% @blocks.each do |block| %>
+  <% @blocks.reverse.each do |block| %>
   <h4><%= block.category %> Evaluation ( <%= block.weight %> points)</h4>
     <div class="scorecard">
 
@@ -51,7 +51,7 @@
             </td>
             <div style="width: 100%;">
             <% if q.numeric == true %>
-              <td><span  style="float: right"><%= number_field_tag q.id, Rating.where(question_id: q.id, score_id: @score.id).first.value, within: 1...100 %></span></td>
+              <td><span  style="float: right"><%= number_field_tag q.id, Rating.where(question_id: q.id, score_id: @score.id).first.value, within: 0...101 %></span></td>
             <% else %>
                 <td><% (1..6).each do |i| %>
                     <div style="margin-left: 1%;display: inline; width: 100%;">
