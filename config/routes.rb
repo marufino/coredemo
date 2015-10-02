@@ -22,6 +22,8 @@ Rails.application.routes.draw do
 
   match 'users/' => 'users#index', via: :get
 
+  match 'users/swap_project/:id' => 'users#swap_project', via: :get
+
   resources :surveys
 
   resources :survey_blocks

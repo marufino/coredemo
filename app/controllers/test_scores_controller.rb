@@ -11,9 +11,10 @@ class TestScoresController < ApplicationController
   # PATCH/PUT /TestScores/1
   # PATCH/PUT /TestScores/1.json
   def update
+
     respond_to do |format|
       if @test_score.update(test_score_params)
-        format.html { redirect_to request.referer, notice: 'Test score was successfully updated.' }
+        format.html { redirect_to request.referer, notice: 'Test score was successfully updated.', :project => params['project'] }
         format.json { render :show, status: :ok, location: test_score }
       else
         format.html { redirect_to request.referer, alert: 'Test score wasn''t successfully updated.' }

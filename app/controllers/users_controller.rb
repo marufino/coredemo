@@ -35,24 +35,31 @@ class UsersController < ApplicationController
 
 
     elsif @user.observer? & !@user.role?('admin')
+
+      if params['project']
+        @project = Project.find_by_name(params['project'])
+      else
+        @project = @user.meta.projects.last
+      end
+
       # get next scorecard to be completed by this observer
-      scores = get_non_completed_scores_by_observer(@user.meta).sort_by{ |s| s.assigned_date}
+      if @project
+        scores = @project.get_non_completed_scores.sort_by{ |s| s.assigned_date}
 
-      # date for survey/profile card
-      @score = scores.first
+        # date for survey/profile card
+        @score = scores.first
 
-      if @score
         @trainee = @score.trainee
 
         # get all trainees under this observer
-        @trainees = get_trainees_by_observer(@user.meta)
+        @trainees = get_trainees_by_project(@project)
 
         if @trainee.previous_scorecard(@score).completed?
           @percent_improvement = @trainee.previous_scorecard(@score).percent_improvement(@trainee)
         end
 
         # generate graph
-        @graph = graph_scores_for_observer(@user.meta)
+        @graph = graph_scores_for_project(@project)
       end
 
 
@@ -143,6 +150,10 @@ class UsersController < ApplicationController
 
     end
 
+  end
+
+  def swap_project
+    redirect_to :controller => 'users', :action => 'show', :id => params['id'], :project => params['select_tag_value'], format: :js
   end
 
   def import

@@ -13,9 +13,9 @@ module ApplicationHelper
   end
 
 
-  def get_trainees_by_observer(obs)
+  def get_trainees_by_project(project)
     trainees = []
-    obs.projects.each {|proj| proj.assignments.order(:date).each {|ass| ass.trainees.each{|t| trainees << t} }}
+    project.assignments.order(:date).each {|ass| ass.trainees.each{|t| trainees << t} }
     return trainees.uniq
   end
 
@@ -51,6 +51,12 @@ module ApplicationHelper
 
   def graph_scores_for_observer(observer)
     scores = get_scores_by_observer(observer)
+
+    return create_graph_for_scores(average_scores_weekly(scores))
+  end
+
+  def graph_scores_for_project(project)
+    scores = project.get_completed_scores
 
     return create_graph_for_scores(average_scores_weekly(scores))
   end

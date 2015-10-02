@@ -33,6 +33,6 @@
 
 
     <div class="actions" style="width: 100%;">
-      <%= f.submit 'Update Test Scores', data: { confirm: 'Are you sure? Once a test score is submitted it cannot be modified!'} %>
+      <%= f.submit 'Update Test Scores', data: { confirm: 'Are you sure? Once a test score is submitted it cannot be modified!'}, :project => @project.name %>
     </div>
 <% end %>

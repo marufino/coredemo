@@ -85,6 +85,12 @@ class Score < ActiveRecord::Base
 
 
     num_options = 6.0
+
+    # normalize ratings
+    ratings.each do |r|
+      # make from 0 - 6
+    end
+
     knowledge = 0
     abilities = 0
     skills= 0

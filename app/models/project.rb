@@ -25,5 +25,18 @@ class Project < ActiveRecord::Base
     order('id').map { |e| [e.name, e.id] }
   end
 
+  def get_completed_scores
+    scores = []
+    self.assignments.order(:date).each {|ass| Score.where(:assignment_id => ass.id).each {|score| if score.completed then scores << score end} }
+    return scores
+  end
+
+  def get_non_completed_scores
+    scores = []
+    self.assignments.order(:date).each {|ass| Score.where(:assignment_id => ass.id).each {|score| if !score.completed then scores << score end} }
+    return scores
+  end
+
+
 end
 
