@@ -7,6 +7,6 @@ Fabricator(:user) do
   phone { Faker::PhoneNumber.phone_number}
   password 'password'
   password_confirmation 'password'
-  avatar { Faker::Avatar.image }
+  #avatar { Faker::Avatar.image }
 
 end
