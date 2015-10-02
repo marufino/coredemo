@@ -32,7 +32,6 @@
           <th>Need for Evaluation</th>
           <th>Phone</th>
           <th>Email</th>
-          <th>Test Scores</th>
           <th>See Details</th>
         </tr>
         </thead>
@@ -53,7 +52,6 @@
             </td>
             <td><%= trainee.user.phone %></td>
             <td><%= trainee.user.email %></td>
-            <td><%= render :partial => 'form_test_scores' , :locals => {:test_scores => TestScore.where(:trainee => trainee, :project => @project).first} %></td>
             <td style="width: 10%; margin: .2em"><%= link_to 'See Details', user_path(trainee.user.id) %></td>
           </tr>
         <% end %>

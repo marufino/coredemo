@@ -87,8 +87,13 @@ class Score < ActiveRecord::Base
     num_options = 6.0
 
     # normalize ratings
-    ratings.each do |r|
+    ratings.each_with_index do |r,i|
       # make from 0 - 6
+
+      if questions[i].numeric == true
+        ratings[i] = (r.to_i / 100.0) * 6
+      end
+
     end
 
     knowledge = 0

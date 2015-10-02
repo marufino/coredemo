@@ -47,6 +47,7 @@ class SurveysController < ApplicationController
 
     @survey.survey_blocks.each do |block| block.questions.each do |q|
       q.description = Competency.find_by_name(q.category).description
+      q.numeric = Competency.find_by_name(q.category).numeric
       end
     end
 

@@ -76,6 +76,6 @@ class CompetenciesController < ApplicationController
     end
 
     def competency_params
-      params.require(:competency).permit(:name, :description, :category, :coaching)
+      params.require(:competency).permit(:name, :description, :category, :coaching, :numeric)
     end
 end

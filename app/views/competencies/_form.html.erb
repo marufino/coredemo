@@ -19,6 +19,10 @@
     <%= f.label :category %><br>
     <%= f.select :category , $categorynames, include_blank: false %>
   </div>
+    <div class="field">
+      <%= f.label 'Exam Score?' %><br>
+      <%= f.check_box :numeric %>
+    </div>
   <div class="field">
     <%= f.label :description %><br>
     <%= f.text_area :description %>

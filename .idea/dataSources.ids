@@ -1643,6 +1643,7 @@
       <column name="updated_at" sqlType="timestamp" precision="29" scale="6" nullable="true" jdbcType="93"/>
       <column name="category" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="coaching" sqlType="text" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
+      <column name="numeric" sqlType="bool" precision="1" scale="0" nullable="true" jdbcType="-7"/>
       <primary-key name="competencies_pkey" columns="id"/>
     </table>
     <table name="competencies_id_seq" schema="public" catalog="db/development" type="SEQUENCE">
@@ -1709,6 +1710,7 @@
       <column name="description" sqlType="text" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
       <column name="created_at" sqlType="timestamp" precision="29" scale="6" nullable="true" jdbcType="93"/>
       <column name="updated_at" sqlType="timestamp" precision="29" scale="6" nullable="true" jdbcType="93"/>
+      <column name="numeric" sqlType="bool" precision="1" scale="0" nullable="true" jdbcType="-7"/>
       <primary-key name="questions_pkey" columns="id"/>
       <index name="index_questions_on_survey_block_id" unique="false" columns="survey_block_id"/>
     </table>

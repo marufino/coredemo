@@ -50,15 +50,19 @@
             <td style="padding-left:10px; width: 20%;"><%= q.category %><span onclick="myFunction('<%= q.category %>')"class="glyphicon glyphicon-info-sign pointer" aria-hidden="true" style="color:cornflowerblue; float:right;"></span>
             </td>
             <div style="width: 100%;">
-            <td><% (1..6).each do |i| %>
-                <div style="margin-left: 1%;display: inline; width: 100%;">
-                  <% if !@score.completed? %>
-                    <%= radio_button_tag q.id, i, if Rating.where(question_id: q.id, score_id: @score.id).first then (Rating.where(question_id: q.id, score_id: @score.id).first.value == i) else 1 end  %>
-                  <% else %>
-                    <%= radio_button_tag q.id, i, Rating.where(question_id: q.id, score_id: @score.id).first.value == i, disabled: true %>
-                  <% end %>
-                </div>
-              <% end %></td>
+            <% if q.numeric == true %>
+              <td><span  style="float: right"><%= number_field_tag q.id, Rating.where(question_id: q.id, score_id: @score.id).first.value, within: 1...100 %></span></td>
+            <% else %>
+                <td><% (1..6).each do |i| %>
+                    <div style="margin-left: 1%;display: inline; width: 100%;">
+                      <% if !@score.completed? %>
+                        <%= radio_button_tag q.id, i, if Rating.where(question_id: q.id, score_id: @score.id).first then (Rating.where(question_id: q.id, score_id: @score.id).first.value == i) else 1 end  %>
+                      <% else %>
+                        <%= radio_button_tag q.id, i, Rating.where(question_id: q.id, score_id: @score.id).first.value == i, disabled: true %>
+                      <% end %>
+                    </div>
+                  <% end %></td>
+            <% end %>
             </div>
 
             <% if !@score.completed? %>

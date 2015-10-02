@@ -1,6 +1,6 @@
 <div class="col-xs-12 shadow user-profile" style="margin-bottom: 50px;">
     <div class="col-xs-3 user-profile">
-      <%= image_tag("profile_thumb.png", :alt => "profile pic", :style => "padding-left: 20px; padding-top: 10px; width: 85%;" ) %>
+      <%= image_tag(user.avatar.url(:medium), :alt => "profile pic", :style => "padding-left: 20px; padding-top: 10px; width: 85%;" ) %>
     </div>
     <div class="col-xs-3 user-profile" style="margin-top: 1em;">
       <b><%= user.first_name %> <%= user.last_name %></b><br>

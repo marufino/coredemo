@@ -10,6 +10,8 @@ class User < ActiveRecord::Base
 
   belongs_to :meta, polymorphic: true
 
+  has_attached_file :avatar, styles: { medium: "300x300#", thumb: "50x50#" }, default_url: "default_profile.jpg"
+  validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
 
   def role?(role)
     return !!self.roles.find_by_name(role)

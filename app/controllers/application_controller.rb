@@ -9,9 +9,9 @@ class ApplicationController < ActionController::Base
 
   # my custom fields are :name, :heard_how
     def configure_permitted_parameters
-      devise_parameter_sanitizer.for(:sign_up) { |u| u.permit({ roles_attributes: [:id, :name] },:first_name,:last_name, :title, :email, :phone, :password, :password_confirmation, :meta_type) }
+      devise_parameter_sanitizer.for(:sign_up) { |u| u.permit({ roles_attributes: [:id, :name] },:first_name,:last_name, :title, :email, :phone, :password, :password_confirmation, :meta_type, :avatar) }
 
-      devise_parameter_sanitizer.for(:account_update) { |u| u.permit({ roles_attributes: [:id, :name] },:first_name,:last_name, :title, :email, :phone, :password, :password_confirmation, :current_password, :meta_type) }
+      devise_parameter_sanitizer.for(:account_update) { |u| u.permit({ roles_attributes: [:id, :name] },:first_name,:last_name, :title, :email, :phone, :password, :password_confirmation, :current_password, :meta_type, :avatar) }
     end
 
 

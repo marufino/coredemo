@@ -150,20 +150,6 @@ namespace :app do
       a[i].save
       p.save
 
-      all_trainees = []
-      p.assignments.each do |a|
-        a.trainees.each do |t|
-          all_trainees << t
-        end
-      end
-
-      all_trainees.uniq.each do |t|
-          t_s = Fabricate.build(:TestScore)
-          t_s.trainee = t
-          t_s.project = p
-          t_s.save
-      end
-
       10.times do |k|
 
         ratings = []

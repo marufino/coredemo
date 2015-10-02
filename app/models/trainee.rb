@@ -94,6 +94,12 @@ class Trainee < ActiveRecord::Base
     return Score.where(:completed => false).where(:trainee_id => self.id).order('assigned_date').first
   end
 
+  def next_scorecard_project(project)
+
+    assignments = project.assignments
+    return Score.where(:completed => false).where(:trainee_id => self.id).where(:assignments => assignments).order('assigned_date').first
+  end
+
   def last_completed_scorecard
     return Score.where(:completed => true).where(:trainee_id => self.id).order('completed_date').last
   end

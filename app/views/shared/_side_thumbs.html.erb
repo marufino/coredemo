@@ -2,7 +2,7 @@
   <%= link_to user do %>
       <li>
         <div class = "thumb-text" style="display: inline">
-          <%= image_tag("profile_thumb.png", size: "46x46", :alt => "rss feed", :style => "float: left" ) %>
+          <%= image_tag(user.avatar.url(:thumb), :size => "50x50", :alt => "prof pic", :style => "float: left" ) %>
           <%= user.first_name %> <%= user.last_name %><br>
           <small style= "color: #2c7083"><%= user.title %></small>
         </div>
