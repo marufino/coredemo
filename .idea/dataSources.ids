@@ -1912,6 +1912,10 @@
       <column name="last_name" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="title" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="phone" sqlType="text" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
+      <column name="avatar_file_name" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="avatar_content_type" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="avatar_file_size" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="avatar_updated_at" sqlType="timestamp" precision="29" scale="6" nullable="true" jdbcType="93"/>
       <primary-key name="users_pkey" columns="id"/>
       <index name="index_users_on_email" unique="true" columns="email"/>
       <index name="index_users_on_reset_password_token" unique="true" columns="reset_password_token"/>

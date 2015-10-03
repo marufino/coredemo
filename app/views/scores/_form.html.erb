@@ -18,7 +18,7 @@
     <%= render :partial => "shared/areas_of", :locals => {:score => @score} %>
   <% end %>
 
-  <% @blocks.reverse.each do |block| %>
+  <% @blocks.each do |block| %>
   <h4><%= block.category %> Evaluation ( <%= block.weight %> points)</h4>
     <div class="scorecard">
 

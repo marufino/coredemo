@@ -57,7 +57,7 @@ class Score < ActiveRecord::Base
 
   def calculate_scores(ratings,questions)
 
-    blocks = self.assignment.surveys[0].survey_blocks.reverse
+    blocks = self.assignment.surveys[0].survey_blocks
 
     # pull areas of strength and areas of weakness
     rating_map = ratings.zip(questions).sort!
@@ -112,22 +112,14 @@ class Score < ActiveRecord::Base
       end
     end
 
-    self.knowledge  = knowledge * 100.0/blocks[0].weight
-    self.skills     = skills * 100.0/blocks[1].weight
-    self.abilities  = abilities * 100.0/blocks[2].weight
-    self.total      = ((knowledge+abilities+skills) )# + self.current_test_score) / 2.0
+    blocks = blocks.sort_by { |s| s.category }
+
+    self.knowledge  = knowledge * 100.0/blocks[1].weight
+    self.skills     = skills * 100.0/blocks[2].weight
+    self.abilities  = abilities * 100.0/blocks[0].weight
+    self.total      = ((knowledge+abilities+skills) )
   end
 
-  def current_test_score
-    ts = TestScore.where(:trainee => self, :project => Project.find_by_id(self.assignment.project_id)).first
-    if ts.final
-      return ts.final
-    elsif ts.midterm
-      return ts.midterm
-    elsif ts.starting
-      return ts.starting
-    end
-  end
 
   def get_observers
     return Project.find_by_id(self.assignment.project_id).observers.uniq
