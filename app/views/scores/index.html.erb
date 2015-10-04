@@ -7,6 +7,13 @@
 </div>
 
 <% else %>
+    <% if @scores == [] %>
+        <div>
+          <br>
+          <h4> Well Done! All Scorecards completed for the next two weeks!</h4>
+        </div>
+    <% end %>
+
     <% @scores.each_with_index do |score, index| %>
         <% if !score.completed %>
             <%= render :partial => "shared/profile_block_thin", :locals => {:user => score.trainee.user, :score => score, :index => index} %>
