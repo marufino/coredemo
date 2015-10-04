@@ -49,14 +49,16 @@ class UsersController < ApplicationController
         # date for survey/profile card
         @score = scores.first
 
-        @trainee = @score.trainee
+        if @score
+          @trainee = @score.trainee
+
+          if @trainee.previous_scorecard(@score).completed?
+            @percent_improvement = @trainee.previous_scorecard(@score).percent_improvement(@trainee)
+          end
+        end
 
         # get all trainees under this observer
         @trainees = get_trainees_by_project(@project)
-
-        if @trainee.previous_scorecard(@score).completed?
-          @percent_improvement = @trainee.previous_scorecard(@score).percent_improvement(@trainee)
-        end
 
         # generate graph
         @graph = graph_scores_for_project(@project)

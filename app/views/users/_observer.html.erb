@@ -1,201 +1,207 @@
-<% if @user.observer? and @trainee %>
-<row style="float: right">
-  <%#= collection_select :id, Project.all, Project.all, :name, include_blank: false %>
-  Project <%= select_tag "Project", options_for_select(@user.meta.projects.collect{ |u| [u.name, u.id] }, [@project.name, @project.id]) , :id => 'select_tag_id'%>
-</row>
+<% if @user.observer? and @project %>
+    <row style="float: right">
+      <%#= collection_select :id, Project.all, Project.all, :name, include_blank: false %>
+      Project <%= select_tag "Project", options_for_select(@user.meta.projects.collect{ |u| [u.name, u.id] }, [@project.name, @project.id]) , :id => 'select_tag_id'%>
+    </row>
 <% end %>
 
 <row>
   <h3><%= @user.full_name %></h3>
   <% if @user.trainee? %>
-    <h4>Your Results</h4>
-    <%= render :partial => "shared/profile_block", :locals => {:user => @trainee.user, :score => @score} %>
-  <% if @percent_improvement %>
-    <%= render :partial => "shared/areas_of_user", :locals => {:aos => @aos, :aow => @aow} %>
-  <% end %>
+      <h4>Your Results</h4>
+      <%= render :partial => "shared/profile_block", :locals => {:user => @trainee.user, :score => @score} %>
+      <% if @percent_improvement %>
+          <%= render :partial => "shared/areas_of_user", :locals => {:aos => @aos, :aow => @aow} %>
+      <% end %>
   <% elsif @user.observer? & !@user.role?('admin') %>
-    <% if @trainee %>
-      <h4>Upcoming Scorecard</h4>
-        <%= render :partial => "shared/profile_block_thin_single", :locals => {:user => @trainee.user, :score => @score} %>
-
-
-</row>
-
-    <row>
-      <h4>Trainees</h4>
-      <table class="table table-striped shadow">
-        <thead style="font-size: 0.8em;">
-        <tr>
-          <th>Name</th>
-          <th>Last Effective Date</th>
-          <th>CORE Score</th>
-          <th>Need for Evaluation</th>
-          <th>Phone</th>
-          <th>Email</th>
-          <th>See Details</th>
-        </tr>
-        </thead>
-
-        <tbody class="table table-striped shadow" style="font-size: .8em">
-        <% @trainees.each do |trainee| %>
-          <tr>
-            <td><%= trainee.user.full_name %></td>
-            <td><%= trainee.assignments.last.date %></td>
-            <td style="color:<%= if trainee.next_scorecard then trainee.next_scorecard.get_color.to_s end %>"><%= trainee.get_core_score %></td>
-            <td><% if trainee.need_for_eval < 10 %>
-                  <span style="color:green">Low</span>
-                <% elsif trainee.need_for_eval >= 10 and trainee.need_for_eval < 20%>
-                  <span style="color:#ffcc00">Medium</span>
-                <% else %>
-                  <span style="color:darkred">High</span>
-            <% end %>
-            </td>
-            <td><%= trainee.user.phone %></td>
-            <td><%= trainee.user.email %></td>
-            <td style="width: 10%; margin: .2em"><%= link_to 'See Details', user_path(trainee.user.id) %></td>
-          </tr>
-        <% end %>
-        </tbody>
-      </table>
-    </row>
-
-    <% else %>
-        <div>
+      <% if @trainee %>
+          <h4>Upcoming Scorecard</h4>
+          <%= render :partial => "shared/profile_block_thin_single", :locals => {:user => @trainee.user, :score => @score} %>
+      <% elsif @project %>
+          <div>
+            <h4>Project Complete</h4>
+          </div>
+      <% else %>
+          <div>
             <h4>Not Observing any projects at the moment</h4>
-        </div>
-    <% end %>
+          </div>
+      <% end %>
+
+
+      </row>
+
+      <% if @trainees %>
+          <row>
+            <h4>Trainees</h4>
+            <table class="table table-striped shadow">
+              <thead style="font-size: 0.8em;">
+              <tr>
+                <th>Name</th>
+                <th>Last Effective Date</th>
+                <th>CORE Score</th>
+                <th>Need for Evaluation</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>See Details</th>
+              </tr>
+              </thead>
+
+              <tbody class="table table-striped shadow" style="font-size: .8em">
+              <% @trainees.each do |trainee| %>
+                  <tr>
+                    <td><%= trainee.user.full_name %></td>
+                    <td><%= trainee.assignments.last.date %></td>
+                    <td style="color:<%= if trainee.next_scorecard then trainee.next_scorecard.get_color.to_s end %>"><%= trainee.get_core_score %></td>
+                    <td><% if trainee.need_for_eval < 10 %>
+                          <span style="color:green">Low</span>
+                      <% elsif trainee.need_for_eval >= 10 and trainee.need_for_eval < 20%>
+                          <span style="color:#ffcc00">Medium</span>
+                      <% else %>
+                          <span style="color:darkred">High</span>
+                      <% end %>
+                    </td>
+                    <td><%= trainee.user.phone %></td>
+                    <td><%= trainee.user.email %></td>
+                    <td style="width: 10%; margin: .2em"><%= link_to 'See Details', user_path(trainee.user.id) %></td>
+                  </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </row>
+      <% end %>
+
   <% elsif @user.role?('admin') %>
 
-    <h4>Overall Statistics</h4>
+      <h4>Overall Statistics</h4>
 
-    <div class="col-xs-3">
-      <div class ="admin-panels">
-        <div class = "shadow">
-          <li>Overall Completion</li>
-          <li><%= render :partial => "shared/viz_overall_completion" %></li>
+      <div class="col-xs-3">
+        <div class ="admin-panels">
+          <div class = "shadow">
+            <li>Overall Completion</li>
+            <li><%= render :partial => "shared/viz_overall_completion" %></li>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="col-xs-3">
-      <div class ="admin-panels">
-        <div class = "shadow">
-          <li>Average Weeks Taken</li>
-          <li><%= render :partial => "shared/viz_time_taken" %></li>
+      <div class="col-xs-3">
+        <div class ="admin-panels">
+          <div class = "shadow">
+            <li>Average Weeks Taken</li>
+            <li><%= render :partial => "shared/viz_time_taken" %></li>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="col-xs-3">
-      <div class ="admin-panels">
-        <div class = "shadow">
-          <li>Evaluation Progress</li>
-          <li><%= render :partial => "shared/viz_evaluation_progress" %></li>
+      <div class="col-xs-3">
+        <div class ="admin-panels">
+          <div class = "shadow">
+            <li>Evaluation Progress</li>
+            <li><%= render :partial => "shared/viz_evaluation_progress" %></li>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="col-xs-3">
-      <div class ="admin-panels">
-        <div class = "shadow">
-          <li>Top Performers</li>
-          <li><%= render :partial => "shared/viz_top_performers" %></li>
+      <div class="col-xs-3">
+        <div class ="admin-panels">
+          <div class = "shadow">
+            <li>Top Performers</li>
+            <li><%= render :partial => "shared/viz_top_performers" %></li>
+          </div>
         </div>
       </div>
-    </div>
-    <div>&nbsp&nbsp&nbsp</div>
-    <h4 style="display: inline-block; margin-top: 1em; text-align: left;">Recent Events</h4>
+      <div>&nbsp&nbsp&nbsp</div>
+      <h4 style="display: inline-block; margin-top: 1em; text-align: left;">Recent Events</h4>
 
-    <% @scores.each_with_index do |score, index| %>
-      <div class = '<%= 'admin-profile admin-profile-'+index.to_s %>' style = 'display: none'>
-      <%= render :partial => "shared/profile_block_thin", :locals => {:user => score.trainee.user, :score => score, :index => index} %>
-      </div>
-    <% end %>
-
-    <div style="width: 100%; margin-left: 1em;">
-      <div class = 'timeline'>
       <% @scores.each_with_index do |score, index| %>
-        <div class = 'timeline-inside' style="display:inline-block">
-          <div class="row" style="padding-left: 20px">
-            <div class = 'timeline-dot'>
-              <!--<span class="glyphicon glyphicon-unchecked icon-larger"></span>-->
-            </div>
+          <div class = '<%= 'admin-profile admin-profile-'+index.to_s %>' style = 'display: none'>
+            <%= render :partial => "shared/profile_block_thin", :locals => {:user => score.trainee.user, :score => score, :index => index} %>
           </div>
-          <div class="row">
-            <div class = 'timeline-date timeline-date-<%= index.to_s %>' style = 'visibility: hidden'>
-              <small><%= score.completed_date.strftime("%B %d") %></small>
-            </div>
-          </div>
-        </div>
       <% end %>
+
+      <div style="width: 100%; margin-left: 1em;">
+        <div class = 'timeline'>
+          <% @scores.each_with_index do |score, index| %>
+              <div class = 'timeline-inside' style="display:inline-block">
+                <div class="row" style="padding-left: 20px">
+                  <div class = 'timeline-dot'>
+                    <!--<span class="glyphicon glyphicon-unchecked icon-larger"></span>-->
+                  </div>
+                </div>
+                <div class="row">
+                  <div class = 'timeline-date timeline-date-<%= index.to_s %>' style = 'visibility: hidden'>
+                    <small><%= score.completed_date.strftime("%B %d") %></small>
+                  </div>
+                </div>
+              </div>
+          <% end %>
+        </div>
       </div>
-    </div>
 
   <% end %>
 
 
 
-<%= render :partial => "shared/viz_large" %>
+  <%= render :partial => "shared/viz_large" %>
 
 
-<script>
-  $( document ).ready(function() {
-    console.log( "ready!" );
+  <script>
+      $( document ).ready(function() {
+          console.log( "ready!" );
 
-    // show the latest event profile card
-    $(".admin-profile-0").show();
-    $(".timeline-date-0").css('visibility', 'visible');
+          // show the latest event profile card
+          $(".admin-profile-0").show();
+          $(".timeline-date-0").css('visibility', 'visible');
 
 
-    $(".timeline-dot").each(function( index ) {
-      $( this ).click(function(){
+          $(".timeline-dot").each(function( index ) {
+              $( this ).click(function(){
 
-        //debug print
-        console.log("showing .admin-profile-"+index);
+                  //debug print
+                  console.log("showing .admin-profile-"+index);
 
-        // hide all profile cards
-        $(".admin-profile").each(function (){
-          $( this).hide();
-        });
+                  // hide all profile cards
+                  $(".admin-profile").each(function (){
+                      $( this).hide();
+                  });
 
-        // hide all dates
-        $(".timeline-date").each(function (){
-          $( this).css('visibility', 'hidden');
-        });
+                  // hide all dates
+                  $(".timeline-date").each(function (){
+                      $( this).css('visibility', 'hidden');
+                  });
 
-        // show just the one that got clicked
-        $(".timeline-date-"+index).css('visibility', 'visible');
+                  // show just the one that got clicked
+                  $(".timeline-date-"+index).css('visibility', 'visible');
 
-        // show just the one that got clicked
-        $(".admin-profile-"+index).show();
+                  // show just the one that got clicked
+                  $(".admin-profile-"+index).show();
+              });
+          });
       });
-    });
-  });
 
-</script>
+  </script>
 
-<script type="text/javascript">
+  <script type="text/javascript">
 
-  var myCircle = Circles.create({
-    id:           'circle',
-    radius:       90,
-    value:        '<%= if @completion then @completion.to_i else 0 end  %>',
-    maxValue:     100,
-    width:        10,
-    text:         '<row><strong style="font-size:2em"><%= if @completion then @completion.to_i else 0 end %>%</strong></row><br><row><span style="font-size:0.8em"><%="#{Date.today.strftime('%B')}" + " Evaluations" %></span><br><span style="font-size:0.8em">Completed</span></row></div>',
-    colors:       ['lightgray', '#1ab3db'],
-    duration:       200,
-    textClass:      'circles-text-large'
-  });
+      var myCircle = Circles.create({
+          id:           'circle',
+          radius:       90,
+          value:        '<%= if @completion then @completion.to_i else 0 end  %>',
+          maxValue:     100,
+          width:        10,
+          text:         '<row><strong style="font-size:2em"><%= if @completion then @completion.to_i else 0 end %>%</strong></row><br><row><span style="font-size:0.8em"><%="#{Date.today.strftime('%B')}" + " Evaluations" %></span><br><span style="font-size:0.8em">Completed</span></row></div>',
+          colors:       ['lightgray', '#1ab3db'],
+          duration:       200,
+          textClass:      'circles-text-large'
+      });
 
-</script>
+  </script>
 
-<script>
-    $('#select_tag_id').change(function(){
-        $.ajax({
-            url: "swap_project/<%= @user.id %>",
-            type: "GET",
-            data: {select_tag_value: $('#select_tag_id option:selected').text()},
-        })
-    });
-</script>
+  <script>
+      $('#select_tag_id').change(function(){
+          $.ajax({
+              url: "swap_project/<%= @user.id %>",
+              type: "GET",
+              data: {select_tag_value: $('#select_tag_id option:selected').text()},
+          })
+      });
+  </script>
