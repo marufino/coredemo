@@ -28,6 +28,19 @@ class Trainee < ActiveRecord::Base
 
   end
 
+  def get_core_score_for_proj(project)
+    scores = Score.where(:trainee_id => self.id)
+
+    totals=[]
+    scores.each do |s| if s.get_project == project then totals.push(s.total) end end
+    if(totals.compact!=[])
+      return mean(totals.compact).to_i
+    else
+      return 0
+    end
+
+  end
+
   def get_aos
     scores = Score.where(:trainee_id => self.id)
 
@@ -81,6 +94,15 @@ class Trainee < ActiveRecord::Base
     end
   end
 
+  def need_for_eval_project(project)
+    if self.next_scorecard_project(project)
+      date = self.next_scorecard_project(project).assigned_date
+      return (Date.today() - date).to_i
+    else
+      return 1
+    end
+  end
+
   def delete_all_scores
 
     scores = Score.where(:trainee_id => self.id)
@@ -97,7 +119,35 @@ class Trainee < ActiveRecord::Base
   def next_scorecard_project(project)
 
     assignments = project.assignments
-    return Score.where(:completed => false).where(:trainee_id => self.id).where(:assignments => assignments).order('assigned_date').first
+    scores = []
+    assignments.each do |a|
+      a.scores.each do |s|
+        if s.completed == false and s.trainee == self
+          scores << s
+        end
+      end
+    end
+    scores.sort_by {|s| s.assigned_date}
+
+    return scores.first
+
+  end
+
+  def last_scorecard_project(project)
+
+    assignments = project.assignments
+    scores = []
+    assignments.each do |a|
+      a.scores.each do |s|
+        if s.trainee == self
+          scores << s
+        end
+      end
+    end
+    scores.sort_by {|s| s.assigned_date}
+
+    return scores.last
+
   end
 
   def last_completed_scorecard

@@ -50,11 +50,11 @@
         <% @trainees.each do |trainee| %>
           <tr>
             <td><%= trainee.user.full_name %></td>
-            <td><%= trainee.assignments.last.date %></td>
-            <td style="color:<%= if trainee.next_scorecard then trainee.next_scorecard.get_color.to_s end %>"><%= trainee.get_core_score %></td>
-            <td><% if trainee.need_for_eval < 10 %>
+            <td><%= trainee.last_scorecard_project(@project).assigned_date %></td>
+            <td style="color:<%= if trainee.next_scorecard then trainee.next_scorecard.get_color.to_s end %>"><%= trainee.get_core_score_for_proj(@project) %></td>
+            <td><% if trainee.need_for_eval_project(@project) < 10 %>
                   <span style="color:green">Low</span>
-                <% elsif trainee.need_for_eval >= 10 and trainee.need_for_eval < 20%>
+                <% elsif trainee.need_for_eval_project(@project) >= 10 and trainee.need_for_eval_project(@project) < 20%>
                   <span style="color:#ffcc00">Medium</span>
                 <% else %>
                   <span style="color:darkred">High</span>

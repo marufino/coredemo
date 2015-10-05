@@ -22,6 +22,10 @@ class Score < ActiveRecord::Base
   accepts_nested_attributes_for :ratings
 
 
+  def get_project
+    Project.find_by_id(self.assignment.project_id)
+  end
+
   def get_color
 
     colors = Project.find_by_id(self.assignment.project_id).colors.reverse
