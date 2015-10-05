@@ -50,10 +50,11 @@ h6 {
 .getapp {
     padding: .6em;
     width: 30%;
-    background-color: rgba(238, 64, 54, 1);
-    border-radius: .7em;
+    background: linear-gradient(#009fe1, #006994);
+    border-radius: 1em;
     border: 0px solid;
     font-size: 1.4em;
+    box-shadow: 0 2px 2px #111111;
 }
 
 .lead {
@@ -71,8 +72,8 @@ h6 {
 
 .intro-message {
     position: relative;
-    padding-top: 20%;
-    padding-bottom: 20%;
+    padding-top: 15%;
+    padding-bottom: 15%;
 }
 
 .intro-message > h1 {
@@ -112,7 +113,10 @@ h6 {
 
     .intro-message {
         padding-bottom: 15%;
+        padding-top: 0;
+        margin-top: 2em;
     }
+
 
     .intro-message > h1 {
         font-size: 3em;
@@ -199,7 +203,7 @@ h6 {
     }
 
     .intro-message {
-        margin-top: 35%;
+        margin-top: 15%;
         width: 100%;
     }
     ul.banner-social-buttons > li {
@@ -297,6 +301,7 @@ Inspired by the dribble shot http://dribbble.com/shots/1285240-Freebie-Flat-Pric
 .group:after {
     content: "";
     display: table;
+    text-align: center;
 }
 .group:after {
     clear: both;
@@ -318,11 +323,16 @@ body {
 
 }
 .pricing-table {
-    width: 70%;
+    width: 90%;
     margin: 0px auto;
     padding: 10px;
     padding-right: 0;
+    text-align: center;
 }
+.group {
+    text-align: center;
+}
+
 .pricing-table .heading{
     color: #9C9E9F;
     text-transform: uppercase;
@@ -330,7 +340,7 @@ body {
     margin-bottom: 4rem;
 }
 .block{
-    width: 25%;
+    width: 30%;
     margin: 0 15px;
     overflow: hidden;
     -webkit-border-radius: 5px;
@@ -344,6 +354,7 @@ body {
     text-transform: capitalize;
     line-height: 2.5;
     position: relative;
+    box-shadow: 0 3px 2px #999999;
 }
 .content{
     position: relative;
@@ -361,9 +372,6 @@ body {
     position: absolute;
     pointer-events: none;
 }
-.pt-footer:after,.pt-footer:before{
-    top:0;
-}
 .content:after,.pt-footer:after {
     border-color: rgba(136, 183, 213, 0);
     border-width: 5px;
@@ -380,12 +388,7 @@ body {
     letter-spacing: 8px;
     font-weight: bold;
 }
-.price sup{
-    font-size: 1.5rem;
-    position: absolute;
-    top: 12px;
-    left: -12px;
-}
+
 .hint{
     font-style: italic;
     font-size: 0.9rem;
@@ -395,8 +398,9 @@ body {
     background: #FFFFFF;
     text-align: left;
     color: #9C9C9C;
-    padding:30px 22%;
+    padding:10px;
     font-size: 0.9rem;
+    text-align: center;
 }
 .features li{
     padding:15px 0;
@@ -411,40 +415,43 @@ body {
 }
 /*PERSONAL*/
 .personal .title{
-    background: rgba(238, 64, 54, 1);
+    background: linear-gradient(#9a9a9a, #c0c0c0);
 
 }
 .personal .content,.personal .pt-footer{
-    background: rgba(238, 64, 54, 1);
+    background: linear-gradient(#9a9a9a, #c0c0c0);
 }
 .personal .content:after{
-    border-top-color: rgba(238, 64, 54, 1);
+    background: linear-gradient(#9a9a9a, #c0c0c0);
 }
 .personal .pt-footer:after{
     border-top-color: #FFFFFF;
 }
 /*PROFESSIONAL*/
 .professional .title{
-    background: rgba(55, 179, 74, 1);
+    background: linear-gradient(#B29600, #FFD700);
 }
 .professional .content,.professional .pt-footer{
-    background: rgba(55, 179, 74, 1);
+    background: linear-gradient(#B29600, #FFD700);
 }
 .professional .content:after{
-    border-top-color: rgba(55, 179, 74, 1);
+    background: linear-gradient(#B29600, #FFD700);
 }
 .professional .pt-footer:after{
     border-top-color: #FFFFFF;
 }
 /*BUSINESS*/
+.business {
+    text-color: #222222;
+}
 .business .title{
-    background: rgba(38, 169, 224, 1);
+    background: linear-gradient(#c0c0c0, #e6e6e6);
 }
 .business .content,.business .pt-footer{
-    background: rgba(38, 169, 224, 1);
+    background: linear-gradient(#c0c0c0, #e6e6e6);
 }
 .business .content:after{
-    border-top-color: rgba(38, 169, 224, 1);
+    background: linear-gradient(#c0c0c0, #e6e6e6);
 }
 .business .pt-footer:after {
     border-top-color: #FFFFFF;
