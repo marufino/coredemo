@@ -2,6 +2,8 @@
 class SurveysController < ApplicationController
   before_action :set_survey, only: [:show, :edit, :update, :destroy]
 
+  include ApplicationHelper
+
   # GET /surveys
   # GET /surveys.json
   def index
@@ -11,7 +13,7 @@ class SurveysController < ApplicationController
   # GET /surveys/1
   # GET /surveys/1.json
   def show
-    @survey_blocks = @survey.survey_blocks
+    @survey_blocks = sort_survey_blocks(@survey.survey_blocks)
     @competencies = Competency.all
 
   end
@@ -33,8 +35,11 @@ class SurveysController < ApplicationController
 
   # GET /surveys/1/edit
   def edit
+
     @competencies = Competency.all
-    @survey_blocks = @survey.survey_blocks
+
+    @survey_blocks = sort_survey_blocks(@survey.survey_blocks)
+
   end
 
   # POST /surveys
@@ -55,26 +60,29 @@ class SurveysController < ApplicationController
       end
     end
 
-    @survey_blocks = @survey.survey_blocks
+    @survey_blocks = sort_survey_blocks(@survey.survey_blocks)
+
+    if duplicate_competencies
+      flash[:alert] = 'There are duplicate Competencies in the Scorecard. Please correct'
+      render :action => 'new'
+      return
+    end
+
+
+    if !@survey.valid_block_weights
+      flash[:alert] =  "category weights don't add up to 100"
+      render :action => 'new'
+      return
+    end
+
+    if !@survey.valid_question_weights
+      flash[:alert] =  "Question weights don't add up to category weights"
+      render :action => 'new'
+      return
+    end
 
     respond_to do |format|
       if @survey.save
-
-        if duplicate_competencies
-          redirect_to edit_survey_path(@survey), notice: 'There are duplicate Competencies in the Scorecard. Please correct'
-          return
-        end
-
-        if !@survey.valid_block_weights
-          redirect_to edit_survey_path(@survey), notice: "category weights don't add up to 100"
-          return
-        end
-
-        if !@survey.valid_question_weights
-          redirect_to edit_survey_path(@survey), notice: "Question weights don't add up to category weights"
-          return
-        end
-
 
         format.html { redirect_to surveys_path, notice: 'Scorecard was successfully created.' }
         format.json { render :show, status: :created, location: @survey }
@@ -107,33 +115,44 @@ class SurveysController < ApplicationController
   def update
     @competencies = Competency.all
 
-    if duplicate_competencies
-      redirect_to edit_survey_path(@survey), alert: 'There are duplicate Competencies in the Scorecard. Please correct'
-      return
+    @survey = Survey.new(survey_params)
+
+    @survey.survey_blocks.each_with_index do |s,i|
+      s.category = $categorynames[i]
     end
 
     @survey.survey_blocks.each do |block| block.questions.each do |q|
       q.description = Competency.find_by_name(q.category).description
-      end
+      q.numeric = Competency.find_by_name(q.category).numeric
+    end
     end
 
+
+    @survey_blocks = @survey.survey_blocks
+
     respond_to do |format|
-      if @survey.update(survey_params)
+      if @survey.save
+
+        if duplicate_competencies
+          redirect_to edit_survey_path(@survey), notice: 'There are duplicate Competencies in the Scorecard. Please correct'
+          return
+        end
 
         if !@survey.valid_block_weights
-          redirect_to edit_survey_path(@survey), alert: "category weights don't add up to 100"
+          redirect_to edit_survey_path(@survey), notice: "category weights don't add up to 100"
           return
         end
 
         if !@survey.valid_question_weights
-          redirect_to edit_survey_path(@survey), alert: "Question weights don't add up to category weights"
+          redirect_to edit_survey_path(@survey), notice: "Question weights don't add up to category weights"
           return
         end
 
-        format.html { redirect_to surveys_path, notice: 'Scorecard was successfully updated.' }
-        format.json { render :show, status: :ok, location: @survey }
+
+        format.html { redirect_to surveys_path, notice: 'Scorecard was successfully created.' }
+        format.json { render :show, status: :created, location: @survey }
       else
-        format.html { render :edit }
+        format.html { render :new }
         format.json { render json: @survey.errors, status: :unprocessable_entity }
       end
     end
@@ -164,6 +183,6 @@ class SurveysController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def survey_params
-      params[:survey].permit(:name, :description, :add_question, survey_blocks_attributes: [:id, :category, :weight, questions_attributes:[:id, :category, :weight, :description, :_destroy]])
+      params[:survey].permit(:name, :description, :add_question, survey_blocks_attributes: [:category, :weight, questions_attributes:[:id, :category, :weight, :description, :_destroy]])
     end
 end

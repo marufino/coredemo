@@ -1,0 +1,466 @@
+/*!
+ * Start Bootstrap - Landing Page Bootstrap Theme (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ *
+ * edited by Vibrance Studio LLC for the purposes of Michigan and Manchester and The CORE Results Web App
+ */
+
+
+body,
+html {
+    width: 100%;
+    height: 100%;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 500;
+}
+
+.topnav {
+    font-size: 14px; 
+}
+
+.logo224 {
+    width: 70%;
+}
+
+.mmlogo224 {
+    position: absolute;
+    width: 175px;
+    top: 3em;
+    margin-left: 4em;
+    vertical-align: middle;
+}
+
+.logobanner224 {
+    position: absolute;
+    padding: 5px;
+    width: 100%;
+    top: 0;
+    height: 6em;
+}
+
+.getapp {
+    padding: .6em;
+    width: 30%;
+    background: -webkit-linear-gradient(#009fe1, #006994);
+    background: linear-gradient(#009fe1, #006994);
+    border-radius: 1em;
+    border: 0px solid;
+    font-size: 1.4em;
+    box-shadow: 0 2px 2px #111111;
+}
+
+.lead {
+    font-size: 18px;
+}
+
+.intro-header {
+    padding-top: 50px; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
+    padding-bottom: 50px;
+    text-align: center;
+    color: #f8f8f8;
+    background: url(header1.jpg) no-repeat center center;
+    background-size: cover;
+}
+
+.intro-message {
+    position: relative;
+    padding-top: 15%;
+    padding-bottom: 15%;
+}
+
+.intro-message > h1 {
+    margin: 0;
+    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+    font-size: 5em;
+}
+
+.intro-divider {
+    margin-left: auto;
+    margin-right: auto;
+    width: 400px;
+    border-top: 1px solid #f8f8f8;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+.intro-message > h3 {
+    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+}
+
+
+
+@media(max-width:992px) {
+
+    .mmlogo {
+        width: 30%;
+    }
+
+}
+
+@media(max-width:768px) {
+
+    .mmlogo {
+        width: 30%;
+        margin-top: .7em;
+    }
+
+    .intro-message {
+        padding-bottom: 15%;
+        padding-top: 0;
+        margin-top: 2em;
+    }
+
+
+    .intro-message > h1 {
+        font-size: 3em;
+    }
+
+    ul.intro-social-buttons > li {
+        display: block;
+        margin-bottom: 20px;
+
+        padding: 0;
+    }
+
+    ul.intro-social-buttons > li:last-child {
+        margin-bottom: 0;
+    }
+
+    .intro-divider {
+        width: 100%;
+    }
+}
+
+.network-name {
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 2px;
+}
+
+.content-section-a {
+    padding: 50px 0;
+    background-color: #f8f8f8;
+}
+
+.content-section-b {
+    padding: 50px 0;
+    border-top: 1px solid #e7e7e7;
+    border-bottom: 1px solid #e7e7e7;
+}
+
+.section-heading {
+    margin-bottom: 10px;
+}
+
+.section-heading-spacer {
+
+    width: 200px;
+    border-top: 3px solid #e7e7e7;
+
+}
+
+.banner {
+    padding: 100px 0;
+    color: #f8f8f8;
+    background: url(banner-bg.jpg) no-repeat center center;
+    background-size: cover;
+}
+
+.banner h2 {
+    margin: 0;
+    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+    font-size: 3em;
+}
+
+.banner ul {
+    margin-bottom: 0;
+}
+
+.banner-social-buttons {
+    float: right;
+    margin-top: 0;
+}
+
+@media(max-width:1900px) {
+    ul.banner-social-buttons {
+        float: left;
+        margin-top: 15px;
+    }
+}
+
+@media(max-width:768px) {
+    .banner h2 {
+        margin: 0;
+        text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+        font-size: 3em;
+    }
+
+    .intro-message {
+        margin-top: 15%;
+        width: 100%;
+    }
+    ul.banner-social-buttons > li {
+        display: block;
+        margin-bottom: 20px;
+        padding: 0;
+    }
+
+    ul.banner-social-buttons > li:last-child {
+        margin-bottom: 0;
+    }
+    .navbar-brand>img {
+        margin-left: 1em;
+        max-width: 40%;
+    }
+    .intro-divider {
+        width: 50%;
+    }
+
+}
+
+@media(max-width:320px) {
+.navbar-brand>img {
+        margin-left: 1em;
+        max-width: 60%;
+    }
+    .mmlogo {
+        width: 63%;
+        margin-left:4em;
+        margin-top: .7em;
+    }
+    .logo {
+        width: 60%;
+    }
+
+.navbar-toggle {
+        height: 80%;
+        margin-right: 1em;
+        margin-top: 12px;
+    }
+    .getapp {
+        width: 60%;
+    }
+    #message {
+        width: 90%;
+    }
+    
+}
+
+
+
+@media(max-width:450px) {
+.navbar-brand>img {
+        margin-left: 1em;
+        max-width: 60%;
+    }
+}
+
+footer {
+    padding: 50px 0;
+    background-color: #f8f8f8;
+}
+
+p.copyright {
+    margin: 15px 0 0;
+}
+
+/*
+Inspired by the dribble shot http://dribbble.com/shots/1285240-Freebie-Flat-Pricing-Table?list=tags&tag=pricing_table
+*/
+
+/*--------- Font ------------*/
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans);
+@import url(http://weloveiconfonts.com/api/?family=fontawesome);
+/* fontawesome */
+[class*="fontawesome-"]:before {
+    font-family: 'FontAwesome', sans-serif;
+}
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    box-sizing: border-box;
+}
+/*------ utiltity classes -----*/
+.fl{ float:left; }
+.fr{ float: right; }
+/*its also known as clearfix*/
+.group:before,
+.group:after {
+    content: "";
+    display: table;
+    text-align: center;
+}
+.group:after {
+    clear: both;
+}
+.group {
+    zoom: .8;  /*For IE 6/7 (trigger hasLayout) */
+}
+
+body {
+    background: #F2F2F2;
+    font-family: 'Droid Sans', sans-serif;
+    line-height: 1;
+    font-size: 16px;
+}
+.wrapper {
+    width: 100%;
+    text-align: center;
+
+
+}
+.pricing-table {
+    width: 90%;
+    margin: 0px auto;
+    padding: 10px;
+    padding-right: 0;
+    text-align: center;
+}
+.group {
+    text-align: center;
+}
+
+.pricing-table .heading{
+    color: #9C9E9F;
+    text-transform: uppercase;
+    font-size: 1.3rem;
+    margin-bottom: 4rem;
+}
+.block{
+    width: 30%;
+    margin: 0 15px;
+    overflow: hidden;
+    border-radius: 5px;
+    /*    border: 1px solid red;*/
+}
+/*Shared properties*/
+.title,.pt-footer{
+    color: #FEFEFE;
+    text-transform: capitalize;
+    line-height: 2.5;
+    position: relative;
+    box-shadow: 0 3px 2px #999999;
+}
+.content{
+    position: relative;
+    color: #FEFEFE;
+    padding: 20px 0 10px 0;
+}
+/*arrow creation*/
+.content:after, .content:before,.pt-footer:before,.pt-footer:after {
+    top: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+.content:after,.pt-footer:after {
+    border-color: rgba(136, 183, 213, 0);
+    border-width: 5px;
+    margin-left: -5px;
+}
+/*/arrow creation*/
+.price{
+    position: relative;
+    display: inline-block;
+    margin-bottom: 0.625rem;
+}
+.price span{
+    font-size: 4rem;
+    letter-spacing: 8px;
+    font-weight: bold;
+}
+
+.hint{
+    font-style: italic;
+    font-size: 0.9rem;
+}
+.features{
+    list-style-type: none;
+    background: #FFFFFF;
+    text-align: left;
+    color: #9C9C9C;
+    padding:10px;
+    font-size: 0.9rem;
+    text-align: center;
+}
+.features li{
+    padding:15px 0;
+    width: 100%;
+}
+.features li span{
+    padding-right: 0.4rem;
+}
+.pt-footer{
+    font-size: 0.95rem;
+    text-transform: capitalize;
+}
+/*PERSONAL*/
+.personal .title{
+    background: -webkit-linear-gradient(#9a9a9a, #c0c0c0);
+    background: linear-gradient(#9a9a9a, #c0c0c0);
+
+}
+.personal .content,.personal .pt-footer{
+    background: -webkit-linear-gradient(#9a9a9a, #c0c0c0);
+    background: linear-gradient(#9a9a9a, #c0c0c0);
+}
+.personal .content:after{
+    background: -webkit-linear-gradient(#9a9a9a, #c0c0c0);
+    background: linear-gradient(#9a9a9a, #c0c0c0);
+}
+.personal .pt-footer:after{
+    border-top-color: #FFFFFF;
+}
+/*PROFESSIONAL*/
+.professional .title{
+    background: -webkit-linear-gradient(#B29600, #FFD700);
+    background: linear-gradient(#B29600, #FFD700);
+}
+.professional .content,.professional .pt-footer{
+    background: -webkit-linear-gradient(#B29600, #FFD700);
+    background: linear-gradient(#B29600, #FFD700);
+}
+.professional .content:after{
+    background: -webkit-linear-gradient(#B29600, #FFD700);
+    background: linear-gradient(#B29600, #FFD700);
+}
+.professional .pt-footer:after{
+    border-top-color: #FFFFFF;
+}
+/*BUSINESS*/
+.business {
+    text-color: #222222;
+}
+.business .title{
+    background: -webkit-linear-gradient(#c0c0c0, #e6e6e6);
+    background: linear-gradient(#c0c0c0, #e6e6e6);
+}
+.business .content,.business .pt-footer{
+    background: -webkit-linear-gradient(#c0c0c0, #e6e6e6);
+    background: linear-gradient(#c0c0c0, #e6e6e6);
+}
+.business .content:after{
+    background: -webkit-linear-gradient(#c0c0c0, #e6e6e6);
+    background: linear-gradient(#c0c0c0, #e6e6e6);
+}
+.business .pt-footer:after {
+    border-top-color: #FFFFFF;
+}

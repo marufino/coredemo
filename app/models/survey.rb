@@ -12,6 +12,12 @@ class Survey < ActiveRecord::Base
 
   def valid_block_weights
 
+    self.survey_blocks.each do |s|
+      if s.weight == nil
+        return false
+      end
+    end
+
     if self.survey_blocks.map(&:weight).inject(0, &:+) != 100
       return false
     else
@@ -20,6 +26,18 @@ class Survey < ActiveRecord::Base
   end
 
   def valid_question_weights
+
+    self.survey_blocks.each do |s|
+      if s.questions
+        s.questions.each do |q|
+          if q.weight == nil
+            return false
+          end
+        end
+      else
+        return false
+      end
+    end
 
     self.survey_blocks.each do |block|
       if block.questions.map(&:weight).inject(0, &:+) != block.weight

@@ -140,4 +140,12 @@ module ApplicationHelper
   end
 
 
+  def sort_survey_blocks(blocks)
+    s_block_order = [1,2,0]
+    blocks = blocks.sort_by { |s| s.category }
+
+    return s_block_order.map { |index| blocks[index] }
+  end
+
+
 end

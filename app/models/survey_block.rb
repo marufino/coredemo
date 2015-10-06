@@ -4,5 +4,6 @@ class SurveyBlock < ActiveRecord::Base
   belongs_to :survey
 
   accepts_nested_attributes_for :questions, allow_destroy: true
+  validates :weight, presence: true
 
 end
