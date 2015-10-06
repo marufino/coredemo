@@ -3,7 +3,7 @@
 </div>
 <div class="col-xs-5">
   <% flash.each do |name, msg| -%>
-    <%= content_tag :div, msg, class: "alert alert-dismissible alert-#{name} alert-success" %>
+    <%= content_tag :div, msg, class: "alert alert-dismissible alert-#{name} alert-success", :style => "z-index: 999999;" %>
   <% end -%>
 </div>
 <div class="col-xs-4 settings-header">
