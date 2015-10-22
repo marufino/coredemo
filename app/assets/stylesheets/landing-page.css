@@ -24,17 +24,18 @@ h6 {
 }
 
 .topnav {
-    font-size: 14px; 
+    font-size: 14px;
 }
 
 .logo224 {
     width: 70%;
+    padding: .5em;
+
 }
 
 .mmlogo224 {
     position: absolute;
     width: 175px;
-    top: 3em;
     margin-left: 4em;
     vertical-align: middle;
 }
@@ -251,7 +252,7 @@ h6 {
     #message {
         width: 90%;
     }
-    
+
 }
 
 
