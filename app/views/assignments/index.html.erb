@@ -14,39 +14,40 @@
     </div>
     <% end %>
 
-    <%= link_to projects_path do %>
-    <div class="col-xs-3">
-      <div class ="admin-panels">
-        <div class = "shadow">
-          <li>Projects</li>
-          <li style="padding: 30px;"><%= image_tag("projects2.png", size: "150x150", :alt => "Projects") %></li>
-          <li> <%= Project.all.size %> total</li>
+    <%= link_to competencies_path do %>
+        <div class="col-xs-3">
+          <div class ="admin-panels">
+            <div class = "shadow">
+              <li>Competencies</li>
+              <li style="padding: 30px;"><%= image_tag("comps.png", size: "150x150", :alt => "Competencies") %></li>
+              <li> <%= Competency.all.size %> total</li>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
     <% end %>
 
-    <%= link_to competencies_path do %>
-    <div class="col-xs-3">
-      <div class ="admin-panels">
-        <div class = "shadow">
-          <li>Competencies</li>
-          <li style="padding: 30px;"><%= image_tag("comps.png", size: "150x150", :alt => "Competencies") %></li>
-          <li> <%= Competency.all.size %> total</li>
+    <%= link_to surveys_path do %>
+        <div class="col-xs-3">
+          <div class ="admin-panels">
+            <div class = "shadow">
+              <li>Scorecards</li>
+              <li style="padding: 30px;"><%= image_tag("scorecards.png", size: "150x150", :alt => "Scorecards") %></li>
+              <li> <%= Survey.all.size %> total</li>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
     <% end %>
+
   </row>
 
 <row>
-  <%= link_to surveys_path do %>
+  <%= link_to projects_path do %>
       <div class="col-xs-3">
         <div class ="admin-panels">
           <div class = "shadow">
-            <li>Scorecards</li>
-            <li style="padding: 30px;"><%= image_tag("scorecards.png", size: "150x150", :alt => "Scorecards") %></li>
-            <li> <%= Survey.all.size %> total</li>
+            <li>Projects</li>
+            <li style="padding: 30px;"><%= image_tag("projects2.png", size: "150x150", :alt => "Projects") %></li>
+            <li> <%= Project.all.size %> total</li>
           </div>
         </div>
       </div>

@@ -5,6 +5,7 @@ class AssignmentsController < ApplicationController
 
   def index
     @assignments = Assignment.all
+    @curr_page_admin = true
     respond_with(@assignments)
   end
 
