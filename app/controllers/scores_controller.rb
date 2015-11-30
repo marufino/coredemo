@@ -121,6 +121,7 @@ class ScoresController < ApplicationController
 
   def update
 
+
     # pull questions for this score
     questions = @score.assignment.surveys[0].questions
 
@@ -135,6 +136,8 @@ class ScoresController < ApplicationController
       update_params['ratings_attributes'][q.id.to_s] = {'value' => rating.to_s, 'id' => Rating.where(question_id: q.id, score_id: @score.id).first.id.to_s}
       ratings << rating
     end
+
+    @score.comments = params['comments']
 
     # update score
     respond_to do |format|

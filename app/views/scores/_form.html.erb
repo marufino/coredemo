@@ -51,7 +51,11 @@
             </td>
             <div style="width: 100%;">
             <% if q.numeric == true %>
-              <td><span  style="float: right"><%= number_field_tag q.id, Rating.where(question_id: q.id, score_id: @score.id).first.value, within: 0...101 %></span></td>
+              <% if !@score.completed? %>
+                <td><span  style="float: right"><%= number_field_tag q.id, Rating.where(question_id: q.id, score_id: @score.id).first.value, within: 0...101 %></span></td>
+                <% else %>
+                      <td><span  style="float: right"><%= number_field_tag q.id, Rating.where(question_id: q.id, score_id: @score.id).first.value, within: 0...101, disabled: true %></span></td>
+              <% end %>
             <% else %>
                 <td><% (1..6).each do |i| %>
                     <div style="margin-left: 1%;display: inline; width: 100%;">
@@ -73,6 +77,15 @@
       </table>
       </div>
   <% end %>
+
+    <div class="editform">
+      <h4>Comments</h4>
+      <% if !@score.completed? %>
+        <%= text_area_tag :comments, @score.comments %>
+          <% else %>
+        <%= text_area_tag :comments, @score.comments, :readonly => true %>
+      <% end %>
+    </div>
 
   <% if !@score.completed? %>
     <div class="actions">
