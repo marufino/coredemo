@@ -16,7 +16,7 @@
   </thead>
   <tbody>
 
-  <% scores.each_with_index do |score, index| %>
+  <% @scores.each_with_index do |score, index| %>
       <row>
 
         <tr class="pointer" onclick="location.href='<%= edit_score_path(score) %>'">
