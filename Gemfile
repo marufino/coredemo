@@ -81,6 +81,11 @@ gem 'aws-sdk', '< 2.0'
 # gem 'debugger', group: [:development, :test]
 
 #gem 'bootstrap-sass', '~> 3.2.0'
+
+group :development do
+  gem "better_errors"
+end
+
 gem 'autoprefixer-rails'
 
 
