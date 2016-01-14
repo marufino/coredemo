@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   respond_to :html, :json
 
   before_action :set_user, only: [:edit, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /users
   # GET /users.json
