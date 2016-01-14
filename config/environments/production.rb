@@ -102,6 +102,7 @@ Rails.application.configure do
 
   ActionMailer::Base.delivery_method = :smtp
 
+  config.mailer_sender = "noreply@coreresults.com"
   config.action_mailer.default_url_options = { :host => ENV['DOMAIN'] }
 
 end
