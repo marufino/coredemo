@@ -3,4 +3,7 @@
 <p>You can confirm your account email through the link below:</p>
 
 <p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
+
+<p><b>Here's how to login:</b></p>
+<p>User ID: <%= @email %></p>
 <p>Temporary Password: <%= @resource.password %></p>
