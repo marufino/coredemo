@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151130063758) do
+ActiveRecord::Schema.define(version: 20160114204648) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,11 +49,11 @@ ActiveRecord::Schema.define(version: 20151130063758) do
   add_index "area_of_weaknesses_competencies", ["area_of_weakness_id"], name: "aow", using: :btree
 
   create_table "assignments", force: true do |t|
+    t.integer  "project_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.date     "date"
+    t.datetime "date"
     t.boolean  "completed"
-    t.integer  "project_id"
     t.integer  "survey_id"
   end
 
@@ -159,8 +159,8 @@ ActiveRecord::Schema.define(version: 20151130063758) do
     t.integer  "abilities"
     t.integer  "total"
     t.boolean  "completed"
-    t.date     "completed_date"
-    t.date     "assigned_date"
+    t.datetime "completed_date"
+    t.datetime "assigned_date"
     t.integer  "area_of_strength_id"
     t.integer  "area_of_weakness_id"
     t.text     "comments"
@@ -202,18 +202,18 @@ ActiveRecord::Schema.define(version: 20151130063758) do
   end
 
   create_table "users", force: true do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "email",                  default: "",    null: false
+    t.string   "encrypted_password",     default: "",    null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
     t.integer  "meta_id"
     t.string   "meta_type"
     t.string   "first_name"
@@ -224,6 +224,7 @@ ActiveRecord::Schema.define(version: 20151130063758) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.boolean  "confirmable",            default: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
