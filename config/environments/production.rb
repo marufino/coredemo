@@ -97,12 +97,12 @@ Rails.application.configure do
     :authentication => :plain,
     :user_name      => ENV['SENDGRID_USERNAME'],
     :password       => ENV['SENDGRID_PASSWORD'],
-    :domain         => 'heroku.com'
+    :domain         => 'heroku.com',
+    :from           => 'noreply@coreresults.com'
   }
 
   ActionMailer::Base.delivery_method = :smtp
 
-  config.mailer_sender = "noreply@coreresults.com"
   config.action_mailer.default_url_options = { :host => ENV['DOMAIN'] }
 
 end
