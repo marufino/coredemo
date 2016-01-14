@@ -46,7 +46,10 @@ class User < ActiveRecord::Base
           row = Hash[[header, spreadsheet.row(i)].transpose]
           user = find_by_email(row["email"]) || new
           user.attributes = row.to_hash.slice(*row.to_hash.keys)
-          user.password = 'password'
+          if user.meta_id == nil
+            generated_password = Devise.friendly_token.first(8)
+            user.password = generated_password
+          end
           if(user.meta_type=='Trainee' and user.meta_id == nil)
             trainee = Trainee.new
             user.meta = trainee
