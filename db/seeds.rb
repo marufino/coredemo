@@ -32,7 +32,7 @@ block2.questions.create!(category: 'Market Insight', weight: 15, description: 'H
 block3 = survey1.survey_blocks.create(category: 'Abilities', weight: 30)
 block3.questions.create!(category: 'Planning', weight: 15, description: 'How well does the trainee plan for work')
 =end
-u1 = User.create(first_name: 'Ed', last_name: 'Ross',title: 'Manager', email: 'observer1@ncsu.edu', password: 'password', password_confirmation: 'password', meta_type: 'Admin')
+u1 = User.create(first_name: 'Ed', last_name: 'Ross',title: 'Manager', email: 'observer1@ncsu.edu', password: 'password', password_confirmation: 'password', meta_type: 'Admin', avatar: File.open(File.join(Rails.root,'app', 'assets', 'images', 'users2.png')), confirmed_at: Date.today)
 
 role1 = Role.create(name: 'admin')
 
