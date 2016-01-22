@@ -17,6 +17,7 @@
   <% if @score.completed %>
     <%= render :partial => "shared/areas_of", :locals => {:score => @score} %>
   <% end %>
+  <br>
 
   <% @blocks.each do |block| %>
   <h4><%= block.category %> Evaluation ( <%= block.weight %> points)</h4>

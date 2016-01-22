@@ -3,6 +3,10 @@ class AssignmentsController < ApplicationController
 
   respond_to :html
 
+  before_filter do
+    redirect_to current_user unless current_user.admin?
+  end
+
   def index
     @assignments = Assignment.all
     @curr_page_admin = true

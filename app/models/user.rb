@@ -17,6 +17,10 @@ class User < ActiveRecord::Base
     return !!self.roles.find_by_name(role)
   end
 
+  def admin?
+    return self.roles.find_by_name('admin')
+  end
+
   def trainee?
     return (self.meta_type == 'Trainee')
   end

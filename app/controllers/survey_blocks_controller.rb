@@ -1,6 +1,10 @@
 class SurveyBlocksController < ApplicationController
   before_action :set_survey_block, only: [:show, :edit, :update, :destroy]
 
+  before_filter do
+    redirect_to current_user unless current_user.admin?
+  end
+
   # GET /survey_blocks
   # GET /survey_blocks.json
   def index

@@ -3,6 +3,10 @@ class RatingsController < ApplicationController
 
   respond_to :html
 
+  before_filter do
+    redirect_to current_user unless current_user.admin?
+  end
+
   def index
     @ratings = Rating.all
     respond_with(@ratings)

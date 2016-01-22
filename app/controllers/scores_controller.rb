@@ -1,6 +1,10 @@
 class ScoresController < ApplicationController
   include ApplicationHelper
   before_action :set_score, only: [:show, :edit, :update, :destroy]
+  before_action :check_admin, only: [:destroy]
+  before_action :owns_score, only: [:show, :edit]
+  before_action :owns_scores, only: [:index]
+
 
   def index
 
@@ -181,4 +185,28 @@ class ScoresController < ApplicationController
     def score_params
       params[:score]
     end
-end
+
+    def check_admin
+      redirect_to current_user unless current_user.admin?
+    end
+
+    def owns_score
+      if !current_user.admin?
+        redirect_to current_user unless Score.find(params['id']).trainee_id == current_user.meta.id
+      end
+    end
+
+    def owns_scores
+
+      if !current_user.admin?
+        if current_user.trainee?
+          redirect_to current_user unless params['filterrific']['with_trainee_id'].to_i == current_user.meta.id
+        elsif current_user.observer?
+          redirect_to current_user unless params['filterrific']['with_observer_id'].to_i == current_user.meta.id
+        end
+      end
+
+    end
+
+  end
+

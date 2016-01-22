@@ -1,5 +1,7 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy]
+  before_action :check_admin, only: [:index, :show, :edit, :update, :destroy]
+
 
   respond_to :html
 
@@ -213,4 +215,8 @@ class ProjectsController < ApplicationController
     def project_params
       params[:project].permit(:name, :observer_ids, assignments_attributes: [:date, :survey_id, :trainee_ids, :_destroy], colors_attributes: [:value])
     end
+
+  def check_admin
+    redirect_to current_user unless current_user.admin?
+  end
 end

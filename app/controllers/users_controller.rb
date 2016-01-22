@@ -3,7 +3,8 @@ class UsersController < ApplicationController
   respond_to :html, :json
 
   before_action :set_user, only: [:edit, :update, :destroy]
-  before_action :authenticate_user!
+  before_action :check_admin, only: [:index, :edit, :update, :destroy]
+  before_action :check_user, only: [:show]
 
   # GET /users
   # GET /users.json
@@ -18,6 +19,7 @@ class UsersController < ApplicationController
     @curr_page_users = true
 
     @user = User.find(params[:id])
+
 
     if @user.trainee?
 
@@ -210,6 +212,16 @@ class UsersController < ApplicationController
 
   def set_user
     @user = User.find(params[:id])
+  end
+
+  def check_admin
+    redirect_to current_user unless current_user.admin?
+  end
+
+  def check_user
+    if !current_user.admin?
+      redirect_to current_user unless params[:id].to_i == current_user.id
+    end
   end
 
 end

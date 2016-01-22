@@ -1,6 +1,10 @@
 class QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :edit, :update, :destroy]
 
+  before_filter do
+    redirect_to current_user unless current_user.admin?
+  end
+
   # GET /questions
   # GET /questions.json
   def index

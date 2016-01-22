@@ -2,6 +2,11 @@
 class SurveysController < ApplicationController
   before_action :set_survey, only: [:show, :edit, :update, :destroy]
 
+  before_action :authenticate_user!
+  before_filter do
+    redirect_to current_user unless current_user.admin?
+  end
+
   include ApplicationHelper
 
   # GET /surveys
