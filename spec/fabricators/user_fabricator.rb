@@ -7,7 +7,8 @@ Fabricator(:user) do
   phone { Faker::PhoneNumber.phone_number}
   password 'password'
   password_confirmation 'password'
-  avatar { File.open(File.join(Rails.root,'app', 'assets', 'images', 'users2.png'))}
+  avatar { Faker::Avatar.image }
+  #avatar { File.open(File.join(Rails.root,'app', 'assets', 'images', 'users2.png'))}
   confirmed_at {Faker::Date.backward(10)}
 
 end
