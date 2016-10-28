@@ -7,19 +7,19 @@
 default: &default
   adapter: postgresql
   pool: 5
-  #host: postgres://otgbtgfonznwhl:1K3SkkiAY1yY4ptPf13rLhSe-T@ec2-50-16-229-89.compute-1.amazonaws.com:5432/d492e2osmm5mhb
-  host: localhost
+  host: postgres://aawzevfewussvy:OjH3pvelnNgUnTICWqF-BS_IbM@ec2-54-83-202-115.compute-1.amazonaws.com:5432/dcicds82s3vuhe
+  #host: localhost
   username: marufino
   password: password
 
 development: &default
   adapter: postgresql
   encoding: unicode
-  database: postgres
+  database: development
   pool: 5
-  username: postgres
-  password:
-  host: db
+  username: marufino
+  password: password
+  #host: db
 
 
 # development:
